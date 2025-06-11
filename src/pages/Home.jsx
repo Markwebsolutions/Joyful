@@ -1,16 +1,21 @@
 import { lazy, Suspense } from 'react';
-import Marquee from "./homepage/Marque"
+
+import Banner from "./homepage/Banner"
+import Section2 from './homepage/Section2';
+import Section1 from './homepage/Section1';
 
 // Lazy load the Banner component
-const Banner = lazy(() => import("./homepage/Banner"));
+const Marquee = lazy(() => import("./homepage/Marque"));
 
 const Home = () => {
   return (
     <div>
+      <Banner />
       <Suspense fallback={<div>Loading banner...</div>}>
-        <Banner/>
+        <Marquee />
       </Suspense>
-      <Marquee/>
+      <Section1/>
+      <Section2 />
     </div>
   )
 }
