@@ -4,7 +4,8 @@
 .home-banner {
   min-height: 100vh;
   padding: 20px 0;
-  background: url('../assets/bg-img.png') no-repeat center center / cover;
+  /* background: url('../assets/bg-img.png') no-repeat center center / cover; */
+  background: url('../../assets/bg-img.png') no-repeat center center / cover;
   position: relative;
   display: flex;
   align-items: center;
@@ -29,15 +30,13 @@
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  padding-top: 40px;
+  padding-top: 80px;
+  flex-direction: column;
+  /* Mobile: Reverse order (right first, then left) */
+  grid-template-columns: 50% 50%;
+  flex-direction: row;
 }
 
-/* Mobile: Reverse order (right first, then left) */
-.hero-grid {
-  display: flex;
-  flex-direction: column;
-}
 
 .hero-right {
   order: -1;
@@ -176,17 +175,7 @@
 /* Desktop Styles */
 
 
-.home-banner {
-  padding-top: 90px;
-  min-height: 105vh;
-}
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  flex-direction: row;
-  /* Reset for desktop */
-}
 
 /* Reset the order for desktop */
 .hero-right {
@@ -211,7 +200,7 @@
 }
 
 .hero-description:after {
-  content: url("../assets/stars.svg");
+  content: url("../../assets/stars.svg");
   position: absolute;
   left: 0;
   top: 0;
@@ -266,7 +255,7 @@
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 20px;
-
+    padding-top: 0px;
   }
 
   .hero-left {
@@ -308,5 +297,10 @@
 
   .hero-phone {
     gap: 0.2rem;
+  }
+
+  .home-banner {
+    padding-top: 80px;
+    min-height: 105vh;
   }
 }

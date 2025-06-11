@@ -1,14 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './header';
-import Home from '../pages/Home';
+import Header from './Header';
 import './App.css';
+import Home from '../pages/Home';
+// import Banner from '../pages/homepage/Banner';
 
 function App() {
   return (
     <Router>
       <div className="app-container">
         <Header />
-         <main className="main-content">
+        <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <Route path="/about" element={<About />} />
@@ -18,7 +19,7 @@ function App() {
             <Route path="/contact" element={<Contact />} /> */}
           </Routes>
         </main>
-          {/* <Footer /> */}
+        {/* <Footer /> */}
       </div>
     </Router>
   );
