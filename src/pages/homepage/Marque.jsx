@@ -29,7 +29,7 @@ const Marquee = () => {
             alignItems: 'center',
             overflow: 'hidden',
             position: 'relative',
-        }}>
+        }}> 
             {/* Marquee track - triple duplicated for perfect looping */}
             <div style={{
                 display: 'flex',
