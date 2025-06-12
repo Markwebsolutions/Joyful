@@ -4,7 +4,17 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, li, a, strong {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+li,
+a,
+strong {
   font-family: 'Inter', sans-serif;
 }
 
@@ -18,7 +28,8 @@ h1, h2, h3, h4, h5, h6, p, span, li, a, strong {
   padding: 2rem 0;
 }
 
-.section-image, .section-content {
+.section-image,
+.section-content {
   width: 100%;
 }
 
@@ -51,14 +62,16 @@ h1, h2, h3, h4, h5, h6, p, span, li, a, strong {
 }
 
 /* Features & Benefits Shared Styles */
-.features, .benefits {
+.features,
+.benefits {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
-.feature-item, .benefit-item {
+.feature-item,
+.benefit-item {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -167,42 +180,42 @@ h1, h2, h3, h4, h5, h6, p, span, li, a, strong {
   .section-tagline {
     font-size: 1rem;
   }
-  
+
   .section-text {
     margin: 0.9rem 0rem;
   }
-  
+
   .features {
     margin: 0rem 0rem;
     gap: 0.9rem;
   }
-  
+
   .benefits {
     gap: 0.75rem;
     margin: 0.88rem 0;
   }
-  
+
   .contact-info {
     gap: 10px;
   }
-  
+
   .action-buttons {
     gap: 1.25rem;
   }
-  
+
   .contact-icon {
     width: 20px;
     height: 20px;
   }
-  
+
   .contact-label {
     font-size: 0.875rem;
   }
-  
+
   .contact-number {
     font-size: 1rem;
   }
-  
+
   .action-buttons {
     flex-direction: row;
   }
@@ -249,32 +262,33 @@ h1, h2, h3, h4, h5, h6, p, span, li, a, strong {
 
 
 
-
 /* Section2.css */
+.grid-section {
+  background: #F5EDDA;
+  height: auto;
+  min-height: 10vh;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px 23px;
+  gap: 2rem 1.5rem;
   /* row-gap column-gap */
-  padding: 20px;
-
+  margin: 0px auto;
+  max-width: 1600px;
+  width: 90%;
+  padding: 80px 0px;
 }
 
 .grid-item-section {
-  background-color: #f0f0f0;
-  padding: 20px;
   text-align: center;
-  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
 }
 
 .combined-grid-item {
   grid-column: span 2;
-  background-color: #f0f0f0;
-  border-radius: 8px;
   position: relative;
   overflow: hidden;
 }
@@ -291,19 +305,23 @@ h1, h2, h3, h4, h5, h6, p, span, li, a, strong {
   object-fit: cover;
 }
 
-.image-button {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+.grid-item-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.image-button:hover {
-  background-color: #45a049;
+/* Media query for small devices (below tablet) */
+@media (max-width: 768px) {
+  .grid-section {
+    height: auto; /* Changed from 100vh to auto for mobile */
+  }
+  
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column layout */
+  }
+  
+  .combined-grid-item {
+    grid-column: span 1; /* Reset the span to 1 for mobile */
+  }
 }

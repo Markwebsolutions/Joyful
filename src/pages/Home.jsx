@@ -15,7 +15,7 @@ const Home = () => {
         <Marquee />
         <Section1 />
       </Suspense>
-      {/* <Section2 /> */}
+      <Section2 />
     </div>
   )
 }
