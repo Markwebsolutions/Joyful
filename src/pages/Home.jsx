@@ -13,9 +13,9 @@ const Home = () => {
       <Banner />
       <Suspense fallback={<div>Loading banner...</div>}>
         <Marquee />
+        <Section1 />
       </Suspense>
-      <Section1/>
-      <Section2 />
+      {/* <Section2 /> */}
     </div>
   )
 }

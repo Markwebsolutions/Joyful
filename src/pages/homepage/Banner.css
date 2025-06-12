@@ -30,7 +30,7 @@
 
 .hero-grid {
   display: grid;
-  padding-top: 80px;
+  padding-top: 105px;
   flex-direction: column;
   /* Mobile: Reverse order (right first, then left) */
   grid-template-columns: 50% 50%;
@@ -57,11 +57,10 @@
 }
 
 .hero-subtitle {
-  font-family: Inter;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 300;
+  font-size: 18px;
   line-height: 30px;
-  max-width: 385px;
+  max-width: 250px;
   margin-bottom: 0.8rem;
 }
 
@@ -96,24 +95,16 @@
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 40px;
   flex-wrap: wrap;
 }
 
 .hero-button {
-  background-color: orange;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.hero-button:hover {
-  background-color: darkorange;
+  border-radius: 40px;
+  background-color: #D67A1D;
+  padding: 18px 38px;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 .hero-phone {
@@ -208,10 +199,6 @@
   height: 20px;
 }
 
-.hero-button {
-  padding: 12px 24px;
-  font-size: 1rem;
-}
 
 .image-grid {
   gap: 20px;
@@ -222,11 +209,11 @@
 }
 
 .hero-phone-number-details {
-  text-transform: uppercase;
-  font-family: Inter;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
+    text-transform: uppercase;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .hero-phone {

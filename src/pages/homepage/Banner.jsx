@@ -1,6 +1,4 @@
 import './banner.css'; // We'll create this CSS file next
-// import grid1 from "../assets/grid-1.jpg";
-// import grid1 from "../assets/grid-1.jpg";
 import grid1 from "../../assets/grid-1.jpg";
 import grid2 from "../../assets/grid-2.jpg";
 import grid5 from "../../assets/grid-5.jpg";
@@ -26,22 +24,19 @@ const Banner = () => {
                     {/* Left side (50%) */}
                     <div className="hero-left">
                         <div className="hero-text-content">
-                            <h4 className="hero-subtitle">India’s India's Largest Manufacturer and seller of</h4>
+                            <h4 className="hero-subtitle">India's Largest Manufacturer and seller of</h4>
                             <h1 className="hero-title">Diverse range <span>of plastic products</span></h1>
                             <p className="hero-description">Enhance everyday life through functional plastic items produced with advanced technologies such as schoolware, Kitchenware, Home furniture and more...</p>
                             <div className="hero-actions">
-                                <button className="inquiry-button">
+                                <button className="primary-button hero-button">
                                     Send Inquiry
-                                    <FontAwesomeIcon
-                                        icon={faArrowRight}
-                                        className="inquiry-arrow"
-                                    />
+                                    <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
                                 </button>
                                 <div className="hero-phone">
                                     <img src={mobile_icon} alt="Mobile Number Icon" />
                                     <div className="hero-phone-number-details">
-                                        Call us at<br />
-                                        <span>+1 234 567 890</span>
+                                        Call us now:<br />
+                                        <span>+91 22 67402200</span>
                                     </div>
                                 </div>
                             </div>

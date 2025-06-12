@@ -1,128 +1,81 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/joyful.png";
-import "./Header.css"; // Import the CSS file
+import "./Header.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faMagnifyingGlass,
-  faArrowRight
-} from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const textColorClass = isHomePage ? "text-white" : "text-dark";
+  const iconColorClass = isHomePage ? 'light' : 'dark';
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const navLinks = [
+    { path: "/", text: "Home" },
+    { path: "/about", text: "About Us" },
+    { path: "/catalog", text: "Our Catalog" },
+    { path: "/new-arrivals", text: "New Arrivals" },
+    { path: "/network", text: "Network" },
+    { path: "/contact", text: "Contact Us" }
+  ];
 
   return (
     <header className={`header ${isHomePage ? "header-transparent" : "header-colored"}`}>
-      {/* Desktop Header - 3-column grid */}
+      {/* Desktop Header */}
       <div className="desktop-header">
-
-        {/* Column 1 - Logo (left) */}
         <div className="header-logo">
           <Link to="/">
             <img src={Logo} alt="Company Logo" className="logo-image" />
           </Link>
         </div>
 
-        {/* Column 2 - Navigation Links (center) */}
         <nav className="header-nav">
-          <Link
-            to="/"
-            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            About Us
-          </Link>
-          <Link
-            to="/catalog"
-            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Our Catalog
-          </Link>
-          <Link
-            to="/new-arrivals"
-            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            New Arrivals
-          </Link>
-          <Link
-            to="/network"
-            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Network
-          </Link>
-          <Link
-            to="/contact"
-            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Contact Us
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`nav-link ${textColorClass}`}
+            >
+              {link.text}
+            </Link>
+          ))}
         </nav>
 
-        {/* Column 3 - Search and Inquiry (right) */}
         <div className="header-actions">
-          <button className="search-button">
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className={`search-icon ${isHomePage ? "" : ""}`}
-            />
+          <button className={`icon-button ${iconColorClass}`}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
           </button>
-          <button className="inquiry-button">
+          <button className="primary-button">
             Send Inquiry
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              className="inquiry-arrow"
-            />
+            <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
           </button>
         </div>
       </div>
 
       {/* Mobile Header */}
       <div className="mobile-header">
-        {/* Column 1 - Hamburger (left) */}
         <div className="mobile-hamburger">
-          <button
-            onClick={handleMenuToggle}
-            className="hamburger-button"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="hamburger-icon"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+          <button onClick={toggleMenu} className={`icon-button ${iconColorClass}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
 
-        {/* Column 2 - Logo (center) */}
         <div className="mobile-logo">
-          <Link to="/" className="mobile-logo-link">
-            <img src={Logo} alt="Company Logo" className="mobile-logo-image" />
+          <Link to="/">
+            <img src={Logo} alt="Company Logo" className="logo-image" />
           </Link>
         </div>
 
-        {/* Column 3 - Search (right) */}
         <div className="mobile-search">
-          <button className="mobile-search-button">
-            <svg xmlns="http://www.w3.org/2000/svg" className="mobile-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button className={`icon-button ${iconColorClass}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </button>
@@ -130,55 +83,21 @@ function Header() {
       </div>
 
       {/* Mobile Navigation Menu */}
-      <div
-        className={`mobile-menu ${isHomePage ? "mobile-menu-transparent" : "mobile-menu-colored"} ${isMenuOpen ? "mobile-menu-open" : "mobile-menu-closed"}`}
-      >
+      <div className={`mobile-menu ${isHomePage ? "mobile-menu-transparent" : "mobile-menu-colored"} ${isMenuOpen ? "open" : "closed"}`}>
         <nav className="mobile-nav">
-          <Link
-            to="/"
-            onClick={() => setIsMenuOpen(false)}
-            className={`mobile-nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            onClick={() => setIsMenuOpen(false)}
-            className={`mobile-nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            About Us
-          </Link>
-          <Link
-            to="/catalog"
-            onClick={() => setIsMenuOpen(false)}
-            className={`mobile-nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Our Catalog
-          </Link>
-          <Link
-            to="/new-arrivals"
-            onClick={() => setIsMenuOpen(false)}
-            className={`mobile-nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            New Arrivals
-          </Link>
-          <Link
-            to="/network"
-            onClick={() => setIsMenuOpen(false)}
-            className={`mobile-nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Network
-          </Link>
-          <Link
-            to="/contact"
-            onClick={() => setIsMenuOpen(false)}
-            className={`mobile-nav-link ${isHomePage ? "text-white" : "text-dark"}`}
-          >
-            Contact Us
-          </Link>
-          <div className="mobile-inquiry-container">
-            <button className="mobile-inquiry-button">
-              Send Inquiry <span className="mobile-inquiry-arrow">&gt;</span>
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={closeMenu}
+              className={`mobile-nav-link ${textColorClass}`}
+            >
+              {link.text}
+            </Link>
+          ))}
+          <div className="mobile-button-container">
+            <button className="primary-button">
+              Send Inquiry <span className="button-icon">&gt;</span>
             </button>
           </div>
         </nav>
