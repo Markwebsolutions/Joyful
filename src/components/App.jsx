@@ -2,14 +2,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import './App.css';
 import Home from '../pages/Home';
-// import Banner from '../pages/homepage/Banner';
-
+import Footer from './Footer';
 function App() {
   return (
     <Router>
       <div className="app-container">
         <main className="main-content">
-        <Header />
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <Route path="/about" element={<About />} />
@@ -18,8 +17,8 @@ function App() {
             <Route path="/network" element={<Network />} />
             <Route path="/contact" element={<Contact />} /> */}
           </Routes>
+          <Footer/>
         </main>
-        {/* <Footer /> */}
       </div>
     </Router>
   );

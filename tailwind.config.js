@@ -10,6 +10,7 @@ export default {
         inter: ["Inter", "sans-serif"],
         outfit: ["Outfit", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        Baloo2: ['Baloo 2' ,"sans-serif"],
       },
   },
   plugins: [],

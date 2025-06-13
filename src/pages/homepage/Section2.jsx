@@ -14,7 +14,7 @@ const Section2 = () => {
         { src: section2_3, span: 1 },
         { src: section2_4, span: 1 },
         { src: section2_5, span: 1 },
-        { src: section2_6, span: 2 },
+        { src: section2_6, span: 2 },   
         { src: section2_7, span: 1 },
     ];
 
