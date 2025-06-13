@@ -4,9 +4,12 @@ import Logo from "../assets/joyful.png";
 import "./Header.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import EnquiryModal from "./Enquiry";
+
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const textColorClass = isHomePage ? "text-white" : "text-dark";
@@ -14,6 +17,8 @@ function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const navLinks = [
     { path: "/", text: "Home" },
@@ -50,7 +55,7 @@ function Header() {
           <button className={`icon-button ${iconColorClass}`}>
             <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
           </button>
-          <button className="primary-button">
+          <button className="primary-button" onClick={openModal}>
             Send Inquiry
             <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
           </button>
@@ -96,12 +101,15 @@ function Header() {
             </Link>
           ))}
           <div className="mobile-button-container">
-            <button className="primary-button">
+            <button className="primary-button" onClick={() => { openModal(); closeMenu(); }}>
               Send Inquiry <span className="button-icon">&gt;</span>
             </button>
           </div>
         </nav>
       </div>
+
+      {/* Enquiry Modal */}
+      <EnquiryModal isOpen={isModalOpen} onClose={closeModal} />
     </header>
   );
 }

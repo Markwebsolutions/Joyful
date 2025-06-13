@@ -25,12 +25,10 @@ html {
 }
 
 
-
-/* Footer Styles */
 /* Footer Styles */
 .footer {
   color: white;
-  padding: 5rem 0;
+  padding: 3.8rem 0;
   font-family: 'Baloo 2', cursive;
   background-color: #153548;
 }
@@ -40,24 +38,38 @@ html {
 }
 
 .footer-grid {
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: calc(28% - 10px) calc(20% - 10px) calc(22% - 10px) calc(25% - 10px);
-  gap: 37px;
-  max-width: 1200px;
-  padding: 0 20px;
+  grid-template-columns: calc(35% - 20px) calc(20.5% - 20px) calc(20.5% - 20px) calc(21% - 20px);
+  gap: 40px;
 }
 
+.footer-h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-transform: capitalize;
+}
+
+.footer-h2 {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 1.25rem;
+}
+
+
 .footer-links {
-  list-style: none;
+  list-style: disc;
   padding: 0;
   margin: 0;
 }
 
 .footer-links li {
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  transition: color 0.3s;
+  margin-left: 2rem;
+  margin-bottom: 1.3rem;
+  /* font-weight: 500; */
+  font-size: 1rem;
+  text-transform: capitalize;
 }
 
 .footer-links li:hover {
@@ -78,7 +90,7 @@ html {
 .footer-section h3 {
   font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.3rem
 }
 
 .footer-section p {
@@ -92,7 +104,6 @@ html {
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   color: #fff;
-  border-radius: 8px;
   width: 100%;
 }
 
@@ -155,24 +166,14 @@ html {
   transform: translateX(2px);
 }
 
-.contact-btn {
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.contact-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
 address {
+  font-family: 'Baloo 2', cursive;
   font-style: normal;
+  font-family: 'Baloo 2', ;
   line-height: 1.5;
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: capitalize;
 }
 
 /* Hide mobile toggle on desktop */
@@ -188,6 +189,11 @@ address {
 /* Hide mobile list by default */
 .footer-links.mobile-only {
   display: none;
+}
+
+li.contact-li {
+  padding-left: 1rem;
+  margin-top: 1.25rem;
 }
 
 /* Responsive Styles */
@@ -276,6 +282,11 @@ address {
     display: block;
     padding-top: 0.5rem;
   }
+
+  li.contact-li {
+    padding-left: 0.9rem;
+    margin-top: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -302,8 +313,5 @@ address {
     font-size: 1.3rem;
   }
 
-  .contact-btn {
-    width: 100%;
-    padding: 0.75rem;
-  }
+
 }

@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import arrow from "../assets/footer/arrow.svg"
 
 const Footer = () => {
   const [expandedSections, setExpandedSections] = useState({
@@ -43,19 +46,18 @@ const Footer = () => {
               <p>News, Updates, Offers & Releases</p>
               <form className="newsletter-form">
                 <div className="input-wrapper">
-                  <span className="email-icon">📧</span>
+                  <FontAwesomeIcon icon={faEnvelope} size="lg" />
                   <input
                     type="email"
                     placeholder="Email address"
                     aria-label="Email address for newsletter"
                   />
-                  <button type="submit" aria-label="Submit email">➡</button>
-                </div>
+                    <img src={arrow} alt="" />
+                   </div>
               </form>
             </div>
           </div>
 
-          {/* B2B Options */}
           {/* B2B Options */}
           <div className="footer-section">
             {/* Mobile Toggle (only shown on mobile) */}
@@ -66,7 +68,7 @@ const Footer = () => {
               tabIndex="0"
               aria-expanded={expandedSections.b2b}
             >
-              <h3>B2B Options</h3>
+              <h3 className='footer-h1'>B2B Options</h3>
               <span className="toggle-icon">
                 {expandedSections.b2b ? '-' : '+'}
               </span>
@@ -100,7 +102,7 @@ const Footer = () => {
               tabIndex="0"
               aria-expanded={expandedSections.productLine}
             >
-              <h3>Product Line</h3>
+              <h3 className='footer-h1'>Product Line</h3>
               <span className="toggle-icon">
                 {expandedSections.productLine ? '-' : '+'}
               </span>
@@ -108,7 +110,7 @@ const Footer = () => {
 
             {/* Desktop List (always visible on desktop) */}
             <div className="desktop-list">
-              <h3>Product Line</h3>
+              <h3 className='footer-h1'>Product Line</h3>
               <ul className="footer-links">
                 {footerLinks.productLine.map((item, index) => (
                   <li key={index}>{item}</li>
@@ -126,15 +128,15 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div className="footer-section">
-            <h3>Contact us</h3>
+            <h3 className='footer-h1'>Contact us</h3>
             <address>
-              Joyful Plastic Pvt Ltd<br />
+              <span className='footer-h2'>Joyful Plastic Pvt Ltd </span>
               402, 4th floor, Satellite Silver CHS,<br />
               Near Mittal Industrial Estate,<br />
               Andheri Kurla Road, Marol,<br />
               Andheri (East), Mumbai 400059
             </address>
-            <button className="contact-btn">Contact Us</button>
+            <li className='contact-li'> Contact Us</li>
           </div>
         </div>
       </div>
