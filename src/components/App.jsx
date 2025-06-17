@@ -3,6 +3,7 @@ import Header from './Header';
 import './App.css';
 import Home from '../pages/Home';
 import Footer from './Footer';
+import ProductDetails from '../pages/catlogpage/ProductDetails';
 function App() {
   return (
     <Router>
@@ -11,13 +12,13 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/about" element={<About />} />
-            <Route path="/catalog" element={<Catalog />} />
-            <Route path="/new-arrivals" element={<NewArrivals />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/contact" element={<Contact />} /> */}
+            {/* <Route path="/about" element={<About />} /> */}
+            <Route path="/catalog" element={<ProductDetails />} />
+            {/* <Route path="/new-arrivals" element={<NewArrivals />} /> */}
+            {/* <Route path="/network" element={<Network />} /> */}
+            {/* <Route path="/contact" element={<Contact />} /> */}
           </Routes>
-          <Footer/>
+          <Footer />
         </main>
       </div>
     </Router>
