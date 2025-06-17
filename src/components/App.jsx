@@ -4,6 +4,7 @@ import './App.css';
 import Home from '../pages/Home';
 import Footer from './Footer';
 import ProductDetails from '../pages/catlogpage/ProductDetails';
+import AboutUs from '../pages/AboutUs';
 function App() {
   return (
     <Router>
@@ -12,7 +13,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/about" element={<About />} /> */}
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/catalog" element={<ProductDetails />} />
             {/* <Route path="/new-arrivals" element={<NewArrivals />} /> */}
             {/* <Route path="/network" element={<Network />} /> */}
