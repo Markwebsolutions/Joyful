@@ -21,8 +21,8 @@
 }
 
 .navigation span {
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: 300;
+    font-size: 0.94rem;
 }
 
 .aboutUsTitle {
@@ -31,4 +31,139 @@
 }
 
 
-/* About Us 2 */
+
+/* AboutUs.css */
+
+/* Base Styles (Mobile First) */
+.about-us-wrapper {
+    width: 100%;
+}
+
+.about-us-section {
+    padding: 3rem 0;
+}
+
+.about-us-container {
+    width: 90%;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.about-us-image-wrapper {
+    width: 100%;
+    overflow: hidden;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+}
+
+.about-us-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.about-us-image:hover {
+    transform: scale(1.02);
+}
+
+.about-us-content {
+    width: 100%;
+}
+
+.about-us-heading {
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.about-us-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.about-us-list-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+.about-us-list-item.subcontent {
+    margin-left: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.gift-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+/* Tablet Styles (min-width: 768px) */
+@media (min-width: 768px) {
+    .about-us-section {
+        padding: 4rem 0;
+    }
+
+    .about-us-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .about-us-container.even {
+        flex-direction: row;
+    }
+
+    .about-us-container.odd {
+        flex-direction: row-reverse;
+    }
+
+    .about-us-image-wrapper {
+        width: 50%;
+    }
+
+    .about-us-content {
+        width: 50%;
+    }
+
+    .about-us-heading {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .about-us-list-item {
+        font-size: 1.05rem;
+        margin-bottom: 1.25rem;
+    }
+}
+
+/* Desktop Styles (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .about-us-section {
+        padding: 5rem 0;
+    }
+
+    .about-us-container {
+        gap: 4rem;
+    }
+
+    .about-us-heading {
+        font-size: 2.25rem;
+    }
+
+    .about-us-list-item {
+        font-size: 1.1rem;
+    }
+}
