@@ -645,18 +645,19 @@
 
 .joyful-network-clients {
   background: #000CB70D;
-  padding: 70px 0 120px;
-  /* Extra padding at bottom for image overlap */
+  padding: 70px 0 300px;
+  /* Half of 600px */
   position: relative;
   z-index: 1;
 }
 
+
+
 .joyful-network-clients h2 {
   font-weight: 400;
   font-size: 48px;
-  line-height: 110.00000000000001%;
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 3rem;
 }
 
 /* Marketplace Grid */
@@ -683,14 +684,18 @@
   object-fit: contain;
 }
 
-/* Stats Section */
-.stats-wrapper {
-  margin-top: 40px;
+
+
+/* Stats Container - Consistent Single Line Layout */
+.countdown-wrapper-items {
+  width: 100%;
+  margin-top: 60px;
 }
 
 .stats-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 815px;
   margin: 0 auto;
   gap: 20px;
@@ -699,6 +704,9 @@
 .stat-item {
   text-align: center;
   padding: 20px;
+  flex: 1;
+  min-width: 0;
+  /* Prevents flex items from growing beyond container */
 }
 
 .stat-value {
@@ -715,11 +723,31 @@
   margin-top: 12px;
 }
 
+/* Arrow between items */
+.stat-item:not(:last-child) {
+  position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background-image: url(../../assets/section3/arrow-right.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+
 /* Network Image Container */
 .network-image-container {
   position: relative;
-  margin-top: -100px;
-  /* Pull up to overlap */
+  margin-top: -300px;
+  /* Pull up by half the image height */
   z-index: 2;
 }
 
@@ -727,7 +755,6 @@
   width: 100%;
   max-height: 613px;
   object-fit: cover;
-  border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -740,24 +767,48 @@
 
   .stats-container {
     gap: 30px;
+    max-width: 700px;
+  }
+
+  .stat-value {
+    font-size: 48px;
+    line-height: 54px;
+  }
+
+  .stat-label {
+    font-size: 18px;
+  }
+
+  .stat-item:not(:last-child)::after {
+    right: -25px;
+    width: 40px;
+    height: 40px;
+  }
+
+
+  .joyful-network-clients {
+    padding: 70px 0 200px;
+    /* Adjusted for tablet */
   }
 
   .network-image-container {
-    margin-top: -60px;
+    margin-top: -150px;
+    /* Adjusted for tablet */
   }
 }
 
 @media (max-width: 768px) {
   .joyful-network-clients {
-    padding: 50px 0 80px;
+    padding: 50px 0 150px;
+    /* Adjusted padding-bottom */
   }
 
   .joyful-network-clients h2 {
     font-weight: 400;
-    font-size: 32px;
-    line-height: 110.00000000000001%;
+    font-size: 1.8rem;
     letter-spacing: 0%;
     text-align: center;
+    margin-bottom: 1.5rem;
   }
 
   .marketplace-grid {
@@ -769,6 +820,11 @@
     padding: 15px;
   }
 
+  .stats-container {
+    gap: 20px;
+    max-width: 600px;
+  }
+
   .stat-value {
     font-size: 42px;
     line-height: 48px;
@@ -778,17 +834,56 @@
     font-size: 16px;
   }
 
+  .stat-item:not(:last-child)::after {
+    right: -20px;
+    width: 30px;
+    height: 30px;
+  }
+
   .network-image-container {
-    margin-top: -40px;
+    margin-top: -100px;
+    /* Adjusted overlap */
   }
 }
 
 @media (max-width: 480px) {
-  .marketplace-grid {
-    grid-template-columns: 1fr 1fr;
+  .joyful-network-clients {
+    padding: 40px 0 100px;
+    /* Further adjusted for mobile */
   }
 
   .network-image {
-    max-height: 300px;
+    max-height: 200px;
+    /* Reduced image height */
+  }
+
+  .network-image-container {
+    margin-top: -80px;
+    /* Adjusted overlap for mobile */
+  }
+
+  /* Adjust stats layout for small screens */
+  .stats-container {
+    gap: 15px;
+    max-width: 100%;
+  }
+
+  .stat-item {
+    padding: 15px 10px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .stat-item:not(:last-child)::after {
+    right: -12px;
+    width: 16px;
+    height: 16px;
   }
 }

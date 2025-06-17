@@ -5,6 +5,7 @@ import Section4_3 from "../../assets/section3/big-bazaar.png"
 import Section4_4 from "../../assets/section3/amazon.png"
 import Section4_5 from "../../assets/section3/star-bazaar.png"
 import Section4_6 from "../../assets/section3/walmart.png"
+import Network_last from "../../assets/Network/Network_last.jpg" 
 
 
 
@@ -60,7 +61,7 @@ const Network2 = () => {
             <div className="network-image-container">
                 <div className="page-width">
                     <img
-                        src="https://plus.unsplash.com/premium_photo-1750042689626-7a1639fcced7?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src={Network_last}
                         alt="Our marketplace presence"
                         className="network-image"
                         loading="lazy"
