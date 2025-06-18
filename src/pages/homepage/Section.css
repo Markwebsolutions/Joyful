@@ -299,6 +299,7 @@
   .grid-container {
     grid-template-columns: 1fr;
     /* Single column layout */
+    padding: 40px 0px;
   }
 
   .combined-grid-item {
@@ -522,9 +523,13 @@
 }
 
 @media only screen and (min-width: 0px) and (max-width: 767px) {
+  .why-joyful-different {
+    padding: 40px 0;
+    margin-bottom: 0px;
+  }
+
   .why-joyful-different h2 {
     max-width: 355px;
-
     font-weight: 400;
     font-size: 32px;
     line-height: 1.3;
@@ -591,8 +596,12 @@
     gap: 16px;
   }
 
-  .joyful-clients h2 {
+  .joyful-clients {
+    background: #000CB70D;
+    padding: 40px 0;
+  }
 
+  .joyful-clients h2 {
     font-weight: 400;
     font-size: 32px;
     line-height: 110.00000000000001%;
@@ -798,6 +807,11 @@
 }
 
 @media (max-width: 768px) {
+  .countdown-wrapper-items {
+    width: 100%;
+    margin-top: 40px;
+  }
+
   .joyful-network-clients {
     padding: 50px 0 150px;
     /* Adjusted padding-bottom */
@@ -808,7 +822,7 @@
     font-size: 1.8rem;
     letter-spacing: 0%;
     text-align: center;
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
   }
 
   .marketplace-grid {
@@ -852,6 +866,13 @@
     /* Further adjusted for mobile */
   }
 
+  .joyful-network-clients h2 {
+    font-weight: 400;
+    font-size: 1.8rem;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+
   .network-image {
     max-height: 200px;
     /* Reduced image height */
@@ -873,8 +894,8 @@
   }
 
   .stat-value {
-    font-size: 32px;
-    line-height: 38px;
+    font-size: 28px;
+    line-height: 12px;
   }
 
   .stat-label {
@@ -885,5 +906,6 @@
     right: -12px;
     width: 16px;
     height: 16px;
+    transform: translateY(-156%);
   }
 }

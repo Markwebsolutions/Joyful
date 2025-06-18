@@ -32,13 +32,9 @@ body {
 }
 
 /* Logo styles */
-.logo-image {
-    height: 55px;
-}
-
-.mobile-logo .logo-image {
-    height: 2rem;
-}
+    .logo-image {
+        height: 2.2rem;
+    }
 
 /* Button styles */
 .icon-button {
@@ -236,6 +232,9 @@ body {
         display: none;
     }
 
+    .logo-image {
+        height: 55px;
+    }
 }
 
 

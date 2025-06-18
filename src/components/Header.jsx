@@ -102,7 +102,8 @@ function Header() {
           ))}
           <div className="mobile-button-container">
             <button className="primary-button" onClick={() => { openModal(); closeMenu(); }}>
-              Send Inquiry <span className="button-icon">&gt;</span>
+              Send Inquiry
+              <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
             </button>
           </div>
         </nav>
