@@ -171,7 +171,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>  
     </footer>
     <div className="footer-copyright">
       <div className="page-width">

@@ -511,7 +511,7 @@ li.contact-li {
   justify-content: center;
   padding-left: 1rem;
   gap: 2rem;
-}
+}    
 
 /* Responsive Styles */
 @media (max-width: 768px) {
