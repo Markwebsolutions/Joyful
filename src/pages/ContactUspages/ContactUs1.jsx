@@ -14,7 +14,6 @@ const ContactUs1 = () => {
                     <FontAwesomeIcon icon={faCaretRight} />
                     <span>Contact Us</span>
                 </div>
-
                 <h1 className="aboutUsTitle">Contact Us</h1>
             </div>
         </div>
