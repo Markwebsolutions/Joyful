@@ -4,6 +4,7 @@ import location from "../../assets/ContactUs/location.svg";
 import mail from "../../assets/ContactUs/mail.svg";
 import phone from "../../assets/ContactUs/phone.svg";
 import './ContactUs.css';
+import ContactForm from "./ContactUsForm";
 
 const ContactUs = () => {
     const [agreeToTerms, setAgreeToTerms] = React.useState(false);
@@ -53,53 +54,7 @@ const ContactUs = () => {
                     ))}
                 </div>
 
-                <div className="contact-form">
-                    <h2>Get in Touch</h2>
-                    <form>
-                        <div className="form-group">
-                            <input type="text" className="form-control" placeholder="First name" required />
-                            <input type="text" className="form-control" placeholder="Last name" required />
-                        </div>
-
-                        <input type="email" className="form-control" placeholder="Email address" required />
-
-                        <select className="form-control" required>
-                            <option value="" disabled selected>What are you looking for?</option>
-                            <option value="product1">Product 1</option>
-                            <option value="product2">Product 2</option>
-                            <option value="product3">Product 3</option>
-                            <option value="product4">Product 4</option>
-                            <option value="other">Other</option>
-                        </select>
-
-                        <textarea className="form-control" placeholder="Type your message" required></textarea>
-
-                        <div className="terms-container">
-                            <label className="terms-label">
-                                <input
-                                    type="checkbox"
-                                    checked={agreeToTerms}
-                                    onChange={(e) => setAgreeToTerms(e.target.checked)}
-                                    className="terms-checkbox"
-                                    required
-                                />
-                                <span className="terms-text">
-                                    By clicking on "Submit" you agree with our
-                                    <a href="/terms" className="terms-link"> Terms and Conditions</a>,
-                                    meaning you agree to get back in touch with you based on provided
-                                    information when filling your form.
-                                </span>
-                            </label>
-                        </div>
-                        <button
-                            type="submit"
-                            className="submit-btn"
-                            disabled={!agreeToTerms}
-                        >
-                            Submit
-                        </button>
-                    </form>
-                </div>
+                <ContactForm agreeToTerms={agreeToTerms} setAgreeToTerms={setAgreeToTerms} />
             </div>
         </div>
     );

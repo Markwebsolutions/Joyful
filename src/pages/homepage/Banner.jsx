@@ -1,4 +1,4 @@
-import './banner.css'; // We'll create this CSS file next
+import './banner.css';
 import grid1 from "../../assets/grid-1.jpg";
 import grid2 from "../../assets/grid-2.jpg";
 import grid5 from "../../assets/grid-5.jpg";
@@ -9,17 +9,46 @@ import grid3_3 from "../../assets/grid-1.3.jpg";
 import grid3_4 from "../../assets/grid-1.4.jpg";
 import mobile_icon from "../../assets/mobile-icon.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowRight
-} from '@fortawesome/free-solid-svg-icons';
-
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom"; // Add this import
+import { useEffect } from 'react';
 
 const Banner = () => {
+    const navigate = useNavigate(); // Initialize the navigate function
+
+    useEffect(() => {
+        // This function will attempt to play all videos on the page
+        const playVideos = () => {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.play().catch(error => {
+                    console.log('Video play failed:', error);
+                });
+            });
+        };
+
+        // Try to play videos immediately
+        playVideos();
+
+        // Also try to play videos when user interacts with the page
+        document.addEventListener('click', playVideos, { once: true });
+        document.addEventListener('touchstart', playVideos, { once: true });
+
+        return () => {
+            document.removeEventListener('click', playVideos);
+            document.removeEventListener('touchstart', playVideos);
+        };
+    }, []);
+    // Handler for the Send Inquiry button
+    const handleInquiryClick = () => {
+        navigate("/contact#contact-form");
+    };
+
     return (
-        <section class="home-banner">
+        <section className="home-banner">
             {/* Background image with overlay */}
-            <div class="home-bg-overlay"></div>
-            <div class="container">
+            <div className="home-bg-overlay"></div>
+            <div className="container">
                 <div className="hero-grid">
                     {/* Left side (50%) */}
                     <div className="hero-left">
@@ -28,7 +57,10 @@ const Banner = () => {
                             <h1 className="hero-title">Diverse range <span>of plastic products</span></h1>
                             <p className="hero-description">Enhance everyday life through functional plastic items produced with advanced technologies such as schoolware, Kitchenware, Home furniture and more...</p>
                             <div className="hero-actions">
-                                <button className="primary-button hero-button">
+                                <button
+                                    className="primary-button hero-button"
+                                    onClick={handleInquiryClick} // Add the click handler
+                                >
                                     Send Inquiry
                                     <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
                                 </button>
@@ -77,13 +109,20 @@ const Banner = () => {
                                 <img src={grid5} alt="kitchen set" />
                             </div>
                             <div className="grid-item">
-                                <video autoPlay loop muted className="grid-video">
+                                <video
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="grid-video"
+                                    webkit-playsinline="true" // For older iOS versions
+                                    x-webkit-airplay="allow" // For AirPlay support
+                                >
                                     <source src={video} type="video/mp4" />
                                 </video>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>

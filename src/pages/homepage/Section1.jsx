@@ -6,8 +6,16 @@ import feature from "../../assets/Section1/feature.svg";
 import gift from "../../assets/Section1/gift.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom"; // Add this import
 
 const Section1 = () => {
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  // Handler for the Send Inquiry button
+  const handleInquiryClick = () => {
+    navigate("/contact#contact-form");
+  };
+
   return (
     <div className="section-container">
       <div className="section-image">
@@ -43,7 +51,10 @@ const Section1 = () => {
         </div>
 
         <div className="action-buttons">
-          <button className="action-dark-button">
+          <button
+            className="action-dark-button"
+            onClick={handleInquiryClick} // Add the click handler
+          >
             Send Inquiry
             <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
           </button>

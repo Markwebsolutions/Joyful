@@ -1,36 +1,70 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useMemo, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass, faArrowRight, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Logo from "../assets/joyful.png";
 import "./Header.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import EnquiryModal from "./Enquiry";
 
+const NAV_LINKS = [
+  { path: "/", text: "Home" },
+  { path: "/about", text: "About Us" },
+  { path: "/catalog", text: "Our Catalog" },
+  { path: "/new-arrivals", text: "New Arrivals" },
+  { path: "/network", text: "Network" },
+  { path: "/contact", text: "Contact Us" }
+];
 
 function Header() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const isHomePage = pathname === "/";
   const textColorClass = isHomePage ? "text-white" : "text-dark";
   const iconColorClass = isHomePage ? 'light' : 'dark';
+  const headerClass = isHomePage ? "header-transparent" : "header-colored";
+  const mobileMenuClass = isHomePage ? "mobile-menu-transparent" : "mobile-menu-colored";
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const handleInquiryClick = useCallback(() => {
+    navigate("/contact#contact-form");
+    setIsMenuOpen(false);
+  }, [navigate]);
 
-  const navLinks = [
-    { path: "/", text: "Home" },
-    { path: "/about", text: "About Us" },
-    { path: "/catalog", text: "Our Catalog" },
-    { path: "/new-arrivals", text: "New Arrivals" },
-    { path: "/network", text: "Network" },
-    { path: "/contact", text: "Contact Us" }
-  ];
+  const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), []);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+  const closeForm = useCallback(() => setIsFormOpen(false), []);
+
+  const renderNavLinks = useMemo(() => NAV_LINKS.map(({ path, text }) => (
+    <Link
+      key={path}
+      to={path}
+      className={`nav-link ${textColorClass}`}
+      onClick={closeMenu}
+    >
+      {text}
+    </Link>
+  )), [textColorClass, closeMenu]);
+
+  const sendInquiryButton = (
+    <button className="primary-button" onClick={handleInquiryClick}>
+      Send Inquiry
+      <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
+    </button>
+  );
+
+  const renderIconButton = (icon, label, onClick) => (
+    <button
+      className={`icon-button ${iconColorClass}`}
+      aria-label={label}
+      onClick={onClick}
+    >
+      <FontAwesomeIcon icon={icon} className="icon" />
+    </button>
+  );
 
   return (
-    <header className={`header ${isHomePage ? "header-transparent" : "header-colored"}`}>
+    <header className={`header ${headerClass}`}>
       {/* Desktop Header */}
       <div className="desktop-header">
         <div className="header-logo">
@@ -40,36 +74,19 @@ function Header() {
         </div>
 
         <nav className="header-nav">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`nav-link ${textColorClass}`}
-            >
-              {link.text}
-            </Link>
-          ))}
+          {renderNavLinks}
         </nav>
 
         <div className="header-actions">
-          <button className={`icon-button ${iconColorClass}`}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
-          </button>
-          <button className="primary-button" onClick={openModal}>
-            Send Inquiry
-            <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
-          </button>
+          {renderIconButton(faMagnifyingGlass, "Search")}
+          {sendInquiryButton}
         </div>
       </div>
 
       {/* Mobile Header */}
       <div className="mobile-header">
         <div className="mobile-hamburger">
-          <button onClick={toggleMenu} className={`icon-button ${iconColorClass}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          {renderIconButton(isMenuOpen ? faTimes : faBars, "Menu", toggleMenu)}
         </div>
 
         <div className="mobile-logo">
@@ -79,38 +96,30 @@ function Header() {
         </div>
 
         <div className="mobile-search">
-          <button className={`icon-button ${iconColorClass}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
+          {renderIconButton(faMagnifyingGlass, "Search")}
         </div>
       </div>
 
       {/* Mobile Navigation Menu */}
-      <div className={`mobile-menu ${isHomePage ? "mobile-menu-transparent" : "mobile-menu-colored"} ${isMenuOpen ? "open" : "closed"}`}>
-        <nav className="mobile-nav">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={closeMenu}
-              className={`mobile-nav-link ${textColorClass}`}
-            >
-              {link.text}
-            </Link>
-          ))}
-          <div className="mobile-button-container">
-            <button className="primary-button" onClick={() => { openModal(); closeMenu(); }}>
-              Send Inquiry
-              <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
-            </button>
-          </div>
-        </nav>
-      </div>
+      {isMenuOpen && (
+        <div className={`mobile-menu ${mobileMenuClass} open`}>
+          <nav className="mobile-nav">
+            {renderNavLinks}
+            <div className="mobile-button-container">
+              {sendInquiryButton}
+            </div>
+          </nav>
+        </div>
+      )}
 
-      {/* Enquiry Modal */}
-      <EnquiryModal isOpen={isModalOpen} onClose={closeModal} />
+      {/* Contact Form Overlay */}
+      {isFormOpen && (
+        <div className="form-overlay">
+          <div className="form-container">
+            {renderIconButton(faTimes, "Close form", closeForm)}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

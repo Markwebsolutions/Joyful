@@ -16,6 +16,15 @@
     padding: 0 2rem;
 }
 
+/* Default order (desktop) */
+.contact2-info {
+    grid-column: 1;
+}
+
+.contact-form-container {
+    grid-column: 2;
+}
+
 .contact2-info {
     display: flex;
     flex-direction: column;
@@ -191,11 +200,21 @@ select.form-control {
     cursor: not-allowed;
 }
 
+
 @media (max-width: 768px) {
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: 2rem;
         padding: 0;
+    }
+
+    /* Swapped order for mobile */
+    .contact2-info {
+        order: 2;
+    }
+
+    .contact-form-container {
+        order: 1;
     }
 
     .form-group {

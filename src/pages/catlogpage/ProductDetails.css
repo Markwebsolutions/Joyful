@@ -4,6 +4,12 @@
     background: #F2F3FB;
 }
 
+.product2-details-section {
+    padding: 2rem 0 ;
+    color: #333;
+    background: #F5EDDA;
+}
+
 .page-width {
     max-width: 1600px;
     width: 90%;

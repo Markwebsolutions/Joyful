@@ -3,6 +3,7 @@ import './ProductDetails.css';
 import pink1 from "../../assets/product_page/baby-sipper-pink-1.jpg";
 import yellow1 from "../../assets/product_page/baby-sipper-yellow-1.jpg";
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import ProductDetails2 from './ProductDetails2';
 
 const ProductDetails = () => {
     const productData = {
@@ -40,88 +41,91 @@ const ProductDetails = () => {
     };
 
     return (
-        <section className="product-details-section">
-            <div className="page-width">
-                {/* <div className="breadcrumb">Home / {productData.title}</div> */}
+        <>
+            <section className="product-details-section">
+                <div className="page-width">
+                    {/* <div className="breadcrumb">Home / {productData.title}</div> */}
 
-                <div className="product-grid-row">
-                    <div className="product-grid-column left-column">
-                        {/* All color variants section */}
-                        <div className="variants-container">
-                            {productData.colors.map(color => (
-                                <div key={color.value} className="variant-thumbnails">
+                    <div className="product-grid-row">
+                        <div className="product-grid-column left-column">
+                            {/* All color variants section */}
+                            <div className="variants-container">
+                                {productData.colors.map(color => (
+                                    <div key={color.value} className="variant-thumbnails">
 
-                                    {color.images.map((image, index) => (
-                                        <img
-                                            key={image.id}
-                                            src={image.thumb}
-                                            alt={image.alt}
-                                            className={`variant-thumbnail ${selectedColor.value === color.value &&
-                                                selectedImageIndex === index ? 'active' : ''
-                                                }`}
-                                            onClick={() => {
-                                                handleColorChange(color);
-                                                handleThumbnailClick(index);
-                                            }}
-                                        />
-                                    ))}
+                                        {color.images.map((image, index) => (
+                                            <img
+                                                key={image.id}
+                                                src={image.thumb}
+                                                alt={image.alt}
+                                                className={`variant-thumbnail ${selectedColor.value === color.value &&
+                                                    selectedImageIndex === index ? 'active' : ''
+                                                    }`}
+                                                onClick={() => {
+                                                    handleColorChange(color);
+                                                    handleThumbnailClick(index);
+                                                }}
+                                            />
+                                        ))}
 
-                                </div>
-                            ))}
-                        </div>
-                        <div className="product-image-container">
-                            <img
-                                src={currentMainImage.main}
-                                alt={currentMainImage.alt}
-                                className="product-main-image"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="product-grid-column right-column">
-                        <div className="product-info">
-                            <h1 className="product-title">{productData.title}</h1>
-                            <div className="color-option">
-                                <label>Color: <span className="selected-color">{selectedColor.name}</span></label>
-                                <div className="color-selector">
-                                    {productData.colors.map((color) => (
-                                        <button
-                                            key={color.value}
-                                            className={`color-swatch ${selectedColor.value === color.value ? 'active' : ''}`}
-                                            style={{ backgroundColor: color.value }}
-                                            onClick={() => handleColorChange(color)}
-                                            aria-label={color.name}
-                                        />
-                                    ))}
-                                </div>
+                                    </div>
+                                ))}
                             </div>
-
-                            <button className="enquiry-button">Send Enquiry</button>
-
-                            <div className="product-description">
-                                <h3>Description</h3>
-                                <p>{productData.description}</p>
+                            <div className="product-image-container">
+                                <img
+                                    src={currentMainImage.main}
+                                    alt={currentMainImage.alt}
+                                    className="product-main-image"
+                                />
                             </div>
+                        </div>
 
-                            <div className="social-share">
-                                <span>Share:</span>
-                                <div className="social-icons">
-                                    <a href="#" aria-label="Share on Instagram">
-                                        <FaInstagram className="social-icon" />
-                                    </a>
-                                    <a href="#" aria-label="Share on Facebook">
-                                        <FaFacebookF className="social-icon" />
-                                    </a>
-                                    <a href="#" aria-label="Share on Twitter">
-                                        <FaTwitter className="social-icon" />
-                                    </a>
+                        <div className="product-grid-column right-column">
+                            <div className="product-info">
+                                <h1 className="product-title">{productData.title}</h1>
+                                <div className="color-option">
+                                    <label>Color: <span className="selected-color">{selectedColor.name}</span></label>
+                                    <div className="color-selector">
+                                        {productData.colors.map((color) => (
+                                            <button
+                                                key={color.value}
+                                                className={`color-swatch ${selectedColor.value === color.value ? 'active' : ''}`}
+                                                style={{ backgroundColor: color.value }}
+                                                onClick={() => handleColorChange(color)}
+                                                aria-label={color.name}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <button className="enquiry-button">Send Enquiry</button>
+
+                                <div className="product-description">
+                                    <h3>Description</h3>
+                                    <p>{productData.description}</p>
+                                </div>
+
+                                <div className="social-share">
+                                    <span>Share:</span>
+                                    <div className="social-icons">
+                                        <a href="#" aria-label="Share on Instagram">
+                                            <FaInstagram className="social-icon" />
+                                        </a>
+                                        <a href="#" aria-label="Share on Facebook">
+                                            <FaFacebookF className="social-icon" />
+                                        </a>
+                                        <a href="#" aria-label="Share on Twitter">
+                                            <FaTwitter className="social-icon" />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <ProductDetails2 />
+        </>
     );
 };
 

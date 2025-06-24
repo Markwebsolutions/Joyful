@@ -8,7 +8,6 @@ const Network = () => {
     return (
         <div>
             <Network1 />
-
             <Network2 />
             <Section5 />
         </div>
