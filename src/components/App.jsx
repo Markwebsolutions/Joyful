@@ -7,6 +7,7 @@ import ProductDetails from '../pages/catlogpage/ProductDetails';
 import AboutUs from '../pages/AboutUs';
 import Network from '../pages/Network';
 import ContactUs from '../pages/ContactUs';
+import Product from '../pages/Product';
 function App() {
   return (
     <Router>
@@ -17,7 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/catalog" element={<ProductDetails />} />
-            {/* <Route path="/new-arrivals" element={<NewArrivals />} /> */}
+            <Route path="/new-arrivals" element={<Product />} />
             <Route path="/network" element={<Network />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>

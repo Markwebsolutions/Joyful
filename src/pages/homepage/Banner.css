@@ -160,6 +160,41 @@
   object-fit: cover;
 }
 
+/* Add these styles to your existing CSS */
+
+/* Image hover effect */
+.grid-item img,
+.grid-video {
+  transition: transform 0.3s ease;
+}
+
+.grid-item:hover img,
+.grid-item:hover .grid-video {
+  transform: scale(1.05);
+}
+
+/* For split grid items */
+.grid-child-item img {
+  transition: transform 0.3s ease;
+}
+
+.grid-child-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Ensure the video maintains its aspect ratio when scaled */
+.grid-video {
+  transform-origin: center center;
+}
+
+/* Prevent layout shift during hover */
+.grid-item {
+  overflow: hidden;
+}
+
+.grid-child-item {
+  overflow: hidden;
+}
 
 
 /* Desktop Styles */

@@ -26,11 +26,7 @@ const Banner = () => {
                 });
             });
         };
-
-        // Try to play videos immediately
         playVideos();
-
-        // Also try to play videos when user interacts with the page
         document.addEventListener('click', playVideos, { once: true });
         document.addEventListener('touchstart', playVideos, { once: true });
 
