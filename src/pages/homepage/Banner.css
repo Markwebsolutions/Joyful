@@ -283,7 +283,7 @@
 
   /* text  */
   .hero-subtitle {
-    font-family: Inter;
+    text-align: start !important;
     font-weight: 500;
     font-size: 14px;
     line-height: 30px;

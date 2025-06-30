@@ -10,8 +10,12 @@ import grid3_4 from "../../assets/grid-1.4.jpg";
 import mobile_icon from "../../assets/mobile-icon.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from "react-router-dom"; // Add this import
+import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
+import SplitText from '../../style/SplitText';
+import GlareHover from '../../style/GlareHover';
+
+
 
 const Banner = () => {
     const navigate = useNavigate(); // Initialize the navigate function
@@ -39,7 +43,6 @@ const Banner = () => {
     const handleInquiryClick = () => {
         navigate("/contact#contact-form");
     };
-
     return (
         <section className="home-banner">
             {/* Background image with overlay */}
@@ -50,9 +53,45 @@ const Banner = () => {
                     <div className="hero-left">
                         <div className="hero-text-content">
                             <h4 className="hero-subtitle">India's Largest Manufacturer and seller of</h4>
-                            <h1 className="hero-title">Diverse range <span>of plastic products</span></h1>
+                            <SplitText
+                                text={
+                                    <>
+                                        Diverse range <span className="inline-block md:inline">of plastic products</span>
+                                    </>
+                                }
+                                className="hero-title"
+                                delay={100}
+                                duration={0.6}
+                                ease="power3.out"
+                                splitType="chars"
+                                from={{ opacity: 0, y: 40 }}
+                                to={{ opacity: 1, y: 0 }}
+                                threshold={0.1}
+                                rootMargin="-100px"
+                                textAlign="left"
+                            />
                             <p className="hero-description">Enhance everyday life through functional plastic items produced with advanced technologies such as schoolware, Kitchenware, Home furniture and more...</p>
                             <div className="hero-actions">
+                                {/* <GlareHover
+                                    className="hero-button"
+                                    background="#D67A1D"
+                                    glareColor="#ffffff"
+                                    glareOpacity={0.5}
+                                    glareAngle={-45}
+                                    glareSize={250}
+                                    transitionDuration={650}
+                                    borderRadius="55px"
+                                    style={{ padding: 0, border: "none" }}
+                                >
+                                    <button
+                                        className="primary-button"
+                                        onClick={handleInquiryClick}
+                                        style={{ background: "transparent", border: "none", padding: "0.77rem 2rem" }}
+                                    >
+                                        Send Inquiry
+                                        <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
+                                    </button>
+                                </GlareHover> */}
                                 <button
                                     className="primary-button hero-button"
                                     onClick={handleInquiryClick} // Add the click handler

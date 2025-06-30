@@ -1,17 +1,17 @@
-import Section4 from "./homepage/Section4"
-import Section5 from "./homepage/Section5"
-import Network1 from "./Networkpages/Network1"
-import Network2 from "./Networkpages/Network2"
+import { lazy, Suspense } from 'react';
 
+const Network1 = lazy(() => import("./Networkpages/Network1"));
+const Network2 = lazy(() => import("./Networkpages/Network2"));
+const Section5 = lazy(() => import("./homepage/Section5"));
 
-const Network = () => {
-    return (
-        <div>
-            <Network1 />
-            <Network2 />
-            <Section5 />
-        </div>
-    )
-}
+const LoadingFallback = () => <div className="loading-placeholder"></div>;
 
-export default Network
+const Network = () => (
+    <Suspense fallback={<LoadingFallback />}>
+        <Network1 />
+        <Network2 />
+        <Section5 />
+    </Suspense>
+);
+
+export default Network;

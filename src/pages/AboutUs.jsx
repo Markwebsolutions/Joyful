@@ -1,13 +1,15 @@
-import AboutUs1 from "./AboutUspages/AboutUs1"
-import AboutUs2 from "./AboutUspages/AboutUs2"
+import { lazy, Suspense } from 'react';
 
-const AboutUs = () => {
-    return (
-        <div>
-            <AboutUs1 />
-            <AboutUs2 />
-        </div>
-    )
-}
+const AboutUs1 = lazy(() => import("./AboutUspages/AboutUs1"));
+const AboutUs2 = lazy(() => import("./AboutUspages/AboutUs2"));
 
-export default AboutUs
+const LoadingFallback = () => <div className="loading-placeholder"></div>;
+
+const AboutUs = () => (
+    <Suspense fallback={<LoadingFallback />}>
+        <AboutUs1 />
+        <AboutUs2 />
+    </Suspense>
+);
+
+export default AboutUs;
