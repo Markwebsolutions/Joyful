@@ -35,16 +35,18 @@ function Header() {
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const closeForm = useCallback(() => setIsFormOpen(false), []);
 
-  const renderNavLinks = useMemo(() => NAV_LINKS.map(({ path, text }) => (
-    <Link
-      key={path}
-      to={path}
-      className={`nav-link ${textColorClass}`}
-      onClick={closeMenu}
-    >
-      {text}
-    </Link>
-  )), [textColorClass, closeMenu]);
+  const renderNavLinks = useMemo(() =>
+    NAV_LINKS.map(({ path, text }) => (
+      <Link
+        key={path}
+        to={path}
+        className={`nav-link ${textColorClass} ${isMenuOpen ? 'mobile-nav-link' : ''}`}
+        onClick={closeMenu}
+      >
+        <span className="nav-text">{text}</span>
+        {/* {isMenuOpen && <span className="nav-arrow">&gt;</span>} */}
+      </Link>
+    )), [textColorClass, closeMenu, isMenuOpen]);
 
   const sendInquiryButton = (
     <button className="primary-button" onClick={handleInquiryClick}>

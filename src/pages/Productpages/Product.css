@@ -1,0 +1,247 @@
+/* Add this new container style */
+.filter-nav-container {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+}
+
+/* Existing styles remain the same */
+.product-container {
+    display: flex;
+}
+
+/* Left navigation styles */
+.product-nav {
+    padding: 0 10px;
+    width: 100%;
+    border: 1px solid #dee2e6;
+    border-top: none;
+}
+
+.nav-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: capitalize;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-header {
+    font-size: 0.9rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.category-header:hover {
+    background-color: #e9ecef;
+}
+
+.category-header.active {
+    background-color: #e9ecef;
+    font-weight: 600;
+}
+
+.dropdown-icon {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.subcategory-list {
+    list-style: none;
+    padding: 0;
+    padding-left: 25px;
+}
+
+.subcategory-item {
+    padding: 12px 0px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.subcategory-item:hover {
+    background-color: #e9ecef;
+}
+
+/* Right content styles */
+.product-content {
+    flex: 1;
+    padding-left: 50px;
+}
+
+.content-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+.product-card {
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #F5F5F5;
+}
+
+.card-image-container {
+    margin-bottom: 23px;
+    display: flex;
+    justify-content: center;
+    background: #F5F5F5;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+}
+
+.card-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #D67A1D;
+    margin: 0;
+}
+
+.card-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 15px 0;
+}
+
+.card-button {
+    background-color: #D67A1D;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.card-button:hover {
+    background-color: #0056b3;
+}
+
+/* Selected states */
+.no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Product Info */
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Improve card image appearance */
+.card-image {
+    height: 150px;
+    max-width: 100%;
+    background-color: #eee;
+    margin: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+
+    background-color: transparent;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background-color: #F5F5F5;
+    border: 1px solid #E1E1E1;
+    margin-bottom: 0;
+}
+
+.filter-header .nav-title {
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+}
+
+.nav-category .category-header.active,
+.nav-category .category-header.active.selected {
+    background-color: #F5EDDA;
+}
+
+.subcategory-list {
+    background-color: #F5EDDA;
+}
+
+/* Ensure the dropdown icon color matches */
+.dropdown-icon {
+    color: #D67A1D;
+}
+
+/* Add these styles to your existing Product.css */
+
+.box-tick-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.dropdown-icon-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* Push to the right */
+}
+
+.category-image {
+    object-fit: cover;
+}
+
+/* Adjust existing dropdown icon style if needed */
+.dropdown-icon {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #D67A1D;
+    margin-left: 8px;
+}
+
+/* Make sure category header has proper flex layout */
+.category-header {
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+/* new product grid  */
