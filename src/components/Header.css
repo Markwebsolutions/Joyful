@@ -13,21 +13,57 @@ body {
     transition: background-color 0.3s;
 }
 
+/* Desktop header styles */
+.desktop-header {
+    display: none;
+    grid-template-columns: 12% 65% 23%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1rem 0;
+    width: 90%;
+    align-items: center;
+}
+
+/* Home page specific styles */
 .header-transparent {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
+.header-transparent .text-white {
+    color: white !important;
+}
+
+.header-transparent .nav-link {
+    color: white !important;
+}
+
+.header-transparent .nav-link:hover {
+    background-color: white !important;
+    color: #D67A1D !important;
+}
+
+/* Non-home page specific styles */
 .header-colored {
-    background-color: #f5edda;
+    background-color: #f5edda !important;
 }
 
-/* Shared text colors */
-.text-white {
-    color: white;
+.header-colored .text-dark {
+    color: #1f2937 !important;
 }
 
-.text-dark {
-    color: #1f2937;
+.header-colored .nav-link {
+    color: #1f2937 !important;
+}
+
+.header-colored .nav-link:hover {
+    background-color: white !important;
+    color: #D67A1D !important;
+}
+
+/* Shared hover styles */
+.nav-link:hover {
+    background-color: white;
+    color: #D67A1D;
 }
 
 /* Logo styles */
@@ -90,17 +126,7 @@ body {
     height: 0.8rem;
 }
 
-/* Desktop header */
-.desktop-header {
-    display: none;
-    grid-template-columns: 12% 65% 23%;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 1rem 0;
-    width: 90%;
-    align-items: center;
-}
-
+/* Desktop header layout */
 .header-logo,
 .header-nav,
 .header-actions {
@@ -123,35 +149,43 @@ body {
     gap: 0.5rem;
 }
 
-.nav-link:hover {
-    background-color: white;
-    color: #D67A1D;
+.nav-link {
+    padding: 8px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
+    border-radius: 0.5rem;
 }
 
-/* Mobile header */
+/* Mobile header styles */
 .mobile-header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    position: relative;
+    display: flex;
     align-items: center;
-    padding: 0.75rem 1rem;
+    padding: 15px 0;
+}
+
+.mobile-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .mobile-hamburger {
+    display: flex;
     justify-content: flex-start;
 }
-
-.mobile-logo {
-    justify-content: center;
-}
-
 
 
 .mobile-menu {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.mobile-menu-transparent {
-    background-color: transparent;
+.mobile-menu-blue {
+    background-color: #274D63;
 }
 
 .mobile-menu-colored {
@@ -162,9 +196,9 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0 1.25rem;
-    background-color: #274D63;
 }
 
+/* Mobile navigation links */
 .mobile-nav-link {
     padding: 1rem 0;
     font-weight: 400;
@@ -177,21 +211,22 @@ body {
     text-decoration: none;
 }
 
+.mobile-menu-colored .mobile-nav-link {
+    color: #1f2937 !important;
+    border-bottom: 1px solid rgba(31, 41, 55, 0.3) !important;
+}
+
 .mobile-nav-link:last-child {
     border-bottom: none;
+}
+
+.mobile-nav-link:hover {
+    color: #D67A1D !important;
 }
 
 .nav-arrow {
     margin-left: auto;
     padding-left: 1rem;
-}
-
-.mobile-nav-link::after {
-    content: '>';
-    font-weight: bold;
-    font-size: 1rem;
-    color: #ffffff;
-    /* opacity: 0.6; */
 }
 
 .mobile-button-container {
@@ -206,7 +241,13 @@ body {
 
 .mobile-search {
     display: flex;
-    justify-content: flex-end !important;
+    justify-content: flex-end;
+}
+
+.mobile-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Responsive */
@@ -219,24 +260,11 @@ body {
         display: none;
     }
 
+    .mobile-logo {
+        justify-content: center !important;
+    }
+
     .logo-image {
         height: 55px;
-    }
-
-    .mobile-nav-link {
-        border-bottom: none;
-    }
-
-    .nav-link {
-        padding: 8px 20px;
-        transition: background-color 0.3s, color 0.3s;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 100%;
-        border-radius: 0.5rem;
-    }
-
-    .mobile-search {
-        justify-content: flex-end;
     }
 }
