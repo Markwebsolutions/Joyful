@@ -1,5 +1,5 @@
+/* AboutUs.css */
 .aboutUsContainer {
-    /* background-image: url('../../assets//AboutUs/AboutUsbg.jpg'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -12,6 +12,8 @@
     color: white;
     margin-top: 4rem;
     padding-top: 1.25rem;
+    position: relative;
+    /* Added for proper positioning of children */
 }
 
 .navigation {
@@ -29,8 +31,6 @@
     font-size: 3rem;
     font-weight: 700;
 }
-
-
 
 /* AboutUs.css */
 
