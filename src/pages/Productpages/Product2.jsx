@@ -185,12 +185,23 @@ const Product2 = () => {
                             {filteredProducts.map((product) => (
                                 <div key={product.id} className="product-card">
                                     <div className="card-image-container">
+                                        {/* Main Image */}
                                         <img
                                             src={product.mainimage}
                                             alt={product.name}
-                                            className="card-image"
+                                            className="card-image main-image"
                                             loading="lazy"
                                         />
+
+                                        {/* Hover Image - only render if hoverimage exists */}
+                                        {product.hoverimage && (
+                                            <img
+                                                src={product.hoverimage}
+                                                alt={product.name}
+                                                className="card-image hover-image"
+                                                loading="lazy"
+                                            />
+                                        )}
                                     </div>
                                     <div className="card-info">
                                         <h3 className="card-title">{product.name}</h3>
