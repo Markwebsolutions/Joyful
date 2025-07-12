@@ -1,56 +1,67 @@
+import { useNavigate } from 'react-router-dom';
 import "../Product.css";
 
-const ProductGridCard = ({ product }) => (
-    <div className="product-card">
-        <div className="card-image-container">
-            <img
-                src={product.mainimage}
-                alt={product.name}
-                className="card-image main-image"
-                loading="lazy"
-            />
-            {product.hoverimage && (
+const ProductGridCard = ({ product }) => {
+    const navigate = useNavigate();
+
+    return (
+        <div
+            className="product-card"
+            onClick={() => navigate(`/catalog/${product.id}`)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && navigate(`/catalog/${product.id}`)}
+        >
+            <div className="card-image-container">
                 <img
-                    src={product.hoverimage}
+                    src={product.mainimage}
                     alt={product.name}
-                    className="card-image hover-image"
+                    className="card-image main-image"
                     loading="lazy"
                 />
-            )}
-        </div>
-        <div className="card-info">
-            <h3 className="card-title">{product.name}</h3>
-            {product.price && (
-                <p className="card-price">${product.price.toFixed(2)}</p>
-            )}
-            <div className="product-variants">
-                {product.variants.Size?.length > 0 && (
-                    <div className="size-options">
-                        {product.variants.Size.map((size, i) => (
-                            <span key={i} className="size-option">
-                                {size.value}
-                            </span>
-                        ))}
-                    </div>
-                )}
-                {product.variants.Color?.length > 0 && (
-                    <div className="color-options">
-                        {product.variants.Color.map((color, i) => (
-                            <span
-                                key={i}
-                                className="color-circle"
-                                style={{
-                                    backgroundColor: color.hex || '#ccc',
-                                    borderColor: color.hex ? '#ddd' : '#999'
-                                }}
-                                title={color.name}
-                            />
-                        ))}
-                    </div>
+                {product.hoverimage && (
+                    <img
+                        src={product.hoverimage}
+                        alt={product.name}
+                        className="card-image hover-image"
+                        loading="lazy"
+                    />
                 )}
             </div>
+            <div className="card-info">
+                <h3 className="card-title">{product.name}</h3>
+                {product.price && (
+                    <p className="card-price">${product.price.toFixed(2)}</p>
+                )}
+                <div className="product-variants">
+                    {product.variants.Size?.length > 0 && (
+                        <div className="size-options">
+                            {product.variants.Size.map((size, i) => (
+                                <span key={i} className="size-option">
+                                    {size.value}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                    {product.variants.Color?.length > 0 && (
+                        <div className="color-options">
+                            {product.variants.Color.map((color, i) => (
+                                <span
+                                    key={i}
+                                    className="color-circle"
+                                    style={{
+                                        backgroundColor: color.hex || '#ccc',
+                                        borderColor: color.hex ? '#ddd' : '#999'
+                                    }}
+                                    title={color.name}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default ProductGridCard;

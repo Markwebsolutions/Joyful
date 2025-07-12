@@ -238,26 +238,62 @@
 .size-option {
     padding: 2px 6px;
     background: #f0f0f0;
-    border-radius: 4px;
     font-size: 12px;
     border: 1px solid #ddd;
 }
 
+/* Color options in product details */
 .color-options {
     display: flex;
-    gap: 6px;
+    gap: 8px;
+    margin-top: 6px;
 }
 
 .color-circle {
-    width: 18px;
-    height: 18px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     border: 1px solid #ddd;
-    transition: transform 0.2s;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
-.color-circle:hover {
-    transform: scale(1.2);
+.color-circle:hover {}
+
+.color-circle.active {
+    box-shadow: 0 0 0 3px #F2F3FB, 0 0 0 4px #000;
+}
+
+/* Remove any transform effects */
+.color-circle:hover,
+.color-circle.active {
+    transform: none;
+}
+
+/* Size options in product details */
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.size-option {
+    padding: 2px 6px;
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.size-option.active {
+    background-color: #F5EDDA;
+    border-color: #D67A1D;
+    color: #D67A1D;
+    font-weight: 500;
 }
 
 /* Responsive Styles */
@@ -311,7 +347,14 @@
     .card-image-container {
         height: 120px;
     }
+
+    .color-circle {
+        width: 20px;
+        height: 20px;
+    }
 }
+
+
 
 /* Utility Classes */
 .no-products {
@@ -324,4 +367,72 @@
 
 .selected {
     background-color: #F5EDDA;
+}
+
+/* Color options in product details */
+/* Color options - plain styling */
+.color-options {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.color-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Size options - plain styling */
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.size-option {
+    padding: 1px 4px;
+    font-size: 11px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+/* Remove all hover and active effects */
+.color-circle:hover,
+.color-circle.active,
+.size-option:hover,
+.size-option.active {
+    transform: none;
+    box-shadow: none;
+    background-color: transparent;
+    border-color: #ddd;
+    color: inherit;
+    font-weight: normal;
+}
+
+Size options in product details .size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.size-option {
+    padding: 2px 6px;
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.size-option.active {
+    background-color: #F5EDDA;
+    border-color: #D67A1D;
+    color: #D67A1D;
+    font-weight: 500;
 }
