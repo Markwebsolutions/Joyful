@@ -1,15 +1,22 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, memo } from 'react';
+import AboutUs1 from "./AboutUspages/AboutUs1"; // Not lazy-loaded
 
-const AboutUs1 = lazy(() => import("./AboutUspages/AboutUs1"));
-const AboutUs2 = lazy(() => import("./AboutUspages/AboutUs2"));
+// Lazy load with explicit chunk names for better debugging
+const AboutUs2 = lazy(() => import(/* webpackChunkName: "about-us-2" */ "./AboutUspages/AboutUs2"));
 
-const LoadingFallback = () => <div className="loading-placeholder"></div>;
+const LoadingFallback = () => <div className="loading-placeholder" />;
 
-const AboutUs = () => (
-    <Suspense fallback={<LoadingFallback />}>
-        <AboutUs1 />
-        <AboutUs2 />
-    </Suspense>
-);
+// Memoize the first component
+const MemoizedAboutUs1 = memo(AboutUs1);
+
+const AboutUs = memo(() => (
+    <>
+        <MemoizedAboutUs1 />
+
+        <Suspense fallback={<LoadingFallback />}>
+            <AboutUs2 />
+        </Suspense>
+    </>
+));
 
 export default AboutUs;

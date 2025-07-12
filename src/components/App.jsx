@@ -7,13 +7,13 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchProducts } from '../features/productsSlice';
 
-// Regular imports for routes you don't want to lazy load
+// Regular imports for routes you want to load quickly
+import Home from '../pages/Home';  // Now regularly imported
 import OurCatlog from '../pages/OURcATLOG';
 import ProductDetails from '../pages/Productpages/ProductDetails/ProductDetails';
 import NewArrival from '../pages/NewArrival';
 
-// Lazy load all other components
-const Home = lazy(() => import('../pages/Home'));
+// Lazy load other components
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const Network = lazy(() => import('../pages/Network'));
 const ContactUs = lazy(() => import('../pages/ContactUs'));
@@ -33,20 +33,32 @@ function App() {
       <div className="app-container">
         <main className="main-content">
           <Header />
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              {/* Lazy loaded routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/network" element={<Network />} />
-              <Route path="/contact" element={<ContactUs />} />
+          <Routes>
+            {/* Non-lazy routes */}
+            <Route path="/" element={<Home />} />
 
-              {/* Regular routes (not lazy loaded) */}
-              <Route path="/catalog" element={<OurCatlog />} />
-              <Route path="/catalog/:productId" element={<ProductDetails />} />
-              <Route path="/new-arrivals" element={<NewArrival />} />
-            </Routes>
-          </Suspense>
+            {/* Lazy loaded routes wrapped in Suspense */}
+            <Route path="/about" element={
+              <Suspense fallback={<Loading />}>
+                <AboutUs />
+              </Suspense>
+            } />
+            <Route path="/network" element={
+              <Suspense fallback={<Loading />}>
+                <Network />
+              </Suspense>
+            } />
+            <Route path="/contact" element={
+              <Suspense fallback={<Loading />}>
+                <ContactUs />
+              </Suspense>
+            } />
+
+            {/* Other regular routes */}
+            <Route path="/catalog" element={<OurCatlog />} />
+            <Route path="/catalog/:productId" element={<ProductDetails />} />
+            <Route path="/new-arrivals" element={<NewArrival />} />
+          </Routes>
           <Footer />
         </main>
       </div>
