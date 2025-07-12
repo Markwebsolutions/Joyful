@@ -8,6 +8,7 @@ import Network from '../pages/Network';
 import ContactUs from '../pages/ContactUs';
 import OurCatlog from '../pages/OURcATLOG';
 import ProductDetails from '../pages/Productpages/ProductDetails/ProductDetails';
+import NewArrival from '../pages/NewArrival';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/catalog" element={<OurCatlog />} />
             <Route path="/catalog/:productId" element={<ProductDetails />} />
+            <Route path="/new-arrivals" element={<NewArrival />} />
             <Route path="/network" element={<Network />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>

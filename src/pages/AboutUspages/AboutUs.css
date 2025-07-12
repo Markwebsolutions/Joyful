@@ -3,7 +3,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 70vh;
+    height: 27vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 .aboutUsTitle {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
 }
 
@@ -112,6 +112,16 @@
 
 /* Tablet Styles (min-width: 768px) */
 @media (min-width: 768px) {
+    .aboutUsContainer {
+        height: 40vh;
+
+    }
+
+    .aboutUsTitle {
+        font-size: 3rem;
+        font-weight: 700;
+    }
+
     .about-us-section {
         padding: 4rem 0;
     }

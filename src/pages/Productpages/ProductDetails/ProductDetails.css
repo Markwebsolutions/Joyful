@@ -52,6 +52,7 @@
         background: #ffff;
         overflow: hidden;
         position: relative;
+        padding: 20px;
     }
 
     .product-main-image {
