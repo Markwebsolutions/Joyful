@@ -5,62 +5,32 @@ import ProductGridCard from './ProductGrid/ProductGridCard';
 import MobileFilterDropdown from './ProductFilter/MobileFilterDropdown';
 import FilterSidebar from './ProductFilter/FilterSidebar';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts, refreshProducts } from '../../features/productsSlice';
+
 const Product2 = () => {
-    const [categories, setCategories] = useState([]);
-    const [allProducts, setAllProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const {
+        data: allProducts,
+        categories: processedCategories,
+        status,
+        error,
+    } = useSelector(state => state.products);
+
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [localLoading, setLocalLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://joyful-backend-backend-final-4-production.up.railway.app/categories');
-                if (!response.ok) throw new Error('Failed to fetch data');
+        if (status === 'idle') {
+            dispatch(fetchProducts());
+        }
 
-                const data = await response.json();
-                const publishedCategories = data.filter(category => category.published);
-
-                const processedCategories = [
-                    {
-                        name: 'All Categories',
-                        subcategories: []
-                    },
-                    ...publishedCategories.map(category => ({
-                        ...category,
-                        subcategories: category.subcategories
-                            .filter(sub => sub.ispublished)
-                            .map(sub => sub.name)
-                    }))
-                ];
-
-                const processedProducts = publishedCategories.flatMap(category =>
-                    category.subcategories
-                        .filter(sub => sub.ispublished)
-                        .flatMap(sub =>
-                            sub.products
-                                .filter(product => product.ispublished)
-                                .map(product => ({
-                                    ...product,
-                                    category: category.name,
-                                    subcategory: sub.name,
-                                    variants: product.variantsMap ? JSON.parse(product.variantsMap) : {}
-                                }))
-                        )
-                );
-
-                setCategories(processedCategories);
-                setAllProducts(processedProducts);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
+        // Hide loading indicator once we have data
+        if (status === 'succeeded') {
+            setLocalLoading(false);
+        }
+    }, [status, dispatch]);
 
     const filteredProducts = allProducts.filter(product => {
         if (selectedCategory === 'All Categories') return true;
@@ -77,7 +47,7 @@ const Product2 = () => {
             <div className="product-container my-20">
                 {/* Mobile filter dropdown */}
                 <MobileFilterDropdown
-                    categories={categories}
+                    categories={processedCategories}
                     selectedCategory={selectedCategory}
                     setSelectedCategory={setSelectedCategory}
                     setSelectedSubcategory={setSelectedSubcategory}
@@ -85,7 +55,7 @@ const Product2 = () => {
 
                 {/* Desktop filter navigation */}
                 <FilterSidebar
-                    categories={categories}
+                    categories={processedCategories}
                     selectedCategory={selectedCategory}
                     setSelectedCategory={setSelectedCategory}
                     selectedSubcategory={selectedSubcategory}
@@ -93,7 +63,7 @@ const Product2 = () => {
                 />
 
                 {/* Product grid */}
-                {loading ? (
+                {(status === 'loading' || localLoading) ? (
                     <ProductShimmer />
                 ) : filteredProducts.length === 0 ? (
                     <div className="product-content">

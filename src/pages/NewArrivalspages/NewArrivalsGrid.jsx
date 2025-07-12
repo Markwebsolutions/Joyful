@@ -1,11 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../../features/productsSlice';
 import './NewArrivals.css';
 import ProductShimmer from "../Productpages/ProductShimmer";
 
 const sortFunctions = {
-    newest: (a, b) => b.dateAdded - a.dateAdded,
-    oldest: (a, b) => a.dateAdded - b.dateAdded,
+    newest: (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+    oldest: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     'price-low': (a, b) => (a.price || 0) - (b.price || 0),
     'price-high': (a, b) => (b.price || 0) - (a.price || 0),
     'name-asc': (a, b) => a.name.localeCompare(b.name),
@@ -13,68 +15,55 @@ const sortFunctions = {
 };
 
 const NewArrivalsPage = () => {
-    const [products, setProducts] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [sortOption, setSortOption] = useState('newest');
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {
+        data: allProducts,
+        status,
+        error,
+        lastFetch
+    } = useSelector(state => state.products);
 
-    const fetchProducts = useCallback(async () => {
-        try {
-            const response = await fetch('https://joyful-backend-backend-final-4-production.up.railway.app/categories');
-            if (!response.ok) throw new Error('Failed to fetch data');
+    const [sortOption, setSortOption] = useState('newest');
+    const [localLoading, setLocalLoading] = useState(true);
 
-            const data = await response.json();
-            const newArrivalProducts = data
-                .filter(category => category.published)
-                .flatMap(category =>
-                    category.subcategories
-                        ?.filter(sub => sub.ispublished)
-                        ?.flatMap(sub =>
-                            sub.products
-                                ?.filter(product => product.ispublished && product.newarrival)
-                                ?.map(product => ({
-                                    ...product,
-                                    variants: product.variantsMap ? JSON.parse(product.variantsMap) : {},
-                                    dateAdded: new Date(product.createdAt || Date.now())
-                                }))
-                        ) || []
-                );
+    // Memoized new arrival products
+    const newArrivalProducts = useMemo(() => {
+        return allProducts.filter(product => product.newarrival);
+    }, [allProducts]);
 
-            setProducts(newArrivalProducts);
-            setFilteredProducts(newArrivalProducts);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
+    // Memoized sorted products
+    const filteredProducts = useMemo(() => {
+        return [...newArrivalProducts].sort(sortFunctions[sortOption] || (() => 0));
+    }, [newArrivalProducts, sortOption]);
+
+    // Fetch products if needed
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts());
         }
-    }, []);
 
-    useEffect(() => {
-        fetchProducts();
-    }, [fetchProducts]);
+        // Hide loading indicator once we have data
+        if (status === 'succeeded') {
+            setLocalLoading(false);
+        }
+    }, [status, dispatch]);
 
-    useEffect(() => {
-        const sorted = [...products].sort(sortFunctions[sortOption] || (() => 0));
-        setFilteredProducts(sorted);
-    }, [sortOption, products]);
-
-    const handleProductClick = (id) => {
+    const handleProductClick = useCallback((id) => {
         navigate(`/catalog/${id}`);
-    };
+    }, [navigate]);
 
-    const handleKeyDown = (e, id) => {
+    const handleKeyDown = useCallback((e, id) => {
         if (e.key === 'Enter') {
             navigate(`/catalog/${id}`);
         }
-    };
+    }, [navigate]);
 
     if (error) return <div className="page-width">Error: {error}</div>;
 
     return (
         <div className="page-width">
-            <div className="new-arrivals-container ">
+            <div className="new-arrivals-container">
                 <div className="new-arrivals-header">
                     <div className="sort-filter-container">
                         <label htmlFor="sort-select" className="sort-label">Sort by:</label>
@@ -98,10 +87,10 @@ const NewArrivalsPage = () => {
                     </div>
                 </div>
 
-                {loading ? (
+                {(status === 'loading' || localLoading) ? (
                     <ProductShimmer />
                 ) : filteredProducts.length === 0 ? (
-                    <div className="no-products">No products found</div>
+                    <div className="no-products">No new arrival products found</div>
                 ) : (
                     <div className="new-arrivals-grid">
                         {filteredProducts.map((product) => (
@@ -135,7 +124,7 @@ const NewArrivalsPage = () => {
                                         <p className="new-arrivals-price">${product.price.toFixed(2)}</p>
                                     )}
                                     <div className="new-arrivals-variants">
-                                        {product.variants.Size?.length > 0 && (
+                                        {product.variants?.Size?.length > 0 && (
                                             <div className="size-options">
                                                 {product.variants.Size.map((size, i) => (
                                                     <span key={i} className="size-option">
@@ -144,7 +133,7 @@ const NewArrivalsPage = () => {
                                                 ))}
                                             </div>
                                         )}
-                                        {product.variants.Color?.length > 0 && (
+                                        {product.variants?.Color?.length > 0 && (
                                             <div className="color-options">
                                                 {product.variants.Color.map((color, i) => (
                                                     <span

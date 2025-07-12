@@ -1,16 +1,27 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../Product.css";
 
 const ProductGridCard = ({ product }) => {
     const navigate = useNavigate();
 
+    const handleClick = useCallback(() => {
+        navigate(`/catalog/${product.id}`);
+    }, [navigate, product.id]);
+
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === 'Enter') {
+            navigate(`/catalog/${product.id}`);
+        }
+    }, [navigate, product.id]);
+
     return (
         <div
             className="product-card"
-            onClick={() => navigate(`/catalog/${product.id}`)}
+            onClick={handleClick}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && navigate(`/catalog/${product.id}`)}
+            onKeyDown={handleKeyDown}
         >
             <div className="card-image-container">
                 <img
@@ -34,7 +45,7 @@ const ProductGridCard = ({ product }) => {
                     <p className="card-price">${product.price.toFixed(2)}</p>
                 )}
                 <div className="product-variants">
-                    {product.variants.Size?.length > 0 && (
+                    {product.variants?.Size?.length > 0 && (
                         <div className="size-options">
                             {product.variants.Size.map((size, i) => (
                                 <span key={i} className="size-option">
@@ -43,7 +54,7 @@ const ProductGridCard = ({ product }) => {
                             ))}
                         </div>
                     )}
-                    {product.variants.Color?.length > 0 && (
+                    {product.variants?.Color?.length > 0 && (
                         <div className="color-options">
                             {product.variants.Color.map((color, i) => (
                                 <span

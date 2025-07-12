@@ -1,75 +1,79 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProductDetails } from '../../../features/productsSlice';
 import './ProductDetails.css';
 import "../Product.css";
 import ProductDetailsShimmer from './ProductDetailsShimmer';
 
 const ProductDetails = () => {
     const { productId } = useParams();
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const { productDetails, status, error } = useSelector(state => state.products);
+    const product = productDetails[productId];
+
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
+    const [localLoading, setLocalLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch(`https://joyful-backend-backend-final-4-production.up.railway.app/products/${productId}`);
-                if (!response.ok) throw new Error('Product not found');
+    // Memoized variants data
+    const { variants, colorVariants, sizeVariants } = useMemo(() => {
+        if (!product) return { variants: {}, colorVariants: [], sizeVariants: [] };
 
-                const data = await response.json();
-                setProduct(data);
-
-                if (data.variantsMap) {
-                    const variants = JSON.parse(data.variantsMap);
-
-                    if (variants.Color?.length > 0) {
-                        setSelectedColor(variants.Color[0]);
-                    }
-
-                    if (variants.Size?.length > 0) {
-                        setSelectedSize(variants.Size[0]);
-                    }
-                }
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
+        const variants = product.variantsMap ? JSON.parse(product.variantsMap) : {};
+        return {
+            variants,
+            colorVariants: variants.Color || [],
+            sizeVariants: variants.Size || []
         };
+    }, [product]);
 
-        fetchProduct();
-    }, [productId]);
+    // Memoized main image
+    const currentMainImage = useMemo(() => {
+        if (!product) return '';
+        if (selectedColor?.image) return selectedColor.image;
+        if (selectedSize?.image) return selectedSize.image;
+        return product.mainimage;
+    }, [product, selectedColor, selectedSize]);
 
-    const handleColorChange = (color) => {
+    // Memoized description lines
+    const descriptionLines = useMemo(() => {
+        return product?.description
+            ? product.description.split('\n').filter(line => line.trim() !== '')
+            : [];
+    }, [product]);
+
+    // Fetch product details when needed
+    useEffect(() => {
+        if (!product || status === 'idle') {
+            dispatch(fetchProductDetails(productId));
+        }
+
+        if (status === 'succeeded' && product) {
+            setLocalLoading(false);
+
+            // Set initial selected variants
+            if (variants.Color?.length > 0) {
+                setSelectedColor(variants.Color[0]);
+            }
+            if (variants.Size?.length > 0) {
+                setSelectedSize(variants.Size[0]);
+            }
+        }
+    }, [productId, product, status, dispatch, variants]);
+
+    const handleColorChange = useCallback((color) => {
         setSelectedColor(color);
-    };
+    }, []);
 
-    const handleSizeChange = (size) => {
+    const handleSizeChange = useCallback((size) => {
         setSelectedSize(size);
-    };
+    }, []);
 
-    if (loading) return <ProductDetailsShimmer />;
+    if (localLoading || status === 'loading') return <ProductDetailsShimmer />;
     if (error) return <div className="page-width error-message">Error: {error}</div>;
     if (!product) return <div className="page-width">Product not found</div>;
-
-    const variants = product.variantsMap ? JSON.parse(product.variantsMap) : {};
-    const colorVariants = variants.Color || [];
-    const sizeVariants = variants.Size || [];
-
-    let currentMainImage = product.mainimage;
-    if (selectedColor?.image) {
-        currentMainImage = selectedColor.image;
-    } else if (selectedSize?.image) {
-        currentMainImage = selectedSize.image;
-    }
-
-    const descriptionLines = product.description
-        ? product.description.split('\n').filter(line => line.trim() !== '')
-        : [];
 
     return (
         <section className="product-details-section">
@@ -80,7 +84,6 @@ const ProductDetails = () => {
                     <div className="product-grid-column left-column">
                         {(colorVariants.length > 0 || sizeVariants.length > 0) && (
                             <div className="variants-container">
-                                {/* Color variant thumbnails */}
                                 {colorVariants.map((color, index) => (
                                     <div key={`color-${index}`} className="variant-thumbnails">
                                         <img
@@ -93,7 +96,6 @@ const ProductDetails = () => {
                                     </div>
                                 ))}
 
-                                {/* Size variant thumbnails - now showing images if available */}
                                 {sizeVariants.map((size, index) => (
                                     <div
                                         key={`size-${index}`}
