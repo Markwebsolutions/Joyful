@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../features/productsSlice';
+import NewArrivalCard from './NewArrivalCard';
 import './NewArrivals.css';
 import ProductShimmer from "../Productpages/ProductShimmer";
 
@@ -94,63 +95,12 @@ const NewArrivalsPage = () => {
                 ) : (
                     <div className="new-arrivals-grid">
                         {filteredProducts.map((product) => (
-                            <div
+                            <NewArrivalCard
                                 key={product.id}
-                                className="new-arrivals-card"
-                                onClick={() => handleProductClick(product.id)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => handleKeyDown(e, product.id)}
-                            >
-                                <div className="new-arrivals-image-container">
-                                    <img
-                                        src={product.mainimage}
-                                        alt={product.name}
-                                        className="new-arrivals-image main-image"
-                                        loading="lazy"
-                                    />
-                                    {product.hoverimage && (
-                                        <img
-                                            src={product.hoverimage}
-                                            alt={product.name}
-                                            className="new-arrivals-image hover-image"
-                                            loading="lazy"
-                                        />
-                                    )}
-                                </div>
-                                <div className="new-arrivals-info">
-                                    <h3 className="new-arrivals-name">{product.name}</h3>
-                                    {product.price && (
-                                        <p className="new-arrivals-price">${product.price.toFixed(2)}</p>
-                                    )}
-                                    <div className="new-arrivals-variants">
-                                        {product.variants?.Size?.length > 0 && (
-                                            <div className="size-options">
-                                                {product.variants.Size.map((size, i) => (
-                                                    <span key={i} className="size-option">
-                                                        {size.value}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                        {product.variants?.Color?.length > 0 && (
-                                            <div className="color-options">
-                                                {product.variants.Color.map((color, i) => (
-                                                    <span
-                                                        key={i}
-                                                        className="color-circle"
-                                                        style={{
-                                                            backgroundColor: color.hex || '#ccc',
-                                                            borderColor: color.hex ? '#ddd' : '#999'
-                                                        }}
-                                                        title={color.name}
-                                                    />
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                                product={product}
+                                onClick={handleProductClick}
+                                onKeyDown={handleKeyDown}
+                            />
                         ))}
                     </div>
                 )}

@@ -1,13 +1,13 @@
 import '../AboutUspages/AboutUs.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import OurCatlog from "../../assets/New_arrivals/NewArreivalbanner.jpg";
+import New_arrivals from "../../assets/New_arrivals/NewArreivalbanner.jpg";
 import ClickSpark from '../../style/ClickSpark';
 
 const NewArrivals1 = () => {
     return (
         <div>
-            <div className="aboutUsContainer" style={{ backgroundImage: `url(${OurCatlog})` }}>
+            <div className="aboutUsContainer" style={{ backgroundImage: `url(${New_arrivals})` }}>
                 <ClickSpark
                     sparkColor='#fff'
                     sparkSize={10}
@@ -36,10 +36,10 @@ const NewArrivals1 = () => {
                         <div className="navigation">
                             <span>Home</span>
                             <FontAwesomeIcon icon={faCaretRight} />
-                            <span>Our Catlog</span>
+                            <span>New Arrivals</span>
                         </div>
 
-                        <h1 className="aboutUsTitle">Our Catlog</h1>
+                        <h1 className="aboutUsTitle">new arrivals</h1>
                     </div>
                 </ClickSpark>
             </div>
