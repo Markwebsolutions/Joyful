@@ -39,7 +39,7 @@ const NewArrivals1 = () => {
                             <span>New Arrivals</span>
                         </div>
 
-                        <h1 className="aboutUsTitle">new arrivals</h1>
+                        <h1 className="aboutUsTitle">New Arrivals</h1>
                     </div>
                 </ClickSpark>
             </div>

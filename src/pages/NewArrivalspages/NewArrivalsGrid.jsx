@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../features/productsSlice';
@@ -15,6 +15,8 @@ const sortFunctions = {
     'name-desc': (a, b) => b.name.localeCompare(a.name)
 };
 
+const ITEMS_PER_PAGE = 12; // Number of items to load each time
+
 const NewArrivalsPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -27,6 +29,9 @@ const NewArrivalsPage = () => {
 
     const [sortOption, setSortOption] = useState('newest');
     const [localLoading, setLocalLoading] = useState(true);
+    const [visibleItems, setVisibleItems] = useState(ITEMS_PER_PAGE);
+    const loaderRef = useRef(null);
+    const containerRef = useRef(null);
 
     // Memoized new arrival products
     const newArrivalProducts = useMemo(() => {
@@ -37,6 +42,11 @@ const NewArrivalsPage = () => {
     const filteredProducts = useMemo(() => {
         return [...newArrivalProducts].sort(sortFunctions[sortOption] || (() => 0));
     }, [newArrivalProducts, sortOption]);
+
+    // Products to display (only the visible ones)
+    const displayProducts = useMemo(() => {
+        return filteredProducts.slice(0, visibleItems);
+    }, [filteredProducts, visibleItems]);
 
     // Fetch products if needed
     useEffect(() => {
@@ -49,6 +59,33 @@ const NewArrivalsPage = () => {
             setLocalLoading(false);
         }
     }, [status, dispatch]);
+
+    // Reset visible items when sort option changes
+    useEffect(() => {
+        setVisibleItems(ITEMS_PER_PAGE);
+    }, [sortOption]);
+
+    // Infinite scroll implementation
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && visibleItems < filteredProducts.length) {
+                    setVisibleItems((prev) => prev + ITEMS_PER_PAGE);
+                }
+            },
+            { threshold: 0.1, root: containerRef.current }
+        );
+
+        if (loaderRef.current) {
+            observer.observe(loaderRef.current);
+        }
+
+        return () => {
+            if (loaderRef.current) {
+                observer.unobserve(loaderRef.current);
+            }
+        };
+    }, [visibleItems, filteredProducts.length]);
 
     const handleProductClick = useCallback((id) => {
         navigate(`/catalog/${id}`);
@@ -63,7 +100,7 @@ const NewArrivalsPage = () => {
     if (error) return <div className="page-width">Error: {error}</div>;
 
     return (
-        <div className="page-width">
+        <div className="page-width" ref={containerRef}>
             <div className="new-arrivals-container">
                 <div className="new-arrivals-header">
                     <div className="sort-filter-container">
@@ -93,16 +130,24 @@ const NewArrivalsPage = () => {
                 ) : filteredProducts.length === 0 ? (
                     <div className="no-products">No new arrival products found</div>
                 ) : (
-                    <div className="new-arrivals-grid">
-                        {filteredProducts.map((product) => (
-                            <NewArrivalCard
-                                key={product.id}
-                                product={product}
-                                onClick={handleProductClick}
-                                onKeyDown={handleKeyDown}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="new-arrivals-grid">
+                            {displayProducts.map((product) => (
+                                <NewArrivalCard
+                                    key={product.id}
+                                    product={product}
+                                    onClick={handleProductClick}
+                                    onKeyDown={handleKeyDown}
+                                />
+                            ))}
+                        </div>
+                        {/* Loading indicator at the bottom */}
+                        {visibleItems < filteredProducts.length && (
+                            <div ref={loaderRef} className="loading-indicator">
+                                <ProductShimmer count={4} />
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>
