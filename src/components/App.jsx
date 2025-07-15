@@ -12,6 +12,7 @@ import Home from '../pages/Home';  // Now regularly imported
 import OurCatlog from '../pages/OURcATLOG';
 import ProductDetails from '../pages/Productpages/ProductDetails/ProductDetails';
 import NewArrival from '../pages/NewArrival';
+import ScrollToTop from './ScrollToTop';
 
 // Lazy load other components
 const AboutUs = lazy(() => import('../pages/AboutUs'));
@@ -60,6 +61,7 @@ function App() {
             <Route path="/new-arrivals" element={<NewArrival />} />
           </Routes>
           <Footer />
+          <ScrollToTop threshold={1.2} />
         </main>
       </div>
     </Router>
