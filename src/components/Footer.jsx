@@ -92,7 +92,7 @@ const Footer = () => {
               {renderList(footerLinks.b2b)}
             </div>
 
-            <div 
+            <div
               id="b2b-mobile-list"
               className={`footer-links mobile-only ${expandedSections.b2b ? 'mobile-show' : ''}`}
             >
@@ -121,7 +121,7 @@ const Footer = () => {
               {renderList(footerLinks.productLine)}
             </div>
 
-            <div 
+            <div
               id="productLine-mobile-list"
               className={`footer-links mobile-only ${expandedSections.productLine ? 'mobile-show' : ''}`}
             >
@@ -171,13 +171,13 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>  
+      </div>
     </footer>
     <div className="footer-copyright">
       <div className="page-width">
         <div className="copyright-grid">
           <div>
-            <p>© Copyright 2023 Joyful Plastics Pvt. Ltd. All Rights Reserved.</p>
+            <p>© Copyright 2025 Joyful Plastics Pvt. Ltd. All Rights Reserved.</p>
           </div>
           <div>
             <p>Design & Development by Mark Web Solutions</p>

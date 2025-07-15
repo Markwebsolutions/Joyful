@@ -10,16 +10,7 @@ const ProductDetailsShimmer = () => {
                 <div className="product-grid-row">
                     <div className="product-grid-column left-column">
                         <div className="variants-container">
-                            {/* Color variant shimmers */}
-                            {[...Array(4)].map((_, i) => (
-                                <div key={`color-shimmer-${i}`} className="variant-thumbnails shimmer" style={{
-                                    width: '80px',
-                                    height: '80px',
-                                    borderRadius: '50%'
-                                }}></div>
-                            ))}
-
-                            {/* Size variant shimmers */}
+                            {/* Color variant shimmers */}                            {/* Size variant shimmers */}
                             {[...Array(5)].map((_, i) => (
                                 <div key={`size-shimmer-${i}`} className="variant-thumbnails shimmer" style={{
                                     width: '80px',

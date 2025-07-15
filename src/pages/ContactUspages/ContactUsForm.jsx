@@ -13,15 +13,15 @@ const ContactForm = ({
     phoneLabel = "Phone Number",
     buttonText = "Submit",
     redirectTo = "/contact",
-    onClose // Optional prop for modal-like behavior
+    onClose
 }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        firstname: '',
+        lastname: '',
         email: '',
         phone: '',
-        subject: '',
+        querytype: '',
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,12 +41,11 @@ const ContactForm = ({
         setError(null);
 
         try {
-            const response = await fetch("http://localhost:8080/enquiry", {
+            const response = await fetch("https://joyful-backend-backend-final-4-production.up.railway.app/contact-us", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                credentials: "include",
                 body: JSON.stringify(formData),
             });
 
@@ -57,11 +56,10 @@ const ContactForm = ({
             const data = await response.json();
             console.log("Form submitted successfully:", data);
 
-            // Handle success - redirect or close modal
             if (onClose) {
-                onClose(); // For modal behavior
+                onClose();
             } else {
-                navigate(redirectTo); // For regular form behavior
+                navigate(redirectTo);
             }
         } catch (error) {
             console.error("Error submitting form:", error);
@@ -81,18 +79,18 @@ const ContactForm = ({
                         <input
                             type="text"
                             className="form-control"
-                            name="firstName"
+                            name="firstname"
                             placeholder="First name"
-                            value={formData.firstName}
+                            value={formData.firstname}
                             onChange={handleChange}
                             required
                         />
                         <input
                             type="text"
                             className="form-control"
-                            name="lastName"
+                            name="lastname"
                             placeholder="Last name"
-                            value={formData.lastName}
+                            value={formData.lastname}
                             onChange={handleChange}
                             required
                         />
@@ -127,9 +125,9 @@ const ContactForm = ({
                     <input
                         type="text"
                         className="form-control"
-                        name="subject"
+                        name="querytype"
                         placeholder={customSubjectLabel}
-                        value={formData.subject}
+                        value={formData.querytype}
                         onChange={handleChange}
                         required
                     />
