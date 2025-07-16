@@ -47,8 +47,8 @@ function Header() {
   ), [isHomePage, closeMenu]);
 
   const headerStyle = !isHomePage ? { backgroundColor: '#f5edda' } : {};
-  const mobileHeaderStyle = { backgroundColor: isHomePage ? '#274D63' : '#f5edda' };
-  const mobileMenuStyle = { backgroundColor: mobileHeaderStyle.backgroundColor };
+  const mobileHeaderStyle = { backgroundColor: isHomePage ? 'transparent' : '#f5edda' };
+  const mobileMenuStyle = { backgroundColor: isHomePage ? '#274D63' : '#f5edda' };
 
   const iconButtonClass = isHomePage ? 'light' : 'dark';
   const linkColor = isHomePage ? 'white' : '#1f2937';

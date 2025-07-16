@@ -2,7 +2,6 @@
 
 
 /* App.css */
-
 body,
 html {
   margin: 0;
@@ -14,14 +13,14 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* Full viewport height */
 }
 
 .main-content {
   flex: 1;
-  /* Pushes footer down */
+  /* Add margin to account for fixed header */
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
-
 
 /* Footer Styles */
 .page-width {
@@ -580,23 +579,22 @@ li.contact-li {
   }
 }
 
-/* ScrollToTop.css */
-.scroll-to-top {
+/* Floating ScrollToTop Button - Won't affect header */
+.floating-scroll-button {
   position: fixed;
-  /* Ensures it sticks to the viewport */
-  bottom: 40px;
   right: 30px;
-  z-index: 1000;
-  /* Keeps it above other elements */
+  bottom: 30px;
+  z-index: 999;
+  /* Below header's z-index of 1000 */
 }
 
-.scroll-to-top button {
+.floating-scroll-button button {
   background-color: #D67A1D;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -606,7 +604,21 @@ li.contact-li {
   transition: all 0.3s ease;
 }
 
-.scroll-to-top button:hover {
-  background-color: #333;
-  transform: scale(1.1);
+.floating-scroll-button button:hover {
+  background-color: #c36e19;
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .floating-scroll-button {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .floating-scroll-button button {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
 }

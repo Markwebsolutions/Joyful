@@ -1,12 +1,12 @@
+// ScrollToTop.js
 import { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
-import './App.css'; // We'll create this next
 
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
-        if (window.pageYOffset > window.innerHeight * 1.5) {
+        if (window.pageYOffset > window.innerHeight) { // Changed to 100vh threshold
             setIsVisible(true);
         } else {
             setIsVisible(false);
@@ -16,7 +16,7 @@ const ScrollToTop = () => {
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth',
+            behavior: 'smooth'
         });
     };
 
@@ -26,7 +26,7 @@ const ScrollToTop = () => {
     }, []);
 
     return (
-        <div className="scroll-to-top">
+        <div className="floating-scroll-button">
             {isVisible && (
                 <button onClick={scrollToTop} aria-label="Scroll to top">
                     <FaArrowUp />
