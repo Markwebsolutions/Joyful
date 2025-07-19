@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDetailCard = React.memo(({
     product,
@@ -12,9 +13,22 @@ const ProductDetailCard = React.memo(({
     currentMainImage,
     descriptionLines
 }) => {
+    const navigate = useNavigate();
     const sanitizeHTML = useMemo(() => (html) => {
         return { __html: html };
     }, []);
+
+    const handleEnquiryClick = () => {
+        navigate('/inquiry', {
+            state: {
+                product: {
+                    ...product,
+                    color: selectedColor?.name,
+                    size: selectedSize?.value
+                }
+            }
+        });
+    };
 
     return (
         <div className="product-grid-row pagewidth">
@@ -105,7 +119,7 @@ const ProductDetailCard = React.memo(({
                         </div>
                     )}
 
-                    <button className="enquiry-button">Send Enquiry</button>
+                    <button className="enquiry-button" onClick={handleEnquiryClick}>Send Enquiry</button>
 
                     <div className="product-description">
                         <h3 style={{ fontSize: '18px' }}>Description</h3>
