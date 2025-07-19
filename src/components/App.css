@@ -342,8 +342,6 @@ li.contact-li {
   margin: 0.8rem 0 !important;
 }
 
-.phone-number-text {}
-
 .email {
   color: #ccc;
 }
@@ -394,9 +392,6 @@ li.contact-li {
 
 /* Responsive styles for the new sections */
 @media (max-width: 768px) {
-  .footer-bottom-section {
-    /* flex-direction: column; */
-  }
 
   .footer-bottom-grid {
     grid-template-columns: 1fr;

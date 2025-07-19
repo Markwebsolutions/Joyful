@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* Home.css */
+/* Base Styles */
 .home-banner {
   min-height: 100vh;
   padding: 20px 0;
-  /* background: url('../assets/bg-img.png') no-repeat center center / cover; */
   background: url('../../assets/bg-img.png') no-repeat center center / cover;
   position: relative;
   display: flex;
@@ -13,10 +12,7 @@
 
 .home-bg-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: #0e3146c9;
 }
 
@@ -31,21 +27,11 @@
 .hero-grid {
   display: grid;
   padding-top: 105px;
-  flex-direction: column;
-  /* Mobile: Reverse order (right first, then left) */
-  grid-template-columns: 50% 50%;
-  flex-direction: row;
-}
-
-
-.hero-right {
-  order: -1;
-  /* This moves the right section above the left on mobile */
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
 .hero-left {
-  order: 1;
-  /* This moves the left section below on mobile */
   color: #fff;
   display: flex;
   justify-content: center;
@@ -69,7 +55,7 @@
   font-size: 62px;
   line-height: 72px;
   padding-bottom: 40px;
-  border-bottom: 1px solid #FFFFFF1A;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 40px;
 }
 
@@ -77,25 +63,26 @@
   display: block;
 }
 
-.hero-line {
-  width: 40px;
-  height: 2px;
-  background-color: #fff;
-  margin: 1rem 0;
+.hero-description {
+  margin-bottom: 40px;
+  line-height: 1.5;
+  font-size: 16px;
+  position: relative;
+  max-width: 500px;
+  padding-left: 40px;
 }
 
-.hero-description {
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-  font-size: 0.9rem;
-  margin-bottom: 40px;
+.hero-description:after {
+  content: url("../../assets/stars.svg");
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
   gap: 40px;
-  flex-wrap: wrap;
 }
 
 .hero-button {
@@ -104,28 +91,64 @@
   padding: 18px 38px;
   font-weight: 500;
   font-size: 16px;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.hero-button:hover {
+  transform: translateY(-3px);
 }
 
 .hero-phone {
   line-height: 1.4;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
 }
 
 .hero-phone span {
   font-weight: bold;
 }
 
+.phone-icon {
+  width: 20px;
+  height: 20px;
+  animation: phoneRingMobile 2s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Image Grid Styles */
 .image-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 20px;
 }
 
 .grid-item {
   position: relative;
   overflow: hidden;
   aspect-ratio: 360 / 242;
+  opacity: 0;
+  animation: fadeInUp 0.8s forwards;
+}
+
+.grid-item:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.grid-item:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.grid-item:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.grid-item:nth-child(4) {
+  animation-delay: 0.8s;
 }
 
 .grid-item-split {
@@ -135,10 +158,12 @@
   aspect-ratio: 390 / 165;
 }
 
-.grid-item img {
+.grid-item img,
+.grid-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .grid-child-item {
@@ -147,120 +172,106 @@
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.grid-child-item h1 {
-  color: white;
-  font-size: 1rem;
-}
-
-.grid-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Add these styles to your existing CSS */
-
-/* Image hover effect */
-.grid-item img,
-.grid-video {
-  transition: transform 0.3s ease;
+  overflow: hidden;
 }
 
 .grid-item:hover img,
-.grid-item:hover .grid-video {
-  transform: scale(1.05);
-}
-
-/* For split grid items */
-.grid-child-item img {
-  transition: transform 0.3s ease;
-}
-
+.grid-item:hover .grid-video,
 .grid-child-item:hover img {
   transform: scale(1.05);
 }
 
-/* Ensure the video maintains its aspect ratio when scaled */
-.grid-video {
-  transform-origin: center center;
+/* Animations */
+@keyframes phoneRingMobile {
+
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+
+  15%,
+  35% {
+    transform: rotate(25deg) scale(1.15);
+  }
+
+  25% {
+    transform: rotate(-25deg) scale(1.15);
+  }
+
+  45%,
+  65% {
+    transform: rotate(20deg) scale(1.1);
+  }
+
+  55% {
+    transform: rotate(-20deg) scale(1.1);
+  }
 }
 
-/* Prevent layout shift during hover */
-.grid-item {
-  overflow: hidden;
-}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-.grid-child-item {
-  overflow: hidden;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
 
 /* Desktop Styles */
-
-
-
-
-/* Reset the order for desktop */
-.hero-right {
-  order: initial;
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 50% 50%;
+    padding-top: 105px;
+    gap: 40px;
+    align-items: center;
+  }
 }
 
-.hero-left {
-  order: initial;
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+  }
 
-}
+  .hero-left {
+    order: 2;
+  }
 
-.hero-description {
-  position: relative;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
-  max-width: 500px;
-  padding-left: 40px;
-  margin-bottom: 40px;
-}
+  .hero-subtitle {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
 
-.hero-description:after {
-  content: url("../../assets/stars.svg");
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-}
+  .hero-title {
+    font-size: 42px;
+    line-height: 52px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
 
+  .hero-title span {
+    display: inline;
+  }
 
-.image-grid {
-  gap: 20px;
-}
+  .hero-description {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 20px;
+  }
 
-.grid-child-item h1 {
-  font-size: 1.5rem;
-}
-
-.hero-phone-number-details {
-  text-transform: uppercase;
-  font-family: Inter;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.hero-phone {
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  font-family: 'Inter', sans-serif;
-}
-
-/* Very small mobile devices */
-@media only screen and (min-width:0px) and (max-width:768px) {
   .hero-actions {
-    display: flex;
     gap: 1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .home-banner {
+    padding-top: 80px;
+    min-height: 105vh;
   }
 
   .image-grid {
@@ -271,55 +282,13 @@
     gap: 10px;
   }
 
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding-top: 0px;
-  }
-
-  .hero-left {
-    grid-row: 2;
-  }
-
-  /* text  */
-  .hero-subtitle {
-    text-align: start !important;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 30px;
-    margin-bottom: 12px;
-  }
-
-  .hero-title span {
-    display: inline;
-  }
-
-  .hero-title {
-    font-family: Inter;
-    font-weight: 700;
-    font-size: 44px;
-    line-height: 52px;
-    letter-spacing: 0%;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #FFFFFF1A;
-    margin-bottom: 10px;
-  }
-
-
-  .hero-description {
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-    letter-spacing: 0%;
-  }
-
   .hero-phone {
-    gap: 0.2rem;
+    gap: 10px;
   }
 
-  .home-banner {
-    padding-top: 80px;
-    min-height: 105vh;
+  .hero-button {
+    padding: 12px 25px;
+    font-size: 14px;
+    gap: 0px;
   }
 }
