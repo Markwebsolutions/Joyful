@@ -4,6 +4,8 @@
     justify-content: center;
     padding: 40px 0;
     background-color: #000CB70D;
+    /* Add this to make it the positioning context */
+    position: relative;
 }
 
 .contact-wrapper {
@@ -445,5 +447,142 @@ select.form-control {
 
     .contact3LocationIconWrapper {
         margin-bottom: 0;
+    }
+}
+
+/* Success Popup Styles */
+.success-overlay {
+    position: absolute;
+    /* Change from fixed to absolute */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    animation: fadeIn 0.3s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* Change from 140vh to 100% */
+    overflow: hidden;
+    /* Optional: match the container's border radius if it has one */
+}
+
+/* Keep all other styles the same */
+.success-popup {
+    z-index: 1000;
+    animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    margin: auto;
+}
+
+/* Rest of your existing styles remain the same */
+.tick-animation {
+    text-align: center;
+    width: 100%;
+    color: #333;
+}
+
+.checkmark {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: block;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke: #D67A1D;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: #D67A1D;
+    stroke-width: 3;
+    stroke-linecap: round;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+.tick-animation h3 {
+    color: #D67A1D;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.tick-animation p {
+    color: #555;
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.success-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #777;
+    transition: color 0.3s;
+}
+
+.success-popup-close:hover {
+    color: #D67A1D;
+}
+
+/* Animations remain unchanged */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Remove the media query since we're using 100vh now */
+
+@media (max-width: 768px) {
+    .success-overlay {
+        height: 110vh !important;
     }
 }

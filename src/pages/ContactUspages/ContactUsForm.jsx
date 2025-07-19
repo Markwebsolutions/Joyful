@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './ContactUs.css';
 
@@ -26,6 +26,7 @@ const ContactForm = ({
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+    const [showSuccess, setShowSuccess] = useState(true);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,6 +35,18 @@ const ContactForm = ({
             [name]: value
         }));
     };
+
+    useEffect(() => {
+        let timer;
+        if (showSuccess) {
+            timer = setTimeout(() => {
+                setShowSuccess(false);
+                if (onClose) onClose();
+                else navigate(redirectTo);
+            }, 300000);
+        }
+        return () => clearTimeout(timer);
+    }, [showSuccess, navigate, redirectTo, onClose]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -50,20 +63,29 @@ const ContactForm = ({
             });
 
             if (!response.ok) {
-                throw new Error("Failed to submit enquiry");
+                const errorText = await response.text();
+                throw new Error(errorText || `Server responded with status ${response.status}`);
             }
 
-            const data = await response.json();
+            const contentType = response.headers.get('content-type');
+            const data = contentType && contentType.includes('application/json')
+                ? await response.json()
+                : await response.text();
+
             console.log("Form submitted successfully:", data);
+            setShowSuccess(true);
+            setFormData({
+                firstname: '',
+                lastname: '',
+                email: '',
+                phone: '',
+                querytype: '',
+                message: ''
+            });
 
-            if (onClose) {
-                onClose();
-            } else {
-                navigate(redirectTo);
-            }
         } catch (error) {
             console.error("Error submitting form:", error);
-            setError("Failed to submit enquiry. Please try again.");
+            setError(error.message || "Failed to submit enquiry. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -167,6 +189,24 @@ const ContactForm = ({
                     {isSubmitting ? "Submitting..." : buttonText}
                 </button>
             </form>
+
+            {/* Success Popup with Dark Overlay */}
+            {showSuccess && (
+                <>
+                    <div className="success-overlay">
+                        <div className="success-popup">
+                            <div className="tick-animation">
+                                <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                    <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                    <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                </svg>
+                                <h3>Success!</h3>
+                                <p>Your message has been sent successfully</p>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
