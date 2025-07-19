@@ -481,10 +481,13 @@ select.form-control {
     padding: 2rem 1.5rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     margin: auto;
+    position: relative;
+    /* Add this to contain the absolute positioned close button */
 }
 
 /* Rest of your existing styles remain the same */
 .tick-animation {
+    padding-top: 10px;
     text-align: center;
     width: 100%;
     color: #333;
@@ -532,18 +535,27 @@ select.form-control {
 
 .success-popup-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 13px;
+    right: 14px;
     background: none;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     color: #777;
     transition: color 0.3s;
+    padding: 0.5rem;
+    line-height: 1;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .success-popup-close:hover {
     color: #D67A1D;
+    background-color: rgba(214, 122, 29, 0.1);
 }
 
 /* Animations remain unchanged */
@@ -583,6 +595,6 @@ select.form-control {
 
 @media (max-width: 768px) {
     .success-overlay {
-        height: 110vh !important;
+        height: 100vh !important;
     }
 }

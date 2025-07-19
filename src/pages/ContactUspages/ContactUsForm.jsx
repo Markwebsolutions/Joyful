@@ -26,7 +26,7 @@ const ContactForm = ({
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
-    const [showSuccess, setShowSuccess] = useState(true);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,7 +43,7 @@ const ContactForm = ({
                 setShowSuccess(false);
                 if (onClose) onClose();
                 else navigate(redirectTo);
-            }, 300000);
+            }, 3000);
         }
         return () => clearTimeout(timer);
     }, [showSuccess, navigate, redirectTo, onClose]);
@@ -195,6 +195,13 @@ const ContactForm = ({
                 <>
                     <div className="success-overlay">
                         <div className="success-popup">
+                            <button
+                                className="success-popup-close"
+                                onClick={() => setShowSuccess(false)}
+                                aria-label="Close success message"
+                            >
+                                &times;
+                            </button>
                             <div className="tick-animation">
                                 <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                                     <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
@@ -206,7 +213,7 @@ const ContactForm = ({
                         </div>
                     </div>
                 </>
-            )}
+            )}s
         </div>
     );
 };
