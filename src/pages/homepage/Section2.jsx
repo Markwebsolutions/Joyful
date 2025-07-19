@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import section2_1 from "../../assets/Section2/section2_1.jpg";
@@ -7,16 +7,29 @@ import section2_3 from "../../assets/Section2/section2_3.jpg";
 import section2_4 from "../../assets/Section2/section2_4.jpg";
 import section2_5 from "../../assets/Section2/section2_5.jpg";
 import section2_6 from "../../assets/Section2/section2_6.jpg";
+import section2_6mobile from "../../assets/Section2/section2_6mobile.jpg";
+import section2_7mobile from "../../assets/Section2/section2_6mobile.jpg";
 import section2_7 from "../../assets/Section2/section2_7.jpg";
 
 const Section2 = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const images = [
         { src: section2_1, span: 1 },
-        { src: section2_2, span: 2 },
+        { src: section2_2, span: 2, mobileSrc: section2_6mobile },
         { src: section2_3, span: 1 },
         { src: section2_4, span: 1 },
         { src: section2_5, span: 1 },
-        { src: section2_6, span: 2 },
+        { src: section2_6, span: 2, mobileSrc: section2_7mobile },
         { src: section2_7, span: 1 },
     ];
 
@@ -36,7 +49,10 @@ const Section2 = () => {
                     ) : (
                         <div key={index} className="combined-grid-item">
                             <div className="image-container">
-                                <img src={image.src} alt="Sample" />
+                                <img
+                                    src={isMobile ? image.mobileSrc : image.src}
+                                    alt="Sample"
+                                />
                                 <button className="btn-span-2">
                                     Explore Now <FontAwesomeIcon icon={faArrowRight} />
                                 </button>

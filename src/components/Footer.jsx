@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import emailjs from 'emailjs-com';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +8,11 @@ import insta from "../assets/footer/insta.svg"
 import facebook from "../assets/footer/facebook.svg"
 import twitter from "../assets/footer/twitter.svg"
 
-// Moved outside component to prevent recreation on each render
+// Initialize EmailJS (put these in your environment variables)
+const EMAILJS_SERVICE_ID = 'your_service_id';
+const EMAILJS_TEMPLATE_ID = 'your_template_id';
+const EMAILJS_USER_ID = 'your_user_id';
+
 const footerLinks = {
   b2b: [
     'Become a wholesaler',
@@ -31,6 +36,8 @@ const Footer = () => {
     b2b: false,
     productLine: false
   });
+  const [email, setEmail] = useState('');
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   const toggleSection = useCallback((section) => {
     setExpandedSections(prev => ({
@@ -39,7 +46,34 @@ const Footer = () => {
     }));
   }, []);
 
-  // Shared list rendering component
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      setSubmissionStatus('Please enter a valid email address');
+      return;
+    }
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          to_email: email,
+          from_name: 'Joyful Plastic',
+          message: 'Thank you for subscribing to our newsletter! Here are some exclusive offers...'
+        },
+        EMAILJS_USER_ID
+      );
+
+      setSubmissionStatus('Thank you for subscribing! Check your email for our welcome message.');
+      setEmail('');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmissionStatus('Failed to subscribe. Please try again later.');
+    }
+  };
+
   const renderList = (items) => (
     <ul className="footer-links">
       {items.map((item, index) => (
@@ -47,6 +81,7 @@ const Footer = () => {
       ))}
     </ul>
   );
+
 
   return (<>
     <footer className="footer">

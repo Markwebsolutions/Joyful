@@ -33,14 +33,14 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        <Header />
         <main className="main-content">
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<OurCatlog />} />
             <Route path="/catalog/:productId" element={<ProductDetails />} />
             <Route path="/new-arrivals" element={<NewArrival />} />
-            <Route path="/inquiry" element={<ProductDetailForm />} />
+            <Route path="/inquiry" element={<ProductDetailForm />} /> {/* Add this route */}
 
             {/* Lazy-loaded routes */}
             <Route
@@ -68,8 +68,8 @@ function App() {
               }
             />
           </Routes>
+          <Footer />
         </main>
-        <Footer />
         <ScrollToTop />
       </div>
     </Router>
