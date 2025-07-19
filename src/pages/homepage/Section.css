@@ -98,20 +98,20 @@
   margin-top: 1rem;
 }
 
+
 .action-dark-button {
-  background-color: #333;
-  color: white;
-  padding: 1rem 1.9rem;
-  border-radius: 55px;
+  padding: 0.8rem 1.2rem;
+  font-size: 13px;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  background-color: #333;
+  color: white;
   transition: all 0.3s ease;
   font-weight: 500;
-  font-size: 15px;
   line-height: 1.4;
 }
 
@@ -235,7 +235,9 @@
   }
 
   .action-dark-button {
-    padding: 1.1rem 2.45rem;
+    padding: 1rem 1.9rem !important;
+    gap: 8px !important;
+    font-size: 15px !important;
   }
 }
 
