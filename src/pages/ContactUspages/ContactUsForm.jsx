@@ -213,7 +213,7 @@ const ContactForm = ({
                         </div>
                     </div>
                 </>
-            )}s
+            )}
         </div>
     );
 };
