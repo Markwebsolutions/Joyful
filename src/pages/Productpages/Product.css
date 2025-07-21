@@ -260,8 +260,6 @@
     box-sizing: border-box;
 }
 
-.color-circle:hover {}
-
 .color-circle.active {
     box-shadow: 0 0 0 3px #F2F3FB, 0 0 0 4px #000;
 }
@@ -354,6 +352,20 @@
     }
 }
 
+/* Optional: More prominent active state */
+.variant-thumbnails.active {
+    border: 1px solid #000;
+}
+
+.variant-thumbnail.active {
+    border: 1px solid #000;
+}
+
+.variant-thumbnails.active .size-thumbnail-text {
+    border: 1px solid #000;
+    font-weight: bold;
+    background: #fff;
+}
 
 
 /* Utility Classes */
@@ -370,7 +382,6 @@
 }
 
 /* Color options in product details */
-/* Color options - plain styling */
 .color-options {
     display: flex;
     gap: 6px;
@@ -414,7 +425,8 @@
     font-weight: normal;
 }
 
-Size options in product details .size-options {
+/* Size options in product details  */
+.size-options {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
@@ -435,4 +447,69 @@ Size options in product details .size-options {
     border-color: #D67A1D;
     color: #D67A1D;
     font-weight: 500;
+}
+
+/* Related Products Styles */
+.related-products-container {
+    margin: 40px 0;
+}
+
+.related-products-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    padding: 0 15px;
+}
+
+.related-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 0 15px;
+}
+
+.related-product-item {
+    padding: 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.product-detail-wrapper {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subcategory-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #D67A1D;
+    text-transform: capitalize;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .related-products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .related-product-item {
+        padding: 15px;
+    }
+
+    .product-detail-wrapper {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .related-products-title {
+        font-size: 20px;
+    }
+
+    .subcategory-name {
+        font-size: 14px;
+    }
 }
