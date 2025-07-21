@@ -41,8 +41,8 @@ body {
     transition: all 0.3s ease;
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.75rem;
+    height: 2.75rem;
 }
 
 .icon-button.dark {
@@ -214,5 +214,304 @@ body {
 
     .logo-image {
         height: 55px;
+    }
+}
+
+/* search bar  */
+/* Search styles */
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-form {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    background-color: inherit;
+    padding: 0.5rem;
+    border-radius: 55px;
+}
+
+.search-form::after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 0;
+    /* width: 100vw; */
+    /* Cover the entire viewport width */
+    height: 100%;
+    background-color: inherit;
+    /* Match the header background */
+    z-index: -1;
+    /* Place it behind the input but above other elements */
+}
+
+.search-input {
+    padding: 0.5rem 1rem;
+    border-radius: 55px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 180px;
+    height: 36px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: inherit;
+    opacity: 0.7;
+}
+
+/* Mobile search styles */
+.mobile-search-bar {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1000;
+    background-color: inherit;
+    width: 100%;
+}
+
+.mobile-search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    z-index: 1001;
+}
+
+.mobile-search-input {
+    padding: 0.5rem 1rem;
+    border-radius: 55px;
+    border: none;
+    margin-right: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    height: 36px;
+    outline: none;
+}
+
+.mobile-search-input::placeholder {
+    color: inherit;
+    opacity: 0.7;
+}
+
+/* Base responsive behavior */
+.desktop-header {
+    display: none;
+}
+
+.mobile-header {
+    display: flex;
+}
+
+@media (min-width: 770px) {
+    .desktop-header {
+        display: grid;
+        grid-template-columns: 12% 65% 23%;
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 1rem 0;
+        width: 90%;
+        align-items: center;
+    }
+
+    .mobile-header {
+        display: none;
+    }
+}
+
+/* Ensure mobile menu stays hidden on desktop */
+@media (min-width: 770px) {
+    .mobile-menu {
+        display: none !important;
+    }
+
+    .mobile-search-bar {
+        display: none !important;
+    }
+}
+
+/* Fix for logo size */
+.logo-image {
+    height: 2.2rem;
+}
+
+@media (min-width: 770px) {
+    .logo-image {
+        height: 55px;
+    }
+}
+
+/* Add these styles to your existing Header.css */
+/* Search container styles */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Search form styles */
+.search-form {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    width: 250px;
+}
+
+.search-input {
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem;
+    border-radius: 55px;
+    border: 1px solid #e1e1e1;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    height: 36px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.search-input:focus {
+    border-color: #D67A1D;
+    box-shadow: 0 0 0 3px rgba(214, 122, 29, 0.2);
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* Search results dropdown */
+.search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: #f9fafb;
+}
+
+.search-result-image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 12px;
+    border-radius: 4px;
+    border: 1px solid #f3f4f6;
+}
+
+.search-result-name {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+.search-result-price {
+    font-size: 14px;
+    color: #D67A1D;
+    font-weight: 600;
+    margin-left: 12px;
+}
+
+.search-icon-container {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+/* Mobile search styles */
+.mobile-search-form {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.mobile-search-input {
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem;
+    border-radius: 55px;
+    border: 1px solid #e1e1e1;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    height: 36px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.mobile-search-input:focus {
+    border-color: #D67A1D;
+    box-shadow: 0 0 0 3px rgba(214, 122, 29, 0.2);
+}
+
+/* Mobile search results */
+.mobile-search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+/* Adjust the desktop header search positioning */
+@media (min-width: 770px) {
+    .header-actions {
+        gap: 1rem;
     }
 }
