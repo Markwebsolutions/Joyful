@@ -63,12 +63,12 @@ const Section1 = () => {
 
         <div className="action-buttons">
           <button
-            className="action-dark-button"
+            className="dark-button"
             onClick={handleInquiryClick}
             aria-label="Send Inquiry"
           >
             Send Inquiry
-            <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
+            <FontAwesomeIcon icon={faArrowRight} className="icon" />
           </button>
 
           <div className="contact-info">

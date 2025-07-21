@@ -147,6 +147,53 @@
   margin-left: 0.5rem;
 }
 
+/* Add these to your CSS */
+.dark-button {
+  padding: 0.9rem 1.6rem;
+  font-size: 13px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+  color: white;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  line-height: 1.4;
+  gap: 10px;
+}
+
+.dark-button:hover {
+  background-color: #D67A1D;
+  color: white;
+}
+
+.dark-button .icon {
+  transition: transform 0.3s ease;
+}
+
+.dark-button:hover .icon {
+  transform: translateX(5px);
+}
+
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .dark-button {
+    padding: 0.5rem 1.2rem;
+    font-size: 11px;
+  }
+
+  .dark-button:hover .icon {
+    transform: translateX(3px);
+  }
+}
+
+/* dark button  */
+
+
 .contact-info {
   display: flex;
   align-items: center;
@@ -456,6 +503,9 @@
   z-index: 2;
 }
 
+.btn-span-1,
+.btn-span-2 {}
+
 .hover-effect {
   transition: all 0.4s ease;
 }
@@ -498,11 +548,13 @@
 .btn-span-1 {
   bottom: 25px;
   right: 30px;
+  gap: 10px;
 }
 
 .btn-span-2 {
   bottom: 25px;
   left: 2.5rem;
+  gap: 10px;
 }
 
 /* Media query for small devices (below tablet) */
@@ -970,7 +1022,7 @@
   justify-content: center;
   background: white;
   padding: 6px;
-  border-radius: 5px;
+  border-radius: 7px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   will-change: transform;
