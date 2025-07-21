@@ -503,9 +503,6 @@
   z-index: 2;
 }
 
-.btn-span-1,
-.btn-span-2 {}
-
 .hover-effect {
   transition: all 0.4s ease;
 }
@@ -972,10 +969,7 @@
   transform: scale(1.05) translateZ(10px);
 }
 
-
-/* Add these styles to your existing CSS */
 /* Optimized Network Section 4 */
-/* Section 4 & Network Shared Styles */
 .section4-wrapper {
   position: relative;
 }
