@@ -17,36 +17,37 @@ const Network2 = () => {
     };
 
     return (
-        <div className="network-section-wrapper">
-            <section className="joyful-network-clients">
+        <div className="section4-wrapper">
+            <section className="network-content">
                 <div className="page-width">
                     <div className="joyful-clients-wrapper">
                         <h2>Find us at your favourite <strong>marketplace</strong></h2>
-                        <div className="marketplace-grid">
-                            <div className="marketplace-item">
-                                <img src={Section4_1} width="100%" height="auto" alt="Flipkart" loading="lazy" />
+
+                        <div className="section4-grid">
+                            <div className="section4-grid-item">
+                                <img src={Section4_1} width="100%" height="auto" alt="Flipkart" className="section4-grid-img" loading="lazy" />
                             </div>
-                            <div className="marketplace-item">
-                                <img src={Section4_2} width="100%" height="auto" alt="Reliance Retail" loading="lazy" />
+                            <div className="section4-grid-item">
+                                <img src={Section4_2} width="100%" height="auto" alt="Reliance Retail" className="section4-grid-img" loading="lazy" />
                             </div>
-                            <div className="marketplace-item">
-                                <img src={Section4_3} width="100%" height="auto" alt="Big Bazaar" loading="lazy" />
+                            <div className="section4-grid-item">
+                                <img src={Section4_3} width="100%" height="auto" alt="Big Bazaar" className="section4-grid-img" loading="lazy" />
                             </div>
-                            <div className="marketplace-item">
-                                <img src={Section4_4} width="100%" height="auto" alt="Amazon" loading="lazy" />
+                            <div className="section4-grid-item">
+                                <img src={Section4_4} width="100%" height="auto" alt="Amazon" className="section4-grid-img" loading="lazy" />
                             </div>
-                            <div className="marketplace-item">
-                                <img src={Section4_5} width="100%" height="auto" alt="Star Bazaar" loading="lazy" />
+                            <div className="section4-grid-item">
+                                <img src={Section4_5} width="100%" height="auto" alt="Star Bazaar" className="section4-grid-img" loading="lazy" />
                             </div>
-                            <div className="marketplace-item">
-                                <img src={Section4_6} width="100%" height="auto" alt="Walmart" loading="lazy" />
+                            <div className="section4-grid-item">
+                                <img src={Section4_6} width="100%" height="auto" alt="Walmart" className="section4-grid-img" loading="lazy" />
                             </div>
                         </div>
 
-                        <div className="countdown-wrapper-items">
-                            <div className="stats-container">
-                                <div className="stat-item">
-                                    <div className="stat-value">
+                        <div className="section4-stats-wrapper">
+                            <div className="section4-stats-container">
+                                <div className="section4-stat-item">
+                                    <div className="section4-stat-value">
                                         <CountUp
                                             from={0}
                                             to={1200}
@@ -58,10 +59,10 @@ const Network2 = () => {
                                             onEnd={handleCounterComplete}
                                         />k
                                     </div>
-                                    <div className="stat-label">Happy Clients</div>
+                                    <div className="section4-stat-label">Happy Clients</div>
                                 </div>
-                                <div className="stat-item">
-                                    <div className="stat-value">
+                                <div className="section4-stat-item">
+                                    <div className="section4-stat-value">
                                         <CountUp
                                             from={0}
                                             to={92}
@@ -73,10 +74,10 @@ const Network2 = () => {
                                             onEnd={handleCounterComplete}
                                         />%
                                     </div>
-                                    <div className="stat-label">5 Star Reviews</div>
+                                    <div className="section4-stat-label">5 Star Reviews</div>
                                 </div>
-                                <div className="stat-item">
-                                    <div className="stat-value">
+                                <div className="section4-stat-item">
+                                    <div className="section4-stat-value">
                                         <CountUp
                                             from={0}
                                             to={100}
@@ -88,7 +89,7 @@ const Network2 = () => {
                                             onEnd={handleCounterComplete}
                                         />+
                                     </div>
-                                    <div className="stat-label">Quality Products</div>
+                                    <div className="section4-stat-label">Quality Products</div>
                                 </div>
                             </div>
                         </div>
@@ -96,13 +97,13 @@ const Network2 = () => {
                 </div>
             </section>
 
-            {/* Separate container for the overlapping image */}
-            <div className="network-image-container">
+            {/* Network-specific image container */}
+            <div className="section4-network-image-container">
                 <div className="page-width">
                     <img
                         src={Network_last}
                         alt="Our marketplace presence"
-                        className="network-image"
+                        className="section4-network-image"
                         loading="lazy"
                     />
                 </div>
