@@ -1,22 +1,17 @@
 import { useState, useCallback } from 'react';
-import emailjs from 'emailjs-com';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import arrow from "../assets/footer/arrow.svg"
-import insta from "../assets/footer/insta.svg"
-import facebook from "../assets/footer/facebook.svg"
-import twitter from "../assets/footer/twitter.svg"
+import arrow from "../assets/footer/arrow.svg";
+import insta from "../assets/footer/insta.svg";
+import facebook from "../assets/footer/facebook.svg";
+import twitter from "../assets/footer/twitter.svg";
+
 const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
 const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
 const twitterUrl = import.meta.env.VITE_TWITTER_URL;
 const contactNumber = import.meta.env.VITE_CONTACT_NUMBER;
 const contactLink = import.meta.env.VITE_CONTACT_LINK;
-
-// Initialize EmailJS (put these in your environment variables)
-const EMAILJS_SERVICE_ID = 'your_service_id';
-const EMAILJS_TEMPLATE_ID = 'your_template_id';
-const EMAILJS_USER_ID = 'your_user_id';
 
 const footerLinks = {
   b2b: [
@@ -43,6 +38,7 @@ const Footer = () => {
   });
   const [email, setEmail] = useState('');
   const [submissionStatus, setSubmissionStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleSection = useCallback((section) => {
     setExpandedSections(prev => ({
@@ -53,29 +49,36 @@ const Footer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setSubmissionStatus(null);
 
-    if (!email) {
+    if (!email || !email.includes('@')) {
       setSubmissionStatus('Please enter a valid email address');
+      setIsLoading(false);
       return;
     }
 
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          to_email: email,
-          from_name: 'Joyful Plastic',
-          message: 'Thank you for subscribing to our newsletter! Here are some exclusive offers...'
+      const response = await fetch('https://joyful-backend-backend-final-4-production.up.railway.app/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        EMAILJS_USER_ID
-      );
+        body: JSON.stringify({ email }),
+      });
 
-      setSubmissionStatus('Thank you for subscribing! Check your email for our welcome message.');
+      if (!response.ok) {
+        throw new Error('Subscription failed');
+      }
+
+      const data = await response.json();
+      setSubmissionStatus(data.message || 'Thank you for subscribing!');
       setEmail('');
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error:', error);
       setSubmissionStatus('Failed to subscribe. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -87,7 +90,6 @@ const Footer = () => {
     </ul>
   );
 
-
   return (<>
     <footer className="footer">
       <div className="page-width">
@@ -97,16 +99,26 @@ const Footer = () => {
             <div className="glass">
               <h3>Stay In The Loop!</h3>
               <p>News, Updates, Offers & Releases</p>
-              <form className="newsletter-form">
+              <form className="newsletter-form" onSubmit={handleSubmit}>
                 <div className="input-wrapper">
                   <FontAwesomeIcon icon={faEnvelope} size="lg" />
                   <input
                     type="email"
                     placeholder="Email address"
                     aria-label="Email address for newsletter"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
-                  <img src={arrow} alt="" loading="lazy" />
+                  <button type="submit" disabled={isLoading}>
+                    <img src={arrow} alt="Submit" loading="lazy" />
+                  </button>
                 </div>
+                {submissionStatus && (
+                  <p className={`submission-status ${submissionStatus.includes('Thank you') ? 'success' : 'error'}`}>
+                    {submissionStatus}
+                  </p>
+                )}
               </form>
             </div>
           </div>
@@ -134,7 +146,7 @@ const Footer = () => {
 
             <div
               id="b2b-mobile-list"
-              className={`footer-links mobile-only ${expandedSections.b2b ? 'mobile-show' : ''}`}
+              className={`footer-links mobile-list ${expandedSections.b2b ? 'expanded' : ''}`}
             >
               {renderList(footerLinks.b2b)}
             </div>
@@ -163,7 +175,7 @@ const Footer = () => {
 
             <div
               id="productLine-mobile-list"
-              className={`footer-links mobile-only ${expandedSections.productLine ? 'mobile-show' : ''}`}
+              className={`footer-links mobile-list ${expandedSections.productLine ? 'expanded' : ''}`}
             >
               {renderList(footerLinks.productLine)}
             </div>
