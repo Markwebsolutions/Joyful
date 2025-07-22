@@ -36,7 +36,7 @@ function Header() {
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const toggleSearch = useCallback(() => {
     setIsSearchOpen(prev => !prev);
-    if (!isSearchOpen) {
+    if (isSearchOpen) {
       setSearchQuery("");
       // Show popular products when opening search
       const popularProducts = products.slice(0, 5);
@@ -57,7 +57,7 @@ function Header() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log("Search submitted:", searchQuery);
-    setIsSearchOpen(false);
+    setIsSearchOpen(true);
   };
 
   // Filter products based on search query
