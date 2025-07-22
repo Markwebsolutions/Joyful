@@ -10,6 +10,8 @@ import twitter from "../assets/footer/twitter.svg"
 const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
 const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
 const twitterUrl = import.meta.env.VITE_TWITTER_URL;
+const contactNumber = import.meta.env.VITE_CONTACT_NUMBER;
+const contactLink = import.meta.env.VITE_CONTACT_LINK;
 
 // Initialize EmailJS (put these in your environment variables)
 const EMAILJS_SERVICE_ID = 'your_service_id';
@@ -189,7 +191,7 @@ const Footer = () => {
             <div className="sub-footer__contact">
               <p>
                 <span className="sub-footer__label">Call Us:</span>
-                <a className="sub-footer__phone" href="tel:+912267402200">+91 22 67402200</a></p>
+                <a className="sub-footer__phone" href={contactLink}>{contactNumber}</a></p>
               <p className="sub-footer__email">info@joyful.co.in</p>
             </div>
 
