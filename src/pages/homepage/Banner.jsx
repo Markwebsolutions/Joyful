@@ -13,6 +13,8 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import SplitText from '../../style/SplitText';
+const contactNumber = import.meta.env.VITE_CONTACT_NUMBER;
+const contactLink = import.meta.env.VITE_CONTACT_LINK;
 
 
 const Banner = () => {
@@ -84,7 +86,7 @@ const Banner = () => {
                                     />
                                     <div className="hero-phone-number-details">
                                         Call us now:<br />
-                                        <span>+91 22 67402200</span>
+                                        <a href={contactLink} className="contact-number"><span>{contactNumber}</span></a>
                                     </div>
                                 </div>
                             </div>

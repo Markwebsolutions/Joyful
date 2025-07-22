@@ -36,9 +36,8 @@ function Header() {
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const toggleSearch = useCallback(() => {
     setIsSearchOpen(prev => !prev);
-    if (isSearchOpen) {
+    if (!isSearchOpen) {
       setSearchQuery("");
-      // Show popular products when opening search
       const popularProducts = products.slice(0, 5);
       setSearchResults(popularProducts);
     } else {
@@ -60,11 +59,10 @@ function Header() {
     setIsSearchOpen(true);
   };
 
-  // Filter products based on search query
   useEffect(() => {
     if (searchQuery.trim() === "") {
       if (isSearchOpen) {
-        const popularProducts = products.slice(0, 5); // Show first 5 products
+        const popularProducts = products.slice(0, 5);
         setSearchResults(popularProducts);
       } else {
         setSearchResults([]);
@@ -211,71 +209,77 @@ function Header() {
           </div>
 
           <div className="mobile-search">
-            {isSearchOpen ? (
-              <form onSubmit={handleSearchSubmit} className="mobile-search-form">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  onFocus={() => {
-                    if (searchQuery.trim() === "") {
-                      const popularProducts = products.slice(0, 5);
-                      setSearchResults(popularProducts);
-                    }
-                  }}
-                  onBlur={() => {
-                    setTimeout(() => {
-                      if (searchQuery.trim() === "") {
-                        setSearchResults([]);
-                      }
-                    }, 200);
-                  }}
-                  placeholder="Search for products..."
-                  className="mobile-search-input"
-                  style={{
-                    backgroundColor: searchInputBg,
-                    color: searchInputColor,
-                    borderColor: isHomePage ? 'rgba(255,255,255,0.3)' : '#e1e1e1'
-                  }}
-                  autoFocus
-                />
-                <button type="submit" className="search-icon-container">
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className="icon"
-                    style={{ color: isHomePage ? 'white' : '#6b7280' }}
-                  />
-                </button>
-                {searchResults.length > 0 && (
-                  <div className="mobile-search-results-dropdown">
-                    {searchResults.map(product => (
-                      <div
-                        key={product.id}
-                        className="search-result-item"
-                        onClick={() => handleProductClick(product.id)}
-                      >
-                        <img
-                          src={product.mainimage || product.imagelink}
-                          alt={product.name}
-                          className="search-result-image"
-                        />
-                        <span className="search-result-name">{product.name}</span>
-                        {product.price && (
-                          <span className="search-result-price">₹{product.price}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </form>
-            ) : (
-              <button className={`icon-button ${iconButtonClass}`} onClick={toggleSearch}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
-              </button>
-            )}
+            <button className={`icon-button ${iconButtonClass}`} onClick={toggleSearch}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Expanded Mobile Search - Only visible on mobile */}
+      {isSearchOpen && (
+        <div className="mobile-search-expanded" style={{
+          backgroundColor: isHomePage ? '#274D63' : '#f5edda',
+          display: window.innerWidth >= 770 ? 'none' : 'block' // Hide on desktop
+        }}>
+          <form onSubmit={handleSearchSubmit} className="mobile-search-form-expanded">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onFocus={() => {
+                if (searchQuery.trim() === "") {
+                  const popularProducts = products.slice(0, 5);
+                  setSearchResults(popularProducts);
+                }
+              }}
+              onBlur={() => {
+                setTimeout(() => {
+                  if (searchQuery.trim() === "") {
+                    setSearchResults([]);
+                  }
+                }, 200);
+              }}
+              placeholder="Search for products..."
+              className="mobile-search-input-expanded"
+              style={{
+                backgroundColor: searchInputBg,
+                color: searchInputColor,
+                borderColor: isHomePage ? 'rgba(255,255,255,0.3)' : '#e1e1e1'
+              }}
+              autoFocus
+            />
+            <button type="submit" className="search-icon-container-expanded">
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                className="icon"
+                style={{ color: isHomePage ? 'white' : '#6b7280' }}
+              />
+            </button>
+            {searchResults.length > 0 && (
+              <div className="mobile-search-results-dropdown-expanded">
+                {searchResults.map(product => (
+                  <div
+                    key={product.id}
+                    className="search-result-item"
+                    onClick={() => handleProductClick(product.id)}
+                  >
+                    <img
+                      src={product.mainimage || product.imagelink}
+                      alt={product.name}
+                      className="search-result-image"
+                    />
+                    <span className="search-result-name">{product.name}</span>
+                    {product.price && (
+                      <span className="search-result-price">₹{product.price}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </form>
+        </div>
+      )}
 
       {/* Mobile Menu */}
       {isMenuOpen && (

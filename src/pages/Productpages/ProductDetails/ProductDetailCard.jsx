@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
+const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
+const twitterUrl = import.meta.env.VITE_TWITTER_URL;
 
 const ProductDetailCard = React.memo(({
     product,
@@ -135,13 +138,13 @@ const ProductDetailCard = React.memo(({
                     <div className="social-share">
                         <span>Share:</span>
                         <div className="social-icons">
-                            <a href="#" aria-label="Share on Instagram">
+                            <a href={instagramUrl} aria-label="Share on Instagram">
                                 <FaInstagram className="social-icon" />
                             </a>
-                            <a href="#" aria-label="Share on Facebook">
+                            <a href={facebookUrl} aria-label="Share on Facebook">
                                 <FaFacebookF className="social-icon" />
                             </a>
-                            <a href="#" aria-label="Share on Twitter">
+                            <a href={twitterUrl} aria-label="Share on Twitter">
                                 <FaTwitter className="social-icon" />
                             </a>
                         </div>

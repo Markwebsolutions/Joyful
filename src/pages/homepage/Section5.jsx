@@ -9,11 +9,12 @@ import Section5_7 from "../../assets/section3/instagram-7.jpg"
 import Section5_8 from "../../assets/section3/instagram-8.jpg"
 import Section5_9 from "../../assets/section3/instagram-9.jpg"
 import Section5_10 from "../../assets/section3/instagram-10.jpg"
+const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
 
 const Section5 = () => {
     return (
         <section className="follow-on-instagram">
-            <h2><img src={Section5_1} width="40px" height="40px" /> <span>Follow Us <strong>joyful</strong></span></h2>
+            <h2><a href={instagramUrl}><img src={Section5_1} width="40px" height="40px" /></a> <span>Follow Us <strong>joyful</strong></span></h2>
             <div className="follow-on-instagram-wrapper">
                 <div className="grid-row">
                     <div className="grid-column first-img">

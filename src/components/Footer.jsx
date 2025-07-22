@@ -7,6 +7,9 @@ import arrow from "../assets/footer/arrow.svg"
 import insta from "../assets/footer/insta.svg"
 import facebook from "../assets/footer/facebook.svg"
 import twitter from "../assets/footer/twitter.svg"
+const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
+const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
+const twitterUrl = import.meta.env.VITE_TWITTER_URL;
 
 // Initialize EmailJS (put these in your environment variables)
 const EMAILJS_SERVICE_ID = 'your_service_id';
@@ -199,9 +202,9 @@ const Footer = () => {
 
             <div className="sub-footer__social">
               <p className="sub-footer__social-label">Follow Us
-                <img className="sub-footer__social-icon" src={insta} alt="Instagram" loading="lazy" />
-                <img className="sub-footer__social-icon" src={facebook} alt="Facebook" loading="lazy" />
-                <img className="sub-footer__social-icon" src={twitter} alt="Twitter" loading="lazy" />
+                <a href={instagramUrl}><img className="sub-footer__social-icon" src={insta} alt="Instagram" loading="lazy" /></a>
+                <a href={facebookUrl}><img className="sub-footer__social-icon" src={facebook} alt="Facebook" loading="lazy" /></a>
+                <a href={twitterUrl}><img className="sub-footer__social-icon" src={twitter} alt="Twitter" loading="lazy" /></a>
               </p>
             </div>
           </div>

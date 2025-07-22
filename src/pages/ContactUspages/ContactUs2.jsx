@@ -5,6 +5,8 @@ import mail from "../../assets/ContactUs/mail.svg";
 import phone from "../../assets/ContactUs/phone.svg";
 import './ContactUs.css';
 import ContactForm from "./ContactUsForm";
+const contactNumber = import.meta.env.VITE_CONTACT_NUMBER;
+const contactLink = import.meta.env.VITE_CONTACT_LINK;
 
 const ContactUs = () => {
     const [agreeToTerms, setAgreeToTerms] = React.useState(false);
