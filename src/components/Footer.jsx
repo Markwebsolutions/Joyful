@@ -52,19 +52,31 @@ const Footer = () => {
     setIsLoading(true);
     setSubmissionStatus(null);
 
-    if (!email || !email.includes('@')) {
+    // More robust email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       setSubmissionStatus('Please enter a valid email address');
       setIsLoading(false);
       return;
     }
 
     try {
+      // Generate current date in the required format
+      const now = new Date();
+      const formattedDate = now.toISOString().replace('T', ' ').replace(/\.\d+Z$/, '');
+
+      const requestBody = {
+        subid: Date.now(), // Using timestamp as a simple unique ID
+        email: email,
+        date: formattedDate
+      };
+
       const response = await fetch('https://joyful-backend-backend-final-4-production.up.railway.app/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
@@ -81,7 +93,6 @@ const Footer = () => {
       setIsLoading(false);
     }
   };
-
   const renderList = (items) => (
     <ul className="footer-links">
       {items.map((item, index) => (
