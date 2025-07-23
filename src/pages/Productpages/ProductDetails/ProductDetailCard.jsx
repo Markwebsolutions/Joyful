@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+
 const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
 const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
 const twitterUrl = import.meta.env.VITE_TWITTER_URL;
@@ -14,12 +15,31 @@ const ProductDetailCard = React.memo(({
     onColorChange,
     onSizeChange,
     currentMainImage,
-    descriptionLines
+    descriptionLines,
+    isRelatedProduct = false
 }) => {
     const navigate = useNavigate();
-    const sanitizeHTML = useMemo(() => (html) => {
-        return { __html: html };
-    }, []);
+    const [mainImage, setMainImage] = useState(currentMainImage);
+    const sanitizeHTML = useMemo(() => (html) => ({ __html: html }), []);
+
+    // Update main image when selected color or currentMainImage prop changes
+    React.useEffect(() => {
+        setMainImage(currentMainImage);
+    }, [currentMainImage]);
+
+    const handleColorChange = (color) => {
+        onColorChange(color);
+        if (color.image) {
+            setMainImage(color.image);
+        }
+    };
+
+    const handleSizeChange = (size) => {
+        onSizeChange(size);
+        if (size.image) {
+            setMainImage(size.image);
+        }
+    };
 
     const handleEnquiryClick = () => {
         navigate('/inquiry', {
@@ -34,7 +54,7 @@ const ProductDetailCard = React.memo(({
     };
 
     return (
-        <div className="product-grid-row pagewidth">
+        <div className={`product-grid-row ${isRelatedProduct ? 'related-product' : ''}`}>
             <div className="product-grid-column left-column">
                 {(colorVariants.length > 0 || sizeVariants.length > 0) && (
                     <div className="variants-container">
@@ -44,7 +64,9 @@ const ProductDetailCard = React.memo(({
                                     src={color.image}
                                     alt={color.name}
                                     className={`variant-thumbnail ${selectedColor?.name === color.name ? 'active' : ''}`}
-                                    onClick={() => onColorChange(color)}
+                                    onClick={() => handleColorChange(color)}
+                                    onMouseEnter={() => color.image && setMainImage(color.image)}
+                                    onMouseLeave={() => selectedColor?.image && setMainImage(selectedColor.image)}
                                     loading="lazy"
                                 />
                             </div>
@@ -54,7 +76,7 @@ const ProductDetailCard = React.memo(({
                             <div
                                 key={`size-${size.value}`}
                                 className={`variant-thumbnails ${selectedSize?.value === size.value ? 'active' : ''}`}
-                                onClick={() => onSizeChange(size)}
+                                onClick={() => handleSizeChange(size)}
                             >
                                 {size.image ? (
                                     <img
@@ -62,6 +84,8 @@ const ProductDetailCard = React.memo(({
                                         alt={size.value}
                                         className="variant-thumbnail"
                                         loading="lazy"
+                                        onMouseEnter={() => size.image && setMainImage(size.image)}
+                                        onMouseLeave={() => selectedSize?.image && setMainImage(selectedSize.image)}
                                     />
                                 ) : (
                                     <div className="size-thumbnail-text">{size.value}</div>
@@ -73,7 +97,7 @@ const ProductDetailCard = React.memo(({
 
                 <div className="product-image-container">
                     <img
-                        src={currentMainImage}
+                        src={mainImage}
                         alt={product.name}
                         className="product-main-image"
                         loading="lazy"
@@ -83,7 +107,7 @@ const ProductDetailCard = React.memo(({
 
             <div className="product-grid-column right-column">
                 <div className="product-info">
-                    <h1 className="product-title">{product.name}</h1>
+                    <h1 className={`product-title ${isRelatedProduct ? 'related' : ''}`}>{product.name}</h1>
 
                     {colorVariants.length > 0 && (
                         <div className="color-option">
@@ -135,20 +159,22 @@ const ProductDetailCard = React.memo(({
                         ))}
                     </div>
 
-                    <div className="social-share">
-                        <span>Share:</span>
-                        <div className="social-icons">
-                            <a href={instagramUrl} aria-label="Share on Instagram">
-                                <FaInstagram className="social-icon" />
-                            </a>
-                            <a href={facebookUrl} aria-label="Share on Facebook">
-                                <FaFacebookF className="social-icon" />
-                            </a>
-                            <a href={twitterUrl} aria-label="Share on Twitter">
-                                <FaTwitter className="social-icon" />
-                            </a>
+                    {!isRelatedProduct && (
+                        <div className="social-share">
+                            <span>Share:</span>
+                            <div className="social-icons">
+                                <a href={instagramUrl} aria-label="Share on Instagram">
+                                    <FaInstagram className="social-icon" />
+                                </a>
+                                <a href={facebookUrl} aria-label="Share on Facebook">
+                                    <FaFacebookF className="social-icon" />
+                                </a>
+                                <a href={twitterUrl} aria-label="Share on Twitter">
+                                    <FaTwitter className="social-icon" />
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
