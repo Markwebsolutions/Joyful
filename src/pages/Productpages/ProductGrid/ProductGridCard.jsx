@@ -46,20 +46,21 @@ const ProductGridCard = ({ product }) => {
                 )}
                 <div className="product-variants">
                     {product.variants?.Size?.length > 0 && (
-                        <div className="size-options">
+                        <div className="card-options">
                             {product.variants.Size.map((size, i) => (
-                                <span key={i} className="size-option">
+                                <span key={i}
+                                    className="size-option-card">
                                     {size.value}
                                 </span>
                             ))}
                         </div>
                     )}
                     {product.variants?.Color?.length > 0 && (
-                        <div className="color-options">
+                        <div className="card-options">
                             {product.variants.Color.map((color, i) => (
                                 <span
                                     key={i}
-                                    className="color-circle"
+                                    className="color-circle-card"
                                     style={{
                                         backgroundColor: color.hex || '#ccc',
                                         borderColor: color.hex ? '#ddd' : '#999'

@@ -47,7 +47,7 @@
 
 .new-arrivals-card {
     border: 1px solid #eaeaea;
-    padding: 24px;
+    padding: 24px 24px 28px 24px;
     transition: all 0.3s ease;
     background: #f9f9f9;
     cursor: pointer;
@@ -112,15 +112,11 @@
 }
 
 .new-arrivals-name {
-    font: 500 16px/1.3 sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
     color: #333;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 42px;
 }
 
 .new-arrivals-price {
@@ -156,9 +152,9 @@
     display: flex;
 }
 
-.color-circle {
-    width: 16px;
-    height: 16px;
+.newarrival-color-circle {
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     border: 1px solid #eee;
     cursor: pointer;
@@ -220,10 +216,6 @@
         padding: 2px 6px;
     }
 
-    .color-circle {
-        width: 14px;
-        height: 14px;
-    }
 }
 
 /* Loading indicator for infinite scroll */

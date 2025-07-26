@@ -23,24 +23,26 @@ const ProductDetails = () => {
 
     const product = productDetails[productId];
 
-    const { variants, colorVariants, sizeVariants } = useMemo(() => {
-        if (!product) return { variants: {}, colorVariants: [], sizeVariants: [] };
+    const { variants, colorVariants, sizeVariants, capacityVariants } = useMemo(() => {
+        if (!product) return { variants: {}, colorVariants: [], sizeVariants: [], capacityVariants: [] };
 
         try {
             const variants = product.variantsMap ? JSON.parse(product.variantsMap) : {};
             return {
                 variants,
                 colorVariants: variants.Color || [],
-                sizeVariants: variants.Size || []
+                sizeVariants: variants.Size || [],
+                capacityVariants: variants.Capacity || []
             };
         } catch (e) {
             console.error('Error parsing variants:', e);
-            return { variants: {}, colorVariants: [], sizeVariants: [] };
+            return { variants: {}, colorVariants: [], sizeVariants: [], capacityVariants: [] };
         }
     }, [product]);
 
     const [selectedColor, setSelectedColor] = useState(colorVariants[0] || null);
     const [selectedSize, setSelectedSize] = useState(sizeVariants[0] || null);
+    const [selectedCapacity, setSelectedCapacity] = useState(capacityVariants[0] || null);
 
     useEffect(() => {
         if (!product && status !== 'loading') {
@@ -74,7 +76,7 @@ const ProductDetails = () => {
         return { currentCategory, subcategoryProducts };
     }, [product, categories, allProducts]);
 
-    const currentMainImage = selectedColor?.image || selectedSize?.image || product?.mainimage || '';
+    const currentMainImage = selectedColor?.image || selectedSize?.image || selectedCapacity?.image || product?.mainimage || '';
     const descriptionLines = useMemo(() =>
         product?.description?.split('\n').filter(line => line.trim() !== '') || [],
         [product]
@@ -82,6 +84,7 @@ const ProductDetails = () => {
 
     const handleColorChange = useCallback((color) => setSelectedColor(color), []);
     const handleSizeChange = useCallback((size) => setSelectedSize(size), []);
+    const handleCapacityChange = useCallback((capacity) => setSelectedCapacity(capacity), []);
 
     if (status === 'loading' || !product) return <ProductDetailsShimmer />;
     if (error) return <div className="page-width error-message">Error: {error}</div>;
@@ -95,10 +98,13 @@ const ProductDetails = () => {
                         product={product}
                         selectedColor={selectedColor}
                         selectedSize={selectedSize}
+                        selectedCapacity={selectedCapacity}
                         colorVariants={colorVariants}
                         sizeVariants={sizeVariants}
+                        capacityVariants={capacityVariants}
                         onColorChange={handleColorChange}
                         onSizeChange={handleSizeChange}
+                        onCapacityChange={handleCapacityChange}
                         currentMainImage={currentMainImage}
                         descriptionLines={descriptionLines}
                     />
@@ -117,4 +123,4 @@ const ProductDetails = () => {
     );
 };
 
-export default ProductDetails;
+export default ProductDetails;  

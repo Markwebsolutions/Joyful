@@ -47,7 +47,7 @@ const NewArrivalCard = ({ product, onClick, onKeyDown }) => {
                             {product.variants.Color.map((color, i) => (
                                 <span
                                     key={i}
-                                    className="color-circle"
+                                    className="newarrival-color-circle"
                                     style={{
                                         backgroundColor: color.hex || '#ccc',
                                         borderColor: color.hex ? '#ddd' : '#999'

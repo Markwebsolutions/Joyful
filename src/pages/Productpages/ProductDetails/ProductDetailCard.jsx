@@ -10,10 +10,13 @@ const ProductDetailCard = React.memo(({
     product,
     selectedColor,
     selectedSize,
+    selectedCapacity,
     colorVariants = [],
     sizeVariants = [],
+    capacityVariants = [],
     onColorChange,
     onSizeChange,
+    onCapacityChange,
     currentMainImage,
     descriptionLines,
     isRelatedProduct = false
@@ -41,22 +44,35 @@ const ProductDetailCard = React.memo(({
         }
     };
 
+    const handleCapacityChange = (capacity) => {
+        onCapacityChange(capacity);
+        if (capacity.image) {
+            setMainImage(capacity.image);
+        }
+    };
+
     const handleEnquiryClick = () => {
         navigate('/inquiry', {
             state: {
                 product: {
                     ...product,
                     color: selectedColor?.name,
-                    size: selectedSize?.value
+                    size: selectedSize?.value,
+                    capacity: selectedCapacity?.value
                 }
             }
         });
     };
 
+    // Filter size variants to only those with images for thumbnail display
+    const sizeVariantsWithImages = useMemo(() =>
+        sizeVariants.filter(size => size.image),
+        [sizeVariants]);
+
     return (
         <div className={`product-grid-row ${isRelatedProduct ? 'related-product' : ''}`}>
             <div className="product-grid-column left-column">
-                {(colorVariants.length > 0 || sizeVariants.length > 0) && (
+                {(colorVariants.length > 0 || sizeVariantsWithImages.length > 0 || capacityVariants.length > 0) && (
                     <div className="variants-container">
                         {colorVariants.map((color) => (
                             <div key={`color-${color.name}`} className="variant-thumbnails">
@@ -72,23 +88,40 @@ const ProductDetailCard = React.memo(({
                             </div>
                         ))}
 
-                        {sizeVariants.map((size) => (
+                        {sizeVariantsWithImages.map((size) => (
                             <div
                                 key={`size-${size.value}`}
                                 className={`variant-thumbnails ${selectedSize?.value === size.value ? 'active' : ''}`}
                                 onClick={() => handleSizeChange(size)}
                             >
-                                {size.image ? (
+                                <img
+                                    src={size.image}
+                                    alt={size.value}
+                                    className="variant-thumbnail"
+                                    loading="lazy"
+                                    onMouseEnter={() => size.image && setMainImage(size.image)}
+                                    onMouseLeave={() => selectedSize?.image && setMainImage(selectedSize.image)}
+                                />
+                            </div>
+                        ))}
+
+                        {capacityVariants.map((capacity) => (
+                            <div
+                                key={`capacity-${capacity.value}`}
+                                className={`variant-thumbnails ${selectedCapacity?.value === capacity.value ? 'active' : ''}`}
+                                onClick={() => handleCapacityChange(capacity)}
+                            >
+                                {capacity.image ? (
                                     <img
-                                        src={size.image}
-                                        alt={size.value}
+                                        src={capacity.image}
+                                        alt={capacity.value}
                                         className="variant-thumbnail"
                                         loading="lazy"
-                                        onMouseEnter={() => size.image && setMainImage(size.image)}
-                                        onMouseLeave={() => selectedSize?.image && setMainImage(selectedSize.image)}
+                                        onMouseEnter={() => capacity.image && setMainImage(capacity.image)}
+                                        onMouseLeave={() => selectedCapacity?.image && setMainImage(selectedCapacity.image)}
                                     />
                                 ) : (
-                                    <div className="size-thumbnail-text">{size.value}</div>
+                                    <div className="capacity-thumbnail-text">{capacity.value}</div>
                                 )}
                             </div>
                         ))}
@@ -108,44 +141,63 @@ const ProductDetailCard = React.memo(({
             <div className="product-grid-column right-column">
                 <div className="product-info">
                     <h1 className={`product-title ${isRelatedProduct ? 'related' : ''}`}>{product.name}</h1>
+                    <div className="option-selection">
 
-                    {colorVariants.length > 0 && (
-                        <div className="color-option">
-                            <label>Color: <span className="selected-color">{selectedColor?.name}</span></label>
-                            <div className="color-options">
-                                {colorVariants.map((color) => (
-                                    <span
-                                        key={`color-btn-${color.name}`}
-                                        className={`color-circle ${selectedColor?.name === color.name ? 'active' : ''}`}
-                                        style={{
-                                            backgroundColor: color.hex || '#ccc',
-                                            borderColor: color.hex ? '#ddd' : '#999'
-                                        }}
-                                        onClick={() => onColorChange(color)}
-                                        title={color.name}
-                                    />
-                                ))}
+                        {colorVariants.length > 0 && (
+                            <div className="option-container">
+                                <label className='option-name'>Color: <span className="option-span">{selectedColor?.name}</span></label>
+                                <div className="option-variants">
+                                    {colorVariants.map((color) => (
+                                        <span
+                                            key={`color-btn-${color.name}`}
+                                            className={`color-circle ${selectedColor?.name === color.name ? 'active' : ''}`}
+                                            style={{
+                                                backgroundColor: color.hex || '#ccc',
+                                                borderColor: color.hex ? '#ddd' : '#999'
+                                            }}
+                                            onClick={() => onColorChange(color)}
+                                            title={color.name}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    {sizeVariants.length > 0 && (
-                        <div className="size-option">
-                            <label>Size: <span className="selected-size">{selectedSize?.value}</span></label>
-                            <div className="size-options">
-                                {sizeVariants.map((size) => (
-                                    <span
-                                        key={`size-btn-${size.value}`}
-                                        className={`size-option ${selectedSize?.value === size.value ? 'active' : ''}`}
-                                        onClick={() => onSizeChange(size)}
-                                    >
-                                        {size.value}
-                                    </span>
-                                ))}
+                        {sizeVariants.length > 0 && (
+                            <div className="option-container">
+                                <label className='option-name'>Size: <span className="option-span">{selectedSize?.value}</span></label>
+                                <div className="option-variants">
+                                    {sizeVariants.map((size) => (
+                                        <span
+                                            key={`size-btn-${size.value}`}
+                                            className={`size-square ${selectedSize?.value === size.value ? 'active' : ''}`}
+                                            onClick={() => onSizeChange(size)}
+                                        >
+                                            {size.value}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
+                        {capacityVariants.length > 0 && (
+                            <div className="option-container">
+                                <label className='option-name'>Capacity: <span className="option-span">{selectedCapacity?.value}</span></label>
+                                <div className="option-variants">
+                                    {capacityVariants.map((capacity) => (
+                                        <span
+                                            key={`capacity-btn-${capacity.value}`}
+                                            className={`capacity-circle${selectedCapacity?.value === capacity.value ? 'active' : ''}`}
+                                            onClick={() => onCapacityChange(capacity)}
+                                        >
+                                            {capacity.value}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
                     <button className="enquiry-button" onClick={handleEnquiryClick}>Send Enquiry</button>
 
                     <div className="product-description">
