@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -11,14 +11,47 @@ import "./Section.css";
 
 const Section1 = () => {
   const navigate = useNavigate();
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add animation classes when section comes into view
+            if (imageRef.current) {
+              imageRef.current.classList.add('animate-from-left');
+            }
+            if (contentRef.current) {
+              contentRef.current.classList.add('animate-from-right');
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when 10% of the element is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   const handleInquiryClick = () => {
     navigate("/contact#contact-form");
   };
 
   return (
-    <div className="section-container">
-      <div className="section-image">
+    <div className="section-container" ref={sectionRef}>
+      <div className="section-image" ref={imageRef}>
         <img
           src={SectionImage}
           alt="Joyful Plastics products"
@@ -27,7 +60,7 @@ const Section1 = () => {
         />
       </div>
 
-      <div className="section-content">
+      <div className="section-content" ref={contentRef}>
         <div className="section-tagline">#1 manufacturer and seller of</div>
         <h1 className="section-title">
           Welcome to<br /><strong>Joyful Plastics.</strong>

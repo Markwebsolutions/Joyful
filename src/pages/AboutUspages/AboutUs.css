@@ -177,3 +177,41 @@
         font-size: 1.1rem;
     }
 }
+
+/* Add these to your existing CSS */
+
+.about-us-image-wrapper,
+.about-us-content {
+    opacity: 0;
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* Initial states */
+.about-us-container.even .about-us-image-wrapper {
+    transform: translateX(-50px);
+}
+
+.about-us-container.even .about-us-content {
+    transform: translateX(50px);
+}
+
+.about-us-container.odd .about-us-image-wrapper {
+    transform: translateX(50px);
+}
+
+.about-us-container.odd .about-us-content {
+    transform: translateX(-50px);
+}
+
+/* Animation classes */
+.slide-in-left {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+}
+
+.slide-in-right {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+}
+
+/* Keep the rest of your existing CSS */

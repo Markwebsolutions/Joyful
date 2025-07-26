@@ -1,22 +1,57 @@
-import "./Section.css"
-import Section3_1 from "../../assets/section3/100-Virgin-Plastic.svg"
-import Section3_2 from "../../assets/section3/Easy-to-Clean-and-Maintain.svg"
-import Section3_3 from "../../assets/section3/Ergonomic-Safe-Design.svg"
-import Section3_4 from "../../assets/section3/Made-for-Indian-Homes.svg"
-import Section3_5 from "../../assets/section3/Non-Toxic-and-BPA-Free.svg"
-import Section3_6 from "../../assets/section3/recyclable-environmentally-responsible.svg"
-import Section3_7 from "../../assets/section3/Sturdy-Build-Lasts-Longer.svg"
-import Section3_8 from "../../assets/section3/Vibrant-Fade-Resistant-Colors.svg"
-import Section3_9 from "../../assets/section3/why-joyful.jpg"
-
+import { useEffect, useRef } from "react";
+import "./Section.css";
+import Section3_1 from "../../assets/section3/100-Virgin-Plastic.svg";
+import Section3_2 from "../../assets/section3/Easy-to-Clean-and-Maintain.svg";
+import Section3_3 from "../../assets/section3/Ergonomic-Safe-Design.svg";
+import Section3_4 from "../../assets/section3/Made-for-Indian-Homes.svg";
+import Section3_5 from "../../assets/section3/Non-Toxic-and-BPA-Free.svg";
+import Section3_6 from "../../assets/section3/recyclable-environmentally-responsible.svg";
+import Section3_7 from "../../assets/section3/Sturdy-Build-Lasts-Longer.svg";
+import Section3_8 from "../../assets/section3/Vibrant-Fade-Resistant-Colors.svg";
+import Section3_9 from "../../assets/section3/why-joyful.jpg";
 
 const Section3 = () => {
+    const sectionRef = useRef(null);
+    const leftColumnRef = useRef(null);
+    const rightColumnRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Add animation classes when section comes into view
+                        if (leftColumnRef.current) {
+                            leftColumnRef.current.classList.add("animate-from-left");
+                        }
+                        if (rightColumnRef.current) {
+                            rightColumnRef.current.classList.add("animate-from-right");
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 } // Trigger when 10% of the element is visible
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     return (
-        <section className="why-joyful-different ">
+        <section className="why-joyful-different" ref={sectionRef}>
             <div className="page-width">
                 <div className="grid-row">
-                    <div className="grid-column">
-                        <h2>Why Joyful <strong>Different form Others</strong></h2>
+                    <div className="grid-column grid-opacity" ref={leftColumnRef}>
+                        <h2>
+                            Why Joyful <strong>Different form Others</strong>
+                        </h2>
                         <div className="grid-row-child-wrapper">
                             <div className="grid-column-child-wrapper">
                                 <img src={Section3_1} width="" alt="100% Virgin Plastic" />
@@ -79,16 +114,15 @@ const Section3 = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="grid-column">
+                    <div className="grid-column" ref={rightColumnRef}>
                         <div className="img-wrapper">
-                            <img src={Section3_9} />
+                            <img src={Section3_9} alt="Why Joyful is different" />
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+    );
+};
 
-    )
-}
-
-export default Section3
+export default Section3;

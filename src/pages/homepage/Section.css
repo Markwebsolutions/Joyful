@@ -147,7 +147,6 @@
   margin-left: 0.5rem;
 }
 
-/* Add these to your CSS */
 .dark-button {
   padding: 0.9rem 1.6rem;
   font-size: 13px;
@@ -177,22 +176,6 @@
 .dark-button:hover .icon {
   transform: translateX(5px);
 }
-
-
-/* Mobile responsive styles */
-@media (max-width: 768px) {
-  .dark-button {
-    padding: 0.5rem 1.2rem;
-    font-size: 11px;
-  }
-
-  .dark-button:hover .icon {
-    transform: translateX(3px);
-  }
-}
-
-/* dark button  */
-
 
 .contact-info {
   display: flex;
@@ -244,11 +227,11 @@
 
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(8px);
   }
 
   50% {
-    transform: translateY(-18px);
+    transform: translateY(-15px);
   }
 }
 
@@ -436,8 +419,71 @@
   }
 }
 
+/* Add these animation styles to your Section.css */
 
-/* Section2.css */
+/* Initial state for animation */
+.section-image {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s ease-out;
+}
+
+.section-content {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease-out;
+}
+
+/* Animated state */
+.section-image.animate-from-left {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.section-content.animate-from-right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* For desktop layout */
+@media (min-width: 768px) {
+  .section-container {
+    display: grid;
+    grid-template-columns: calc(55% - 3rem) calc(45% - 3rem);
+    align-items: flex-start;
+    gap: 6rem;
+    padding: 4.375rem 0;
+  }
+
+  /* Adjust animation timing for desktop */
+  .section-image {
+    transition-delay: 0.1s;
+  }
+
+  .section-content {
+    transition-delay: 0.3s;
+  }
+}
+
+/* For mobile layout */
+@media (max-width: 767px) {
+  .section-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Adjust animation timing for mobile */
+  .section-image {
+    transition-delay: 0.1s;
+  }
+
+  .section-content {
+    transition-delay: 0.2s;
+  }
+}
+
+/* section 2 */
 .grid-section {
   height: auto;
   background: #F5EDDA;
@@ -485,7 +531,6 @@
   transform: scale(1.03);
 }
 
-/* Button styles */
 .image-container button {
   position: absolute;
   background: #333;
@@ -554,7 +599,6 @@
   gap: 10px;
 }
 
-/* Media query for small devices (below tablet) */
 @media (max-width: 768px) {
   .grid-section {
     height: auto;
@@ -591,20 +635,11 @@
   }
 }
 
-/* section 3 and 4 */
-.page-width {
-  max-width: 1600px;
-  width: 90%;
-  margin: 0 auto;
-}
+/* section 3 */
 
 .why-joyful-different h2 {
   margin-top: 0;
   margin-bottom: 30px;
-}
-
-.why-joyful-different h2 {
-
   font-weight: 400;
   font-size: 48px;
   line-height: 1.4;
@@ -612,7 +647,6 @@
 }
 
 .why-joyful-different h3 {
-
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
@@ -622,14 +656,12 @@
 .why-joyful-different p {
   margin: 0;
   color: #000000B2;
-}
-
-.why-joyful-different {
-
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  margin: 0;
+}
+
+.why-joyful-different {
   margin-bottom: 30px;
 }
 
@@ -639,10 +671,12 @@
   align-items: center;
   gap: 20px;
   padding: 0px 20px 0 20px;
-}
-
-.why-joyful-different h3 {
-  margin-bottom: 10px;
+  height: 130px;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
 }
 
 .why-joyful-different .grid-row-child-wrapper {
@@ -661,288 +695,11 @@
   width: 100%;
   object-fit: cover;
   object-position: left;
-}
-
-
-.why-joyful-different .grid-column-child-wrapper {
-  height: 130px;
-}
-
-.why-joyful-different .img-wrapper img {
   height: 730px;
 }
 
 .why-joyful-different {
   padding: 60px 0;
-}
-
-.joyful-clients-wrapper .grid-row {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 25px;
-}
-
-.joyful-clients {
-  background: #000CB70D;
-  padding: 70px 0;
-}
-
-.joyful-clients h2 {
-
-  font-weight: 400;
-  font-size: 48px;
-  line-height: 110.00000000000001%;
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 815px;
-  margin-top: 60px;
-  gap: 20px;
-}
-
-.stats-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  padding-bottom: 20px;
-}
-
-.stat-label {
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 100%;
-  text-align: center;
-  color: #0000007a;
-  margin-top: 12px;
-}
-
-.stat-value {
-  font-weight: 700;
-  font-size: 54px;
-  line-height: 60px;
-  text-transform: capitalize;
-  text-align: center;
-  color: #D67A1D;
-}
-
-.why-joyful-different p {
-  margin: 0;
-  color: #000000B2;
-  max-width: 240px;
-  line-height: 1.6;
-
-  font-weight: 400;
-  font-size: 14px;
-}
-
-.stat-item:not(:last-child) {
-  position: relative;
-}
-
-.stat-item:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  right: -35px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  /* background-image: url(images/arrow-right.png); */
-  background-image: url(../../assets/section3/arrow-right.png);
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-.follow-on-instagram h2 {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  justify-content: center;
-
-  font-weight: 400;
-  font-size: 48px;
-  line-height: 110.00000000000001%;
-  text-align: center;
-}
-
-.follow-on-instagram {
-  padding: 60px 0;
-}
-
-.follow-on-instagram-wrapper .grid-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  margin-top: 50px;
-}
-
-.follow-on-instagram-wrapper img {
-  display: block;
-}
-
-.grid-child-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.follow-on-instagram-wrapper .first-img {
-  /* background: url('images/instagram-1.jpg'); */
-  background: url('../../assets/section3/instagram-1.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-}
-
-.follow-on-instagram-wrapper .last-img {
-  /* background: url('images/instagram-11.jpg'); */
-  background: url('../../assets/section3/instagram-11.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-}
-
-@media only screen and (min-width: 0px) and (max-width: 767px) {
-  .why-joyful-different {
-    padding: 40px 0;
-    margin-bottom: 0px;
-  }
-
-  .why-joyful-different h2 {
-    max-width: 355px;
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 1.3;
-  }
-
-  .why-joyful-different p {
-    line-height: 1.6;
-  }
-
-  .why-joyful-different .grid-row-child-wrapper {
-    grid-template-columns: repeat(1, 2fr);
-  }
-
-  .why-joyful-different .grid-row {
-    grid-template-columns: 1fr;
-  }
-
-  .why-joyful-different .img-wrapper img {
-    height: 100%;
-  }
-
-  .why-joyful-different .grid-column:nth-child(2) {
-    grid-row: 1;
-  }
-
-  .joyful-clients-wrapper .grid-row {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .stat-value {
-
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 100%;
-    text-transform: capitalize;
-  }
-
-  .stat-label {
-    color: #0000007a;
-    margin-top: 12px;
-
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 100%;
-    text-align: center;
-  }
-
-  .stat-item:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    right: -24px;
-    top: 30%;
-    transform: translateY(-70%);
-    width: 30px;
-    height: 50px;
-    /* background-image: url(images/arrow-right.png); */
-    background-image: url(../../assets/section3/arrow-right.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-
-  .joyful-clients-wrapper .grid-row {
-    gap: 16px;
-  }
-
-  .joyful-clients {
-    background: #000CB70D;
-    padding: 40px 0;
-  }
-
-  .joyful-clients h2 {
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 110.00000000000001%;
-    letter-spacing: 0%;
-    text-align: center;
-  }
-
-  .follow-on-instagram h2 {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-
-    font-weight: 400;
-    font-size: 38px;
-    line-height: 110.00000000000001%;
-    text-align: center;
-  }
-
-  .follow-on-instagram .grid-column {
-    display: none;
-  }
-
-  .follow-on-instagram .grid-column.mobile-show {
-    display: block;
-  }
-
-  .follow-on-instagram-wrapper .grid-row {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .follow-on-instagram-wrapper .grid-child-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-}
-
-
-/* Add these styles to your existing Section.css */
-
-.why-joyful-different .grid-column-child-wrapper {
-  background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 0px 20px 0 20px;
-  height: 130px;
-  transition: all 0.3s ease;
-  transform-style: preserve-3d;
-  position: relative;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
 }
 
 /* 3D hover effect */
@@ -969,7 +726,41 @@
   transform: scale(1.05) translateZ(10px);
 }
 
-/* Optimized Network Section 4 */
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .why-joyful-different {
+    padding: 40px 0;
+    margin-bottom: 0px;
+  }
+
+  .why-joyful-different h2 {
+    max-width: 355px;
+    font-size: 32px;
+    line-height: 1.3;
+  }
+
+  .why-joyful-different p {
+    line-height: 1.6;
+  }
+
+  .why-joyful-different .grid-row-child-wrapper {
+    grid-template-columns: repeat(1, 2fr);
+  }
+
+  .why-joyful-different .grid-row {
+    grid-template-columns: 1fr;
+  }
+
+  .why-joyful-different .img-wrapper img {
+    height: 100%;
+  }
+
+  .why-joyful-different .grid-column:nth-child(2) {
+    grid-row: 1;
+  }
+}
+
+
+/* section 4 */
 .section4-wrapper {
   position: relative;
 }
@@ -988,21 +779,6 @@
   margin-bottom: 3rem;
 }
 
-.network-content {
-  background: #000CB70D;
-  padding: 70px 0 300px;
-  position: relative;
-  z-index: 1;
-}
-
-.network-content h2 {
-  font-weight: 400;
-  font-size: 48px;
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-/* Marketplace Grid with Hover Effects */
 .section4-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -1040,7 +816,6 @@
   transform: scale(1.1);
 }
 
-/* Stats Container */
 .section4-stats-wrapper {
   margin: 60px;
 }
@@ -1077,13 +852,12 @@
   color: #000000d0;
 }
 
-/* Arrow between items */
-.section4-stat-item:not(:last-child)::after {
+.stat-item:not(:last-child)::after {
   content: "";
   position: absolute;
   right: -35px;
   top: 50%;
-  transform: translateY(-70%);
+  transform: translateY(-50%);
   width: 50px;
   height: 50px;
   background-image: url(../../assets/section3/arrow-right.png);
@@ -1092,22 +866,6 @@
   background-size: contain;
 }
 
-/* Network Image Container (only for Network component) */
-.section4-network-image-container {
-  position: relative;
-  margin-top: -300px;
-  z-index: 2;
-}
-
-.section4-network-image {
-  width: 100%;
-  max-height: 613px;
-  object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-
-/* Animations */
 @keyframes floatIn {
   0% {
     opacity: 0;
@@ -1120,7 +878,6 @@
   }
 }
 
-/* Individual item animation delays */
 .section4-grid-item:nth-child(1) {
   animation-delay: 0.1s;
 }
@@ -1145,7 +902,6 @@
   animation-delay: 0.6s;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
   .section4-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1153,14 +909,6 @@
 
   .section4-content {
     padding: 70px 0;
-  }
-
-  .network-content {
-    padding: 70px 0 200px;
-  }
-
-  .section4-network-image-container {
-    margin-top: -150px;
   }
 
   .section4-stat-item {
@@ -1181,26 +929,9 @@
     gap: 15px;
   }
 
-  .section4-content {
-    padding: 70px 0;
-  }
-
-  .network-content {
-    padding: 50px 0 150px;
-  }
-
   .section4-content h2 {
     font-size: 1.8rem;
     margin-bottom: 24px;
-  }
-
-  .network-content h2 {
-    font-size: 1.8rem;
-    margin-bottom: 24px;
-  }
-
-  .section4-network-image-container {
-    margin-top: -100px;
   }
 
   .section4-stats-container {
@@ -1228,7 +959,7 @@
     font-size: 12px;
   }
 
-  .section4-stat-item:not(:last-child)::after {
+  .stat-item:not(:last-child)::after {
     right: -16px;
     width: 16px;
     height: 16px;
@@ -1247,14 +978,6 @@
     padding: 40px 0;
   }
 
-  .network-content {
-    padding: 40px 0 100px;
-  }
-
-  .section4-network-image-container {
-    margin-top: -80px;
-  }
-
   .section4-stats-container {
     gap: 5px;
   }
@@ -1271,7 +994,7 @@
     font-size: 10px;
   }
 
-  .section4-stat-item:not(:last-child)::after {
+  .stat-item:not(:last-child)::after {
     width: 24px;
     height: 16px;
     transform: translateY(-100%);
@@ -1279,5 +1002,141 @@
 
   .section4-stats-wrapper {
     margin: 24px 0 0;
+  }
+}
+
+/* section 5 */
+.follow-on-instagram h2 {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 110.00000000000001%;
+  text-align: center;
+}
+
+.follow-on-instagram {
+  padding: 60px 0;
+}
+
+.follow-on-instagram-wrapper .follow-grid-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.follow-on-instagram-wrapper img {
+  display: block;
+}
+
+.grid-child-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.follow-on-instagram-wrapper .first-img {
+  background: url('../../assets/section3/instagram-1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+
+.follow-on-instagram-wrapper .last-img {
+  background: url('../../assets/section3/instagram-11.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .follow-on-instagram h2 {
+    flex-direction: column;
+    gap: 20px;
+    font-size: 38px;
+  }
+
+  .follow-on-instagram .grid-column {
+    display: none;
+  }
+
+  .follow-on-instagram .grid-column.mobile-show {
+    display: block;
+  }
+
+  .follow-on-instagram-wrapper .follow-grid-row {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .follow-on-instagram-wrapper .grid-child-row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+}
+
+/* network */
+.network-content {
+  background: #000CB70D;
+  padding: 70px 0 300px;
+  position: relative;
+  z-index: 1;
+}
+
+.network-content h2 {
+  font-weight: 400;
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section4-network-image-container {
+  position: relative;
+  margin-top: -300px;
+  z-index: 2;
+}
+
+.section4-network-image {
+  width: 100%;
+  max-height: 613px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+@media (max-width: 1024px) {
+  .network-content {
+    padding: 70px 0 200px;
+  }
+
+  .section4-network-image-container {
+    margin-top: -150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .network-content {
+    padding: 50px 0 150px;
+  }
+
+  .network-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+  }
+
+  .section4-network-image-container {
+    margin-top: -100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-content {
+    padding: 40px 0 100px;
+  }
+
+  .section4-network-image-container {
+    margin-top: -80px;
   }
 }

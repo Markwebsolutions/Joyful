@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import AboutUs_1 from "../../assets/AboutUs/AboutUs_1.jpg";
 import AboutUs_2 from "../../assets/AboutUs/AboutUs_2.jpg";
 import AboutUs_3 from "../../assets/AboutUs/AboutUs_3.jpg";
@@ -6,6 +7,8 @@ import gift from "../../assets/Section1/gift.svg";
 import "./AboutUs.css";
 
 const AboutUs2 = () => {
+    const sectionRefs = useRef([]);
+
     const items = [
         {
             src: AboutUs_1,
@@ -53,11 +56,50 @@ const AboutUs2 = () => {
         }
     ];
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const container = entry.target.querySelector('.about-us-container');
+                        const image = entry.target.querySelector('.about-us-image-wrapper');
+                        const content = entry.target.querySelector('.about-us-content');
+
+                        if (container.classList.contains('even')) {
+                            image.classList.add('slide-in-left');
+                            content.classList.add('slide-in-right');
+                        } else {
+                            image.classList.add('slide-in-right');
+                            content.classList.add('slide-in-left');
+                        }
+
+                        // Unobserve after animation to prevent repeating
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.1,
+            }
+        );
+
+        sectionRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            sectionRefs.current.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+            });
+        };
+    }, []);
+
     return (
         <div className="about-us-wrapper">
             {items.map((item, index) => (
                 <section
                     key={index}
+                    ref={(el) => (sectionRefs.current[index] = el)}
                     className="about-us-section"
                     style={{ backgroundColor: item.bgColor }}
                 >

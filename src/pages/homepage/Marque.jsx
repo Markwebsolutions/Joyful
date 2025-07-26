@@ -38,7 +38,7 @@ const Marquee = () => {
             <div style={{
                 display: 'flex',
                 gap: '50px',
-                animation: 'marquee 35s linear infinite',
+                animation: 'marquee 62s linear infinite',
                 willChange: 'transform' // Optimize for performance
             }}>
                 {duplicatedItems.map((item, index) => (

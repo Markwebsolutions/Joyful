@@ -16,7 +16,7 @@ const Section5 = () => {
         <section className="follow-on-instagram">
             <h2><a href={instagramUrl}><img src={Section5_1} width="40px" height="40px" /></a> <span>Follow Us <strong>joyful</strong></span></h2>
             <div className="follow-on-instagram-wrapper">
-                <div className="grid-row">
+                <div className="follow-grid-row">
                     <div className="grid-column first-img">
 
                     </div>

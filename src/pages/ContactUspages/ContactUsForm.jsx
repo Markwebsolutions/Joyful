@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import './ContactUs.css';
 
 const ContactForm = ({
-    agreeToTerms,
-    setAgreeToTerms,
     formTitle = "Get in Touch",
     showNameFields = true,
     showSubjectField = true,
@@ -164,27 +162,10 @@ const ContactForm = ({
                     required
                 ></textarea>
 
-                <div className="terms-container">
-                    <label className="terms-label">
-                        <input
-                            type="checkbox"
-                            checked={agreeToTerms}
-                            onChange={(e) => setAgreeToTerms(e.target.checked)}
-                            className="terms-checkbox"
-                            required
-                        />
-                        <span className="terms-text">
-                            By clicking on "{buttonText}" you agree with our
-                            <a href="/terms" className="terms-link"> Terms and Conditions</a>,
-                            meaning you agree to get back in touch with you based on provided
-                            information when filling your form.
-                        </span>
-                    </label>
-                </div>
                 <button
                     type="submit"
                     className="submit-btn"
-                    disabled={!agreeToTerms || isSubmitting}
+                    disabled={isSubmitting}
                 >
                     {isSubmitting ? "Submitting..." : buttonText}
                 </button>

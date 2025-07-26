@@ -56,7 +56,7 @@ function Header() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log("Search submitted:", searchQuery);
-    setIsSearchOpen(true);
+    // Don't close search on submit
   };
 
   useEffect(() => {
@@ -123,7 +123,7 @@ function Header() {
 
         <div className="header-actions">
           <div className="search-container">
-            {isSearchOpen ? (
+            {isSearchOpen && (
               <form onSubmit={handleSearchSubmit} className="search-form">
                 <input
                   type="text"
@@ -180,11 +180,14 @@ function Header() {
                   </div>
                 )}
               </form>
-            ) : (
-              <button className={`icon-button ${iconButtonClass}`} onClick={toggleSearch}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
-              </button>
             )}
+            <button
+              className={`icon-button ${iconButtonClass}`}
+              onClick={toggleSearch}
+              style={{ display: isSearchOpen ? 'none' : 'block' }}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
+            </button>
           </div>
           <button className="primary-button" onClick={handleInquiryClick}>
             Send Inquiry
