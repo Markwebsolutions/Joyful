@@ -149,7 +149,7 @@
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    gap: 10px;
 }
 
 .product-card {
@@ -212,12 +212,6 @@
     text-overflow: ellipsis;
 }
 
-.card-price {
-    font-size: 16px;
-    font-weight: 600;
-    color: #D67A1D;
-    margin: 0;
-}
 
 
 

@@ -2,7 +2,8 @@
 .new-arrival-container {
     max-width: 1600px;
     margin: 0 auto;
-    padding: 20px;
+    width: 90%;
+    padding: 50px 0;
 }
 
 .new-arrival-header {
@@ -10,12 +11,15 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .new-arrival-title {
     font-size: 28px;
     font-weight: 600;
     color: #333;
+    margin: 0;
 }
 
 .new-arrival-sort {
@@ -27,6 +31,7 @@
 .new-arrival-sort-label {
     font-size: 16px;
     color: #555;
+    white-space: nowrap;
 }
 
 .new-arrival-sort-select {
@@ -35,31 +40,40 @@
     border-radius: 4px;
     background-color: white;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: all 0.3s;
+    font-size: 14px;
+    min-width: 180px;
 }
 
-.new-arrival-sort-select:hover {
+.new-arrival-sort-select:hover,
+.new-arrival-sort-select:focus {
     border-color: #D67A1D;
+    outline: none;
 }
 
-/* Product Grid */
+/* Product Grid - Updated to match card styling */
 .new-arrival-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
 
 .new-arrival-card {
     border: 1px solid #eaeaea;
+    padding: 20px;
     overflow: hidden;
     transition: all 0.3s ease;
-    background: white;
+    background: #F5F5F5;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .new-arrival-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
 }
 
 /* Image Container */
@@ -67,8 +81,8 @@
     position: relative;
     width: 100%;
     padding-top: 100%;
-    /* 1:1 Aspect Ratio */
     overflow: hidden;
+    margin-bottom: 15px;
 }
 
 .new-arrival-image {
@@ -77,145 +91,161 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.new-arrival-main-image {
-    opacity: 1;
+.new-arrival-card:hover .new-arrival-image {
+    transform: scale(1.05);
 }
 
-.new-arrival-hover-image {
-    opacity: 0;
-}
-
-.new-arrival-card:hover .new-arrival-main-image {
-    opacity: 0;
-}
-
-.new-arrival-card:hover .new-arrival-hover-image {
-    opacity: 1;
-}
-
-/* Product Info */
+/* Product Info - Updated to match card styling */
 .new-arrival-info {
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .new-arrival-name {
     font-size: 16px;
     font-weight: 500;
     color: #333;
-    margin-bottom: 8px;
-    white-space: nowrap;
+    margin-bottom: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.new-arrival-price {
-    font-size: 16px;
-    font-weight: 600;
-    color: #D67A1D;
-    margin-bottom: 12px;
-}
-
-/* Variants */
+/* Variants - Updated to match card styling */
 .new-arrival-variants {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 10px;
+    margin-top: auto;
 }
 
 .new-arrival-variant-group {
     display: flex;
-    gap: 6px;
     flex-wrap: wrap;
-}
-
-.new-arrival-color-options {
-    display: flex;
     gap: 6px;
 }
 
+/* Color variants - Updated to match card styling */
 .new-arrival-color-circle {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    border: 1px solid #f0f0f0;
+    border: 1px solid #ddd;
     transition: all 0.2s ease;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .new-arrival-color-circle:hover {
-    transform: scale(1.2);
-    box-shadow: 0 0 0 2px #D67A1D;
+    box-shadow: 0 0 0 3px #F2F3FB, 0 0 0 4px #000;
 }
 
-.new-arrival-size-options,
-.new-arrival-capacity-options {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.new-arrival-size-option {
-    padding: 4px 8px;
+/* Size variants - Updated to match card styling */
+.new-arrival-size-square {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
     font-size: 12px;
-    background: #f5f5f5;
-    border-radius: 3px;
-    border: 1px solid #e0e0e0;
-    transition: all 0.2s ease;
     cursor: pointer;
 }
 
-.new-arrival-size-option:hover {
-    background: #D67A1D;
-    color: white;
+.new-arrival-size-square:hover,
+.new-arrival-size-square.active {
+    background-color: #F5EDDA;
     border-color: #D67A1D;
+    color: #D67A1D;
+    font-weight: 500;
 }
 
-.new-arrival-capacity-option {
-    padding: 4px 8px;
-    font-size: 12px;
-    background: #f5f5f5;
+/* Capacity variants - Updated to match card styling */
+.new-arrival-capacity-rounded {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
     border-radius: 12px;
-    border: 1px solid #e0e0e0;
+    font-size: 12px;
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
-.new-arrival-capacity-option:hover {
-    background: #D67A1D;
-    color: white;
+.new-arrival-capacity-rounded:hover,
+.new-arrival-capacity-rounded.active {
+    background-color: #F5EDDA;
     border-color: #D67A1D;
+    color: #D67A1D;
+    font-weight: 500;
+}
+
+/* Price styling */
+.new-arrival-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #D67A1D;
+    margin-top: 12px;
 }
 
 /* Loading and Error States */
-.new-arrival-loading,
 .new-arrival-error,
 .new-arrival-empty {
     text-align: center;
     padding: 40px;
     font-size: 18px;
     color: #666;
+    grid-column: 1 / -1;
 }
 
 .new-arrival-error {
     color: #d32f2f;
 }
 
-/* Mobile Layout (2 columns) */
+/* Badge for new arrivals */
+.new-arrival-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #D67A1D;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 1;
+}
+
+/* Responsive Layout */
+@media (max-width: 1024px) {
+    .new-arrival-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .new-arrival-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
 
+    .new-arrival-container {
+        padding: 30px 0;
+    }
+
     .new-arrival-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
     }
 
     .new-arrival-sort {
@@ -227,58 +257,24 @@
     }
 }
 
-/* Small Mobile Adjustments */
 @media (max-width: 480px) {
+    .new-arrival-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .new-arrival-card {
+        padding: 16px;
+    }
+
     .new-arrival-title {
         font-size: 24px;
     }
-
-    .new-arrival-name {
-        font-size: 14px;
-    }
-
-    .new-arrival-price {
-        font-size: 14px;
-    }
 }
 
-/* Shimmer Effect */
-@keyframes shimmer {
-    0% {
-        background-position: -468px 0;
-    }
-
-    100% {
-        background-position: 468px 0;
-    }
-}
-
-.shimmer-bg {
-    background: linear-gradient(to right, #f6f6f6 8%, #f0f0f0 18%, #f6f6f6 33%);
-    background-size: 800px 104px;
-    animation: shimmer 1.5s infinite linear;
-    border-radius: 4px;
-}
-
-.new-arrival-card.shimmer {
-    pointer-events: none;
-    user-select: none;
-}
-
-.new-arrival-card.shimmer .new-arrival-image-container {
-    background: #f6f6f6;
-    position: relative;
-    overflow: hidden;
-}
-
-.new-arrival-card.shimmer .new-arrival-image {
-    display: none;
-}
-
-/* Adjust shimmer colors to match your design */
-.new-arrival-card.shimmer .shimmer-bg {
-    background: #f6f6f6;
-    background: linear-gradient(to right, #f6f6f6 8%, #eaeaea 18%, #f6f6f6 33%);
-    background-size: 800px 104px;
-    animation: shimmer 1.5s infinite linear;
+/* Accessibility improvements */
+.new-arrival-color-circle:focus,
+.new-arrival-size-square:focus,
+.new-arrival-capacity-rounded:focus {
+    outline: 2px solid #D67A1D;
+    outline-offset: 2px;
 }

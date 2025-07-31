@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import { fetchProducts } from '../../features/productsSlice';
 import './NewArrivals.css';
 
 const NewArrivalsGrid = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // Initialize the navigate function
     const { data: categories, loading, error } = useSelector((state) => state.products);
     const [sortOption, setSortOption] = useState('newest');
 
@@ -18,33 +20,17 @@ const NewArrivalsGrid = () => {
             <div className="new-arrival-image-container shimmer-bg"></div>
             <div className="new-arrival-info">
                 <div className="new-arrival-name shimmer-bg" style={{ width: '80%', height: '20px' }}></div>
-                <div className="new-arrival-price shimmer-bg" style={{ width: '40%', height: '16px', marginTop: '8px' }}></div>
-                <div className="new-arrival-variants">
-                    <div className="new-arrival-variant-group">
-                        <div style={{ display: 'flex', gap: '6px' }}>
-                            {[...Array(3)].map((_, i) => (
-                                <div key={i} className="shimmer-bg" style={{ width: '20px', height: '20px', borderRadius: '50%' }}></div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="new-arrival-variant-group" style={{ marginTop: '8px' }}>
-                        <div style={{ display: 'flex', gap: '6px' }}>
-                            {[...Array(4)].map((_, i) => (
-                                <div key={i} className="shimmer-bg" style={{ width: '24px', height: '24px', borderRadius: '3px' }}></div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <div className="new-arrival-variants shimmer-bg" style={{ width: '100%', height: '40px', marginTop: '12px' }}></div>
             </div>
         </div>
     );
 
-    // Extract and sort new arrival products
+    // Extract and filter new arrival products that are published
     const newArrivalProducts = [];
     categories?.forEach(category => {
         category.subcategories?.forEach(subcategory => {
             subcategory.products?.forEach(product => {
-                if (product.newarrival) {
+                if (product.newarrival && product.ispublished) {
                     newArrivalProducts.push(product);
                 }
             });
@@ -70,6 +56,11 @@ const NewArrivalsGrid = () => {
                 return 0;
         }
     });
+
+    // Handle card click
+    const handleCardClick = (productId) => {
+        navigate(`/catalog/${productId}`);
+    };
 
     if (error) {
         return <div className="new-arrival-error">Error: {error}</div>;
@@ -120,75 +111,65 @@ const NewArrivalsGrid = () => {
                     <div
                         key={product.id}
                         className="new-arrival-card"
+                        onClick={() => handleCardClick(product.id)} // Add click handler
+                        style={{ cursor: 'pointer' }} // Add pointer cursor to indicate clickable
                     >
                         {/* Product Image */}
                         <div className="new-arrival-image-container">
                             <img
                                 src={product.mainimage || 'https://via.placeholder.com/300'}
                                 alt={product.name}
-                                className="new-arrival-image new-arrival-main-image"
+                                className="new-arrival-image"
                             />
-                            {product.hoverimage && (
-                                <img
-                                    src={product.hoverimage}
-                                    alt={product.name}
-                                    className="new-arrival-image new-arrival-hover-image"
-                                />
-                            )}
                         </div>
 
                         {/* Product Info */}
                         <div className="new-arrival-info">
                             <h3 className="new-arrival-name">{product.name}</h3>
+
                             {/* Variants */}
                             <div className="new-arrival-variants">
-                                {/* Color Variants */}
+                                {/* Color variants - shown as circles */}
                                 {product.variantsMap?.Color && (
                                     <div className="new-arrival-variant-group">
-                                        <div className="new-arrival-color-options">
-                                            {product.variantsMap.Color.map((color, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="new-arrival-color-circle"
-                                                    style={{ backgroundColor: color.hex }}
-                                                    title={color.name}
-                                                />
-                                            ))}
-                                        </div>
+                                        {product.variantsMap.Color.map((color, index) => (
+                                            <span
+                                                key={index}
+                                                className="new-arrival-color-circle"
+                                                style={{ backgroundColor: color.hex }}
+                                                title={color.name}
+                                            />
+                                        ))}
                                     </div>
                                 )}
 
-                                {/* Size Variants */}
-                                {product.variantsMap?.Size && product.variantsMap.Size.length > 0 && (
+                                {/* Size variants - shown as squares */}
+                                {product.variantsMap?.Size && (
                                     <div className="new-arrival-variant-group">
-                                        <div className="new-arrival-size-options">
-                                            {product.variantsMap.Size.map((size, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="new-arrival-size-option"
-                                                    title={size.value}
-                                                >
-                                                    {size.value}
-                                                </span>
-                                            ))}
-                                        </div>
+                                        {product.variantsMap.Size.map((size, index) => (
+                                            <span
+                                                key={index}
+                                                className="new-arrival-size-square"
+                                                title={size.value}
+                                            >
+                                                {size.value}
+                                            </span>
+                                        ))}
                                     </div>
                                 )}
 
-                                {/* Capacity Variants */}
-                                {product.variantsMap?.Capacity && product.variantsMap.Capacity.length > 0 && (
+                                {/* Capacity variants - shown as rounded squares */}
+                                {product.variantsMap?.Capacity && (
                                     <div className="new-arrival-variant-group">
-                                        <div className="new-arrival-capacity-options">
-                                            {product.variantsMap.Capacity.map((capacity, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="new-arrival-capacity-option"
-                                                    title={capacity.value}
-                                                >
-                                                    {capacity.value}
-                                                </span>
-                                            ))}
-                                        </div>
+                                        {product.variantsMap.Capacity.map((capacity, index) => (
+                                            <span
+                                                key={index}
+                                                className="new-arrival-capacity-rounded"
+                                                title={capacity.value}
+                                            >
+                                                {capacity.value}
+                                            </span>
+                                        ))}
                                     </div>
                                 )}
                             </div>

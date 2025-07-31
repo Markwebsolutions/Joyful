@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,6 +11,7 @@ import {
 import Logo from "../assets/joyful.png";
 import Search from "./Search";
 import "./Header.css";
+import { setSelectedCategory, setSelectedSubcategory } from '../features/productsSlice';
 
 const NAV_LINKS = [
   { path: "/", text: "Home" },
@@ -23,6 +24,7 @@ const NAV_LINKS = [
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCatalogHovered, setIsCatalogHovered] = useState(false);
@@ -68,6 +70,14 @@ function Header() {
     };
   }, []);
 
+  const handleCategorySelect = (categoryName) => {
+    dispatch(setSelectedCategory(categoryName));
+    dispatch(setSelectedSubcategory(null));
+    navigate("/catalog");
+    closeMenu();
+    setIsCatalogHovered(false);
+  };
+
   const renderCatalogDropdown = () => (
     <div
       className="catalog-dropdown"
@@ -78,14 +88,10 @@ function Header() {
         {products
           .filter(category => category.subcategories && category.subcategories.length > 0)
           .map(category => (
-            <Link
+            <div
               key={category.id}
-              to={`/catalog/${category.id}`}
               className="subcategory-item-header"
-              onClick={() => {
-                closeMenu();
-                setIsCatalogHovered(false);
-              }}
+              onClick={() => handleCategorySelect(category.name)}
             >
               <div className="subcategory-image-header">
                 <img
@@ -95,7 +101,7 @@ function Header() {
                 />
               </div>
               <span className="subcategory-name-header">{category.name}</span>
-            </Link>
+            </div>
           ))}
       </div>
     </div>
@@ -205,11 +211,10 @@ function Header() {
                       {products
                         .filter(category => category.subcategories && category.subcategories.length > 0)
                         .map(category => (
-                          <Link
+                          <div
                             key={category.id}
-                            to={`/catalog/${category.id}`}
                             className="subcategory-item-header"
-                            onClick={closeMenu}
+                            onClick={() => handleCategorySelect(category.name)}
                           >
                             <div className="subcategory-image-header">
                               <img
@@ -219,7 +224,7 @@ function Header() {
                               />
                             </div>
                             <span className="subcategory-name-header">{category.name}</span>
-                          </Link>
+                          </div>
                         ))}
                     </div>
                   </div>
