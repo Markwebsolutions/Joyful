@@ -52,7 +52,7 @@ const ContactForm = ({
         setError(null);
 
         try {
-            const response = await fetch("https://joyful-backend-backend-final-4-production.up.railway.app/contact-us", {
+            const response = await fetch("https://joyfulbackend-production.up.railway.app/contact-us", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

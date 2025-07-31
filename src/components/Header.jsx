@@ -1,21 +1,21 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMagnifyingGlass,
   faArrowRight,
   faBars,
   faTimes,
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from "../assets/joyful.png";
+import Search from "./Search";
 import "./Header.css";
 
 const NAV_LINKS = [
   { path: "/", text: "Home" },
   { path: "/about", text: "About Us" },
-  { path: "/catalog", text: "Our Catalog" },
+  { path: "/catalog", text: "Our Catalog", hasDropdown: true },
   { path: "/new-arrivals", text: "New Arrivals" },
   { path: "/network", text: "Network" },
   { path: "/contact", text: "Contact Us" }
@@ -25,77 +25,103 @@ function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isCatalogHovered, setIsCatalogHovered] = useState(false);
   const isHomePage = pathname === "/";
+  const catalogDropdownRef = useRef(null);
+  const catalogHoverTimerRef = useRef(null);
 
-  const [searchResults, setSearchResults] = useState([]);
   const products = useSelector(state => state.products.data);
 
   const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), []);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
-  const toggleSearch = useCallback(() => {
-    setIsSearchOpen(prev => !prev);
-    if (!isSearchOpen) {
-      setSearchQuery("");
-      const popularProducts = products.slice(0, 5);
-      setSearchResults(popularProducts);
-    } else {
-      setSearchResults([]);
-    }
-  }, [isSearchOpen, products]);
+
   const handleInquiryClick = useCallback(() => {
     navigate("/contact#contact-form");
     closeMenu();
   }, [navigate, closeMenu]);
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+  const handleCatalogEnter = () => {
+    clearTimeout(catalogHoverTimerRef.current);
+    setIsCatalogHovered(true);
   };
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search submitted:", searchQuery);
-    // Don't close search on submit
+  const handleCatalogLeave = () => {
+    catalogHoverTimerRef.current = setTimeout(() => {
+      setIsCatalogHovered(false);
+    }, 300);
+  };
+
+  const handleDropdownEnter = () => {
+    clearTimeout(catalogHoverTimerRef.current);
+    setIsCatalogHovered(true);
+  };
+
+  const handleDropdownLeave = () => {
+    catalogHoverTimerRef.current = setTimeout(() => {
+      setIsCatalogHovered(false);
+    }, 300);
   };
 
   useEffect(() => {
-    if (searchQuery.trim() === "") {
-      if (isSearchOpen) {
-        const popularProducts = products.slice(0, 5);
-        setSearchResults(popularProducts);
-      } else {
-        setSearchResults([]);
-      }
-      return;
-    }
+    return () => {
+      clearTimeout(catalogHoverTimerRef.current);
+    };
+  }, []);
 
-    const results = products.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.searchkeywords?.toLowerCase().includes(searchQuery.toLowerCase())
-    ).slice(0, 5);
-
-    setSearchResults(results);
-  }, [searchQuery, products, isSearchOpen]);
-
-  const handleProductClick = (productId) => {
-    navigate(`/catalog/${productId}`);
-    setIsSearchOpen(false);
-    setSearchQuery("");
-  };
+  const renderCatalogDropdown = () => (
+    <div
+      className="catalog-dropdown"
+      onMouseEnter={handleDropdownEnter}
+      onMouseLeave={handleDropdownLeave}
+    >
+      <div className="subcategories-grid-header">
+        {products
+          .filter(category => category.subcategories && category.subcategories.length > 0)
+          .map(category => (
+            <Link
+              key={category.id}
+              to={`/catalog/${category.id}`}
+              className="subcategory-item-header"
+              onClick={() => {
+                closeMenu();
+                setIsCatalogHovered(false);
+              }}
+            >
+              <div className="subcategory-image-header">
+                <img
+                  src={category.imagelink || 'https://via.placeholder.com/80'}
+                  alt={category.name}
+                  className="subcategory-image"
+                />
+              </div>
+              <span className="subcategory-name-header">{category.name}</span>
+            </Link>
+          ))}
+      </div>
+    </div>
+  );
 
   const renderNavLinks = useMemo(() => (
-    NAV_LINKS.map(({ path, text }) => (
-      <Link
+    NAV_LINKS.map(({ path, text, hasDropdown }) => (
+      <div
         key={path}
-        to={path}
-        className={`nav-link ${isHomePage ? 'text-white' : 'text-dark'}`}
-        onClick={closeMenu}
+        className={`nav-link-container ${hasDropdown ? 'has-dropdown' : ''}`}
+        onMouseEnter={hasDropdown ? handleCatalogEnter : undefined}
+        onMouseLeave={hasDropdown ? handleCatalogLeave : undefined}
+        ref={hasDropdown ? catalogDropdownRef : null}
       >
-        {text}
-      </Link>
+        <Link
+          to={path}
+          className={`nav-link ${isHomePage ? 'text-white' : 'text-dark'}`}
+          onClick={closeMenu}
+        >
+          {text}
+        </Link>
+
+        {hasDropdown && isCatalogHovered && renderCatalogDropdown()}
+      </div>
     ))
-  ), [isHomePage, closeMenu]);
+  ), [isHomePage, closeMenu, products, isCatalogHovered]);
 
   const headerStyle = !isHomePage ? { backgroundColor: '#f5edda' } : {};
   const mobileHeaderStyle = { backgroundColor: isHomePage ? 'transparent' : '#f5edda' };
@@ -104,12 +130,10 @@ function Header() {
   const iconButtonClass = isHomePage ? 'light' : 'dark';
   const linkColor = isHomePage ? 'white' : '#1f2937';
   const borderColor = isHomePage ? 'rgba(255, 255, 255, 0.3)' : 'rgba(31, 41, 55, 0.3)';
-  const searchInputBg = isHomePage ? 'rgba(255, 255, 255, 0.18)' : 'rgba(31, 41, 55, 0.1)';
-  const searchInputColor = isHomePage ? 'white' : '#1f2937';
 
   return (
     <header className="header" style={headerStyle}>
-      {/* Desktop Header - hidden on mobile */}
+      {/* Desktop Header */}
       <div className="desktop-header">
         <div className="header-logo">
           <Link to="/">
@@ -122,73 +146,7 @@ function Header() {
         </nav>
 
         <div className="header-actions">
-          <div className="search-container">
-            {isSearchOpen && (
-              <form onSubmit={handleSearchSubmit} className="search-form">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  onFocus={() => {
-                    if (searchQuery.trim() === "") {
-                      const popularProducts = products.slice(0, 5);
-                      setSearchResults(popularProducts);
-                    }
-                  }}
-                  onBlur={() => {
-                    setTimeout(() => {
-                      if (searchQuery.trim() === "") {
-                        setSearchResults([]);
-                      }
-                    }, 200);
-                  }}
-                  placeholder="Search for products..."
-                  className="search-input"
-                  style={{
-                    backgroundColor: searchInputBg,
-                    color: searchInputColor,
-                    borderColor: isHomePage ? 'rgba(255,255,255,0.3)' : '#e1e1e1'
-                  }}
-                  autoFocus
-                />
-                <button type="submit" className="search-icon-container">
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className="icon"
-                    style={{ color: isHomePage ? 'white' : '#6b7280' }}
-                  />
-                </button>
-                {searchResults.length > 0 && (
-                  <div className="search-results-dropdown">
-                    {searchResults.map(product => (
-                      <div
-                        key={product.id}
-                        className="search-result-item"
-                        onClick={() => handleProductClick(product.id)}
-                      >
-                        <img
-                          src={product.mainimage || product.imagelink}
-                          alt={product.name}
-                          className="search-result-image"
-                        />
-                        <span className="search-result-name">{product.name}</span>
-                        {product.price && (
-                          <span className="search-result-price">₹{product.price}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </form>
-            )}
-            <button
-              className={`icon-button ${iconButtonClass}`}
-              onClick={toggleSearch}
-              style={{ display: isSearchOpen ? 'none' : 'block' }}
-            >
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
-            </button>
-          </div>
+          <Search isHomePage={isHomePage} />
           <button className="primary-button" onClick={handleInquiryClick}>
             Send Inquiry
             <FontAwesomeIcon icon={faArrowRight} className="button-icon" />
@@ -196,7 +154,7 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Header - hidden on desktop */}
+      {/* Mobile Header */}
       <div className="mobile-header" style={mobileHeaderStyle}>
         <div className="mobile-header-container">
           <div className="mobile-hamburger">
@@ -212,100 +170,61 @@ function Header() {
           </div>
 
           <div className="mobile-search">
-            <button className={`icon-button ${iconButtonClass}`} onClick={toggleSearch}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
-            </button>
+            <Search isHomePage={isHomePage} isMobile={true} />
           </div>
         </div>
       </div>
-
-      {/* Expanded Mobile Search - Only visible on mobile */}
-      {isSearchOpen && (
-        <div className="mobile-search-expanded" style={{
-          backgroundColor: isHomePage ? '#274D63' : '#f5edda',
-          display: window.innerWidth >= 770 ? 'none' : 'block' // Hide on desktop
-        }}>
-          <form onSubmit={handleSearchSubmit} className="mobile-search-form-expanded">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              onFocus={() => {
-                if (searchQuery.trim() === "") {
-                  const popularProducts = products.slice(0, 5);
-                  setSearchResults(popularProducts);
-                }
-              }}
-              onBlur={() => {
-                setTimeout(() => {
-                  if (searchQuery.trim() === "") {
-                    setSearchResults([]);
-                  }
-                }, 200);
-              }}
-              placeholder="Search for products..."
-              className="mobile-search-input-expanded"
-              style={{
-                backgroundColor: searchInputBg,
-                color: searchInputColor,
-                borderColor: isHomePage ? 'rgba(255,255,255,0.3)' : '#e1e1e1'
-              }}
-              autoFocus
-            />
-            <button type="submit" className="search-icon-container-expanded">
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="icon"
-                style={{ color: isHomePage ? 'white' : '#6b7280' }}
-              />
-            </button>
-            {searchResults.length > 0 && (
-              <div className="mobile-search-results-dropdown-expanded">
-                {searchResults.map(product => (
-                  <div
-                    key={product.id}
-                    className="search-result-item"
-                    onClick={() => handleProductClick(product.id)}
-                  >
-                    <img
-                      src={product.mainimage || product.imagelink}
-                      alt={product.name}
-                      className="search-result-image"
-                    />
-                    <span className="search-result-name">{product.name}</span>
-                    {product.price && (
-                      <span className="search-result-price">₹{product.price}</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </form>
-        </div>
-      )}
 
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="mobile-menu" style={mobileMenuStyle}>
           <nav className="mobile-nav">
-            {NAV_LINKS.map(({ path, text }) => (
-              <Link
-                key={path}
-                to={path}
-                className="mobile-nav-link"
-                style={{
-                  color: linkColor,
-                  borderBottom: `1px solid ${borderColor}`
-                }}
-                onClick={closeMenu}
-              >
-                <span className="mobile-nav-link-text">{text}</span>
-                <FontAwesomeIcon
-                  icon={faChevronRight}
-                  className="mobile-nav-link-arrow"
-                  style={{ color: linkColor }}
-                />
-              </Link>
+            {NAV_LINKS.map(({ path, text, hasDropdown }) => (
+              <div key={path}>
+                <Link
+                  to={path}
+                  className="mobile-nav-link"
+                  style={{
+                    color: linkColor,
+                    borderBottom: `1px solid ${borderColor}`
+                  }}
+                  onClick={closeMenu}
+                >
+                  <span className="mobile-nav-link-text">{text}</span>
+                  {hasDropdown && (
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className="mobile-nav-link-arrow"
+                      style={{ color: linkColor }}
+                    />
+                  )}
+                </Link>
+                {hasDropdown && (
+                  <div className="mobile-subcategories">
+                    <div className="subcategories-grid-header">
+                      {products
+                        .filter(category => category.subcategories && category.subcategories.length > 0)
+                        .map(category => (
+                          <Link
+                            key={category.id}
+                            to={`/catalog/${category.id}`}
+                            className="subcategory-item-header"
+                            onClick={closeMenu}
+                          >
+                            <div className="subcategory-image-header">
+                              <img
+                                src={category.imagelink || 'https://via.placeholder.com/60'}
+                                alt={category.name}
+                                className="subcategory-image"
+                              />
+                            </div>
+                            <span className="subcategory-name-header">{category.name}</span>
+                          </Link>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
             <div className="mobile-button-container">
               <button className="primary-button" onClick={handleInquiryClick}>

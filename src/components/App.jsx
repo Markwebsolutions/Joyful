@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { fetchProducts } from '../features/productsSlice';
 import Header from './Header';
 import './App.css';
-import { fetchProducts } from '../features/productsSlice';
 import ScrollToTop from './ScrollToTop';
 
 // Regular imports for critical routes
@@ -19,21 +19,14 @@ const ContactUs = lazy(() => import('../pages/ContactUs'));
 const Footer = lazy(() => import('./Footer'));
 const ProductDetailForm = lazy(() => import('../pages/Productpages/ProductDetails/ProductDetailForm'));
 
-
 // Loading fallback component
 const Loading = () => <div className="page-loading">Loading...</div>;
 
 function App() {
   const dispatch = useDispatch();
-  const [productsLoaded, setProductsLoaded] = useState(false);
 
   useEffect(() => {
-    const loadProducts = async () => {
-      await dispatch(fetchProducts());
-      setProductsLoaded(true);
-    };
-
-    loadProducts();
+    dispatch(fetchProducts());
   }, [dispatch]);
 
   return (
@@ -47,16 +40,14 @@ function App() {
             <Route path="/catalog" element={<OurCatlog />} />
             <Route path="/catalog/:productId" element={<ProductDetails />} />
             <Route path="/new-arrivals" element={<NewArrival />} />
-            <Route path="/inquiry" element={<ProductDetailForm />} />
+            <Route path="/inquiry" element={<Suspense fallback={<Loading />}><ProductDetailForm /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<Loading />}><AboutUs /></Suspense>} />
             <Route path="/network" element={<Suspense fallback={<Loading />}><Network /></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<Loading />}><ContactUs /></Suspense>} />
           </Routes>
-          {productsLoaded && (
-            <Suspense fallback={null}>
-              <Footer />
-            </Suspense>
-          )}
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </main>
       </div>
     </Router>

@@ -15,6 +15,37 @@ const ProductGridCard = ({ product }) => {
         }
     }, [navigate, product.id]);
 
+    // Helper function to render variant options
+    const renderVariantOptions = (variantType) => {
+        if (!product.variantsMap?.[variantType]?.length) return null;
+
+        return (
+            <div className="card-options">
+                {product.variantsMap[variantType].map((variant, i) => {
+                    if (variantType === 'Color') {
+                        return (
+                            <span
+                                key={i}
+                                className="color-circle-card"
+                                style={{
+                                    backgroundColor: variant.hex || '#ccc',
+                                    borderColor: variant.hex ? '#ddd' : '#999'
+                                }}
+                                title={variant.name}
+                            />
+                        );
+                    } else {
+                        return (
+                            <span key={i} className="size-option-card">
+                                {variant.value || variant.name}
+                            </span>
+                        );
+                    }
+                })}
+            </div>
+        );
+    };
+
     return (
         <div
             className="product-card"
@@ -41,35 +72,12 @@ const ProductGridCard = ({ product }) => {
             </div>
             <div className="card-info">
                 <h3 className="card-title">{product.name}</h3>
-                {product.price && (
-                    <p className="card-price">${product.price.toFixed(2)}</p>
-                )}
+
+                {/* Visual representation of variants only */}
                 <div className="product-variants">
-                    {product.variants?.Size?.length > 0 && (
-                        <div className="card-options">
-                            {product.variants.Size.map((size, i) => (
-                                <span key={i}
-                                    className="size-option-card">
-                                    {size.value}
-                                </span>
-                            ))}
-                        </div>
-                    )}
-                    {product.variants?.Color?.length > 0 && (
-                        <div className="card-options">
-                            {product.variants.Color.map((color, i) => (
-                                <span
-                                    key={i}
-                                    className="color-circle-card"
-                                    style={{
-                                        backgroundColor: color.hex || '#ccc',
-                                        borderColor: color.hex ? '#ddd' : '#999'
-                                    }}
-                                    title={color.name}
-                                />
-                            ))}
-                        </div>
-                    )}
+                    {renderVariantOptions('Color')}
+                    {renderVariantOptions('Size')}
+                    {renderVariantOptions('Capacity')}
                 </div>
             </div>
         </div>

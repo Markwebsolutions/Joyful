@@ -19,6 +19,7 @@ const FilterSidebar = ({
             </div>
             <div className="product-nav">
                 <ul className="nav-list">
+
                     {categories.map((category, index) => (
                         <li key={index} className="nav-category">
                             <div

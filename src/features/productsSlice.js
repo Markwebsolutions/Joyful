@@ -1,96 +1,62 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// features/productsSlice.js
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+// Make sure this thunk is properly defined and exported
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async () => {
-        const response = await fetch('https://joyful-backend-backend-final-4-production.up.railway.app/categories');
-        if (!response.ok) throw new Error('Failed to fetch data');
+        const response = await fetch('https://joyfulbackend-production.up.railway.app/categories');
+        if (!response.ok) {
+            throw new Error('Failed to fetch products');
+        }
         return await response.json();
     }
 );
-
-export const fetchProductDetails = createAsyncThunk(
-    'products/fetchProductDetails',
-    async (productId) => {
-        const response = await fetch(`https://joyful-backend-backend-final-4-production.up.railway.app/products/${productId}`);
-        if (!response.ok) throw new Error('Product not found');
-        return { productId, data: await response.json() };
-    }
-);
-
-const processApiData = (data) => {
-    const publishedCategories = data.filter(category => category.published);
-
-    const processedCategories = [
-        {
-            name: 'All Categories',
-            subcategories: []
-        },
-        ...publishedCategories.map(category => ({
-            ...category,
-            subcategories: category.subcategories
-                .filter(sub => sub.ispublished)
-                .map(sub => sub.name)
-        }))
-    ];
-
-    const processedProducts = publishedCategories.flatMap(category =>
-        category.subcategories
-            .filter(sub => sub.ispublished)
-            .flatMap(sub =>
-                sub.products
-                    .filter(product => product.ispublished)
-                    .map(product => ({
-                        ...product,
-                        category: category.name,
-                        subcategory: sub.name,
-                        variants: product.variantsMap ? JSON.parse(product.variantsMap) : {}
-                    }))
-            )
-    );
-
-    return { processedCategories, processedProducts };
-};
 
 const productsSlice = createSlice({
     name: 'products',
     initialState: {
         data: [],
-        categories: [],
-        productDetails: {},
-        status: 'idle',
+        loading: false,
         error: null,
-        lastFetch: null,
+        selectedCategory: 'All Categories',
+        selectedSubcategory: null,
+        isMobileView: window.innerWidth < 768
     },
     reducers: {
-        refreshProducts: (state) => {
-            state.status = 'idle';
+        setSelectedCategory: (state, action) => {
+            state.selectedCategory = action.payload;
+            state.selectedSubcategory = null;
         },
-        clearProductDetails: (state, action) => {
-            delete state.productDetails[action.payload];
+        setSelectedSubcategory: (state, action) => {
+            state.selectedSubcategory = action.payload;
+        },
+        setIsMobileView: (state, action) => {
+            state.isMobileView = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchProducts.pending, (state) => {
-                state.status = 'loading';
+                state.loading = true;
+                state.error = null;
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                const { processedCategories, processedProducts } = processApiData(action.payload);
-                state.categories = processedCategories;
-                state.data = processedProducts;
-                state.lastFetch = new Date().toISOString();
+                state.loading = false;
+                state.data = action.payload;
             })
             .addCase(fetchProducts.rejected, (state, action) => {
-                state.status = 'failed';
+                state.loading = false;
                 state.error = action.error.message;
-            })
-            .addCase(fetchProductDetails.fulfilled, (state, action) => {
-                state.productDetails[action.payload.productId] = action.payload.data;
             });
-    },
+    }
 });
 
-export const { refreshProducts, clearProductDetails } = productsSlice.actions;
+// Make sure all actions are exported
+export const {
+    setSelectedCategory,
+    setSelectedSubcategory,
+    setIsMobileView
+} = productsSlice.actions;
+
 export default productsSlice.reducer;

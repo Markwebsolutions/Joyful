@@ -1,0 +1,286 @@
+.feedback-section {
+    background-color: #F5EDDA;
+    padding: 4rem 2rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.feedback-heading {
+    font-weight: 400;
+    font-size: 48px;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.feedback-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Shared Feedback Card Styles */
+.feedback-card {
+    background-color: white;
+    padding: 2rem;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    min-height: 370px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.feedback-rating {
+    display: flex;
+    gap: 0px;
+    margin-bottom: 24px;
+}
+
+.feedback-star {
+    color: #D67A1D;
+    opacity: 0.3;
+    font-size: 19px;
+    margin-right: 2px;
+}
+
+.feedback-star.filled {
+    opacity: 1;
+}
+
+.feedback-card-heading {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 14px;
+    color: #333;
+}
+
+.feedback-description {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 1.5rem;
+    line-height: 26px;
+    color: #555;
+    flex-grow: 1;
+}
+
+.feedback-author-container {
+    display: flex;
+    align-items: center;
+    gap: 14.5px;
+}
+
+.feedback-author-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.feedback-author {
+    font-weight: 600;
+    font-size: 16px;
+    color: #D67A1D;
+}
+
+/* Mobile Slider Styles */
+.mobile-slider {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.slider-wrapper {
+    border-radius: 8px;
+}
+
+.slider-track {
+    display: flex;
+    width: 100%;
+}
+
+.feedback-slide {
+    min-width: 100%;
+    padding: 0 0.31rem;
+}
+
+.slider-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.slider-dots {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: #D67A1D;
+}
+
+.slider-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.slider-button {
+    background: white;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.slider-button:hover {
+    background: #D67A1D;
+    color: white;
+    border-color: #D67A1D;
+}
+
+/* Desktop Slider Styles */
+.desktop-slider-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+.desktop-slider-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.desktop-grid {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 20px;
+}
+
+.desktop-grid .feedback-card {
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: calc(33.333% - 14px);
+}
+
+.desktop-slider-controls {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 1.5rem;
+}
+
+.desktop-slider-dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.desktop-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.desktop-dot.active {
+    background-color: #D67A1D;
+}
+
+.desktop-slider-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.desktop-slider-button {
+    background: white;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.desktop-slider-button:hover {
+    background: #D67A1D;
+    color: white;
+    border-color: #D67A1D;
+}
+
+/* Adjust for tablet view */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .desktop-grid .feedback-card {
+        flex: 0 0 calc(50% - 10px);
+        min-width: calc(50% - 10px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .feedback-section {
+        padding: 2rem 1rem;
+    }
+
+    .feedback-heading {
+        font-size: 32px;
+        margin-bottom: 2rem;
+    }
+
+    .feedback-card {
+        padding: 1.5rem;
+        min-height: 280px;
+    }
+
+    .feedback-card-heading {
+        font-size: 18px;
+    }
+
+    .feedback-description {
+        font-size: 15px;
+    }
+}
+
+.slider-button img,
+.desktop-slider-button img {
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+}
+
+.slider-button:hover img,
+.desktop-slider-button:hover img {
+    filter: brightness(0) invert(1);
+}

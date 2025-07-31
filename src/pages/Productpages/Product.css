@@ -134,13 +134,10 @@
 }
 
 .subcategory-item {
-    padding: 12px 0;
+    padding: 6px 8px 12px 12px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.subcategory-item:hover {
-    background-color: #e9ecef;
+    font-size: 13px;
+    text-transform: capitalize;
 }
 
 /* Product Grid */
@@ -331,8 +328,8 @@
 }
 
 .related-product-item {
-    padding: 20px;
-    border-radius: 8px;
+    padding: 50px 0;
+    /* border-radius: 8px; */
     transition: all 0.3s ease;
 }
 
@@ -358,7 +355,7 @@
     }
 
     .related-product-item {
-        padding: 15px;
+        padding: 20px 0;
     }
 
     .product-detail-wrapper {

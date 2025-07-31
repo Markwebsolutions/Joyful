@@ -1,21 +1,29 @@
 // store.js
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import sessionStorage from 'redux-persist/lib/storage/session'; // Uses sessionStorage
 import productsReducer from './features/productsSlice';
 
+// Persist configuration
+const persistConfig = {
+    key: 'root', // Key for the persisted state
+    storage: sessionStorage, // Use sessionStorage instead of localStorage
+    whitelist: ['products'], // Only persist the 'products' reducer
+};
+
+// Create a persisted reducer
+const persistedReducer = persistReducer(persistConfig, productsReducer);
+
+// Configure the Redux store
 export const store = configureStore({
     reducer: {
-        products: productsReducer,
+        products: persistedReducer, // Use the persisted reducer
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false, // Required for redux-persist
+        }),
 });
 
-// Add session storage syncing
-const STORAGE_KEY = 'redux_state';
-
-// Load initial state from session storage
-const preloadedState = JSON.parse(sessionStorage.getItem(STORAGE_KEY)) || {};
-
-// Subscribe to store changes to persist to session storage
-store.subscribe(() => {
-    const state = store.getState();
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-});
+// Export the persistor to wrap the app
+export const persistor = persistStore(store);

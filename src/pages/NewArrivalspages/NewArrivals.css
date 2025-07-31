@@ -1,31 +1,35 @@
 /* Base Styles */
-.new-arrivals-container {
-    padding-bottom: 20px;
-    margin: 40px 0;
+.new-arrival-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.new-arrivals-header {
+.new-arrival-header {
     display: flex;
-    justify-content: flex-end;
-    margin: 16px 0 22px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-.sort-filter-container {
+.new-arrival-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+}
+
+.new-arrival-sort {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.sort-label,
-.sort-select {
+.new-arrival-sort-label {
     font-size: 16px;
-}
-
-.sort-label {
     color: #555;
 }
 
-.sort-select {
+.new-arrival-sort-select {
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -34,213 +38,247 @@
     transition: border-color 0.3s;
 }
 
-.sort-select:hover {
+.new-arrival-sort-select:hover {
     border-color: #D67A1D;
 }
 
-/* Product Grid - Desktop (4 columns) */
-.new-arrivals-grid {
+/* Product Grid */
+.new-arrival-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 20px;
 }
 
-.new-arrivals-card {
+.new-arrival-card {
     border: 1px solid #eaeaea;
-    padding: 24px 24px 28px 24px;
-    transition: all 0.3s ease;
-    background: #f9f9f9;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.new-arrivals-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    border-color: transparent;
-}
-
-/* Image Container - Desktop */
-.new-arrivals-image-container {
-    position: relative;
-    margin: 0 auto 22px;
-    height: 220px;
-    width: 100%;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.3s ease;
+    background: white;
+    cursor: pointer;
 }
 
-.new-arrivals-image {
+.new-arrival-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Container */
+.new-arrival-image-container {
+    position: relative;
     width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: opacity 0.3s ease;
+    padding-top: 100%;
+    /* 1:1 Aspect Ratio */
+    overflow: hidden;
+}
+
+.new-arrival-image {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
 }
 
-.new-arrivals-image.main-image {
+.new-arrival-main-image {
     opacity: 1;
-    z-index: 1;
 }
 
-.new-arrivals-image.hover-image {
-    opacity: 0;
-    z-index: 2;
-}
-
-.new-arrivals-card:hover .main-image {
+.new-arrival-hover-image {
     opacity: 0;
 }
 
-.new-arrivals-card:hover .hover-image {
+.new-arrival-card:hover .new-arrival-main-image {
+    opacity: 0;
+}
+
+.new-arrival-card:hover .new-arrival-hover-image {
     opacity: 1;
 }
 
 /* Product Info */
-.new-arrivals-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: auto;
-    width: 100%;
+.new-arrival-info {
+    padding: 16px;
 }
 
-.new-arrivals-name {
-    font-size: 1rem;
+.new-arrival-name {
+    font-size: 16px;
     font-weight: 500;
     color: #333;
+    margin-bottom: 8px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.new-arrivals-price {
-    font: 600 16px sans-serif;
+.new-arrival-price {
+    font-size: 16px;
+    font-weight: 600;
     color: #D67A1D;
-    margin: 8px 0 0;
+    margin-bottom: 12px;
 }
 
 /* Variants */
-.new-arrivals-variants {
+.new-arrival-variants {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 8px;
-    width: 100%;
+    margin-top: 8px;
 }
 
-.size-options {
+.new-arrival-variant-group {
     display: flex;
+    gap: 6px;
     flex-wrap: wrap;
+}
+
+.new-arrival-color-options {
+    display: flex;
     gap: 6px;
 }
 
-.size-option {
-    padding: 3px 8px;
-    background: #f3f3f3;
+.new-arrival-color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.new-arrival-color-circle:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 2px #D67A1D;
+}
+
+.new-arrival-size-options,
+.new-arrival-capacity-options {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.new-arrival-size-option {
+    padding: 4px 8px;
     font-size: 12px;
+    background: #f5f5f5;
     border-radius: 3px;
     border: 1px solid #e0e0e0;
-}
-
-.color-options {
-    display: flex;
-}
-
-.newarrival-color-circle {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid #eee;
+    transition: all 0.2s ease;
     cursor: pointer;
-    box-sizing: border-box;
 }
 
-/* Empty State */
-.no-products {
+.new-arrival-size-option:hover {
+    background: #D67A1D;
+    color: white;
+    border-color: #D67A1D;
+}
+
+.new-arrival-capacity-option {
+    padding: 4px 8px;
+    font-size: 12px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.new-arrival-capacity-option:hover {
+    background: #D67A1D;
+    color: white;
+    border-color: #D67A1D;
+}
+
+/* Loading and Error States */
+.new-arrival-loading,
+.new-arrival-error,
+.new-arrival-empty {
     text-align: center;
     padding: 40px;
     font-size: 18px;
     color: #666;
-    width: 100%;
-    grid-column: 1 / -1;
+}
+
+.new-arrival-error {
+    color: #d32f2f;
 }
 
 /* Mobile Layout (2 columns) */
 @media (max-width: 768px) {
-    .new-arrivals-grid {
+    .new-arrival-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
-    .new-arrivals-card {
-        padding: 16px;
+    .new-arrival-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
     }
 
-    .new-arrivals-image-container {
-        height: 160px;
-        margin-bottom: 16px;
+    .new-arrival-sort {
+        width: 100%;
     }
 
-    .new-arrivals-name {
-        font-size: 14px;
-        height: 30px;
-    }
-
-    .new-arrivals-price {
-        font-size: 14px;
-    }
-
-    .sort-label,
-    .sort-select {
-        font-size: 14px;
+    .new-arrival-sort-select {
+        width: 100%;
     }
 }
 
 /* Small Mobile Adjustments */
 @media (max-width: 480px) {
-    .new-arrivals-image-container {
-        height: 140px;
+    .new-arrival-title {
+        font-size: 24px;
     }
 
-    .new-arrivals-card {
-        padding: 12px;
+    .new-arrival-name {
+        font-size: 14px;
     }
 
-    .size-option {
-        font-size: 11px;
-        padding: 2px 6px;
+    .new-arrival-price {
+        font-size: 14px;
     }
-
 }
 
-/* Loading indicator for infinite scroll */
-.loading-indicator {
-    grid-column: 1 / -1;
-    width: 100%;
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-}
-
-/* Shimmer animation for loading state */
+/* Shimmer Effect */
 @keyframes shimmer {
     0% {
-        background-position: -468px 0
+        background-position: -468px 0;
     }
 
     100% {
-        background-position: 468px 0
+        background-position: 468px 0;
     }
 }
 
-.shimmer {
-    animation: shimmer 1.5s infinite linear;
+.shimmer-bg {
     background: linear-gradient(to right, #f6f6f6 8%, #f0f0f0 18%, #f6f6f6 33%);
     background-size: 800px 104px;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 4px;
+}
+
+.new-arrival-card.shimmer {
+    pointer-events: none;
+    user-select: none;
+}
+
+.new-arrival-card.shimmer .new-arrival-image-container {
+    background: #f6f6f6;
     position: relative;
+    overflow: hidden;
+}
+
+.new-arrival-card.shimmer .new-arrival-image {
+    display: none;
+}
+
+/* Adjust shimmer colors to match your design */
+.new-arrival-card.shimmer .shimmer-bg {
+    background: #f6f6f6;
+    background: linear-gradient(to right, #f6f6f6 8%, #eaeaea 18%, #f6f6f6 33%);
+    background-size: 800px 104px;
+    animation: shimmer 1.5s infinite linear;
 }

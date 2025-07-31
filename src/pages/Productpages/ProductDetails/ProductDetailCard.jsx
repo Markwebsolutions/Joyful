@@ -1,10 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
-const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
-const twitterUrl = import.meta.env.VITE_TWITTER_URL;
+import "./ProductDetails.css"
+import SocialShare from './SocialShare';
 
 const ProductDetailCard = React.memo(({
     product,
@@ -25,13 +22,31 @@ const ProductDetailCard = React.memo(({
     const [mainImage, setMainImage] = useState(currentMainImage);
     const sanitizeHTML = useMemo(() => (html) => ({ __html: html }), []);
 
-    // Update main image when selected color or currentMainImage prop changes
-    React.useEffect(() => {
+    const cleanDescription = useMemo(() => {
+        return (text) => {
+            if (!text) return '';
+            let cleaned = text.replace(/<[^>]*>/g, '');
+            cleaned = cleaned.replace(/\s+/g, ' ').trim();
+            return cleaned;
+        };
+    }, []);
+
+    // Update main image when currentMainImage changes from parent
+    useEffect(() => {
         setMainImage(currentMainImage);
     }, [currentMainImage]);
 
+    // Update main image when selected variants change
+    useEffect(() => {
+        const newImage = selectedColor?.image || selectedSize?.image || selectedCapacity?.image || product?.mainimage || '';
+        if (newImage !== mainImage) {
+            setMainImage(newImage);
+        }
+    }, [selectedColor, selectedSize, selectedCapacity, product?.mainimage, mainImage]);
+
     const handleColorChange = (color) => {
         onColorChange(color);
+        // If the color has an image, update immediately
         if (color.image) {
             setMainImage(color.image);
         }
@@ -64,27 +79,44 @@ const ProductDetailCard = React.memo(({
         });
     };
 
-    // Filter size variants to only those with images for thumbnail display
     const sizeVariantsWithImages = useMemo(() =>
         sizeVariants.filter(size => size.image),
         [sizeVariants]);
 
+    const capacityVariantsWithImages = useMemo(() =>
+        capacityVariants.filter(capacity => capacity.image),
+        [capacityVariants]);
+
+    const shareUrl = window.location.href;
+    const shareTitle = `Check out this product: ${product.name}`;
+    const productDescription = cleanDescription(product.description || descriptionLines.join(' '));
+
     return (
         <div className={`product-grid-row ${isRelatedProduct ? 'related-product' : ''}`}>
             <div className="product-grid-column left-column">
-                {(colorVariants.length > 0 || sizeVariantsWithImages.length > 0 || capacityVariants.length > 0) && (
+                {(colorVariants.length > 0 || sizeVariantsWithImages.length > 0 || capacityVariantsWithImages.length > 0) && (
                     <div className="variants-container">
                         {colorVariants.map((color) => (
-                            <div key={`color-${color.name}`} className="variant-thumbnails">
-                                <img
-                                    src={color.image}
-                                    alt={color.name}
-                                    className={`variant-thumbnail ${selectedColor?.name === color.name ? 'active' : ''}`}
-                                    onClick={() => handleColorChange(color)}
-                                    onMouseEnter={() => color.image && setMainImage(color.image)}
-                                    onMouseLeave={() => selectedColor?.image && setMainImage(selectedColor.image)}
-                                    loading="lazy"
-                                />
+                            <div
+                                key={`color-${color.name}`}
+                                className={`variant-thumbnails ${selectedColor?.name === color.name ? 'active' : ''}`}
+                            >
+                                {color.image ? (
+                                    <img
+                                        src={color.image}
+                                        alt={color.name}
+                                        className="variant-thumbnail"
+                                        onClick={() => handleColorChange(color)}
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div
+                                        className="color-thumbnail-text"
+                                        onClick={() => handleColorChange(color)}
+                                        style={{ backgroundColor: color.hex || '#ccc' }}
+                                        title={color.name}
+                                    />
+                                )}
                             </div>
                         ))}
 
@@ -92,45 +124,36 @@ const ProductDetailCard = React.memo(({
                             <div
                                 key={`size-${size.value}`}
                                 className={`variant-thumbnails ${selectedSize?.value === size.value ? 'active' : ''}`}
-                                onClick={() => handleSizeChange(size)}
                             >
                                 <img
                                     src={size.image}
                                     alt={size.value}
                                     className="variant-thumbnail"
+                                    onClick={() => handleSizeChange(size)}
                                     loading="lazy"
-                                    onMouseEnter={() => size.image && setMainImage(size.image)}
-                                    onMouseLeave={() => selectedSize?.image && setMainImage(selectedSize.image)}
                                 />
                             </div>
                         ))}
 
-                        {capacityVariants.map((capacity) => (
+                        {capacityVariantsWithImages.map((capacity) => (
                             <div
                                 key={`capacity-${capacity.value}`}
                                 className={`variant-thumbnails ${selectedCapacity?.value === capacity.value ? 'active' : ''}`}
-                                onClick={() => handleCapacityChange(capacity)}
                             >
-                                {capacity.image ? (
-                                    <img
-                                        src={capacity.image}
-                                        alt={capacity.value}
-                                        className="variant-thumbnail"
-                                        loading="lazy"
-                                        onMouseEnter={() => capacity.image && setMainImage(capacity.image)}
-                                        onMouseLeave={() => selectedCapacity?.image && setMainImage(selectedCapacity.image)}
-                                    />
-                                ) : (
-                                    <div className="capacity-thumbnail-text">{capacity.value}</div>
-                                )}
+                                <img
+                                    src={capacity.image}
+                                    alt={capacity.value}
+                                    className="variant-thumbnail"
+                                    onClick={() => handleCapacityChange(capacity)}
+                                    loading="lazy"
+                                />
                             </div>
                         ))}
                     </div>
                 )}
-
                 <div className="product-image-container">
                     <img
-                        src={mainImage}
+                        src={mainImage || product?.mainimage}
                         alt={product.name}
                         className="product-main-image"
                         loading="lazy"
@@ -142,7 +165,6 @@ const ProductDetailCard = React.memo(({
                 <div className="product-info">
                     <h1 className={`product-title ${isRelatedProduct ? 'related' : ''}`}>{product.name}</h1>
                     <div className="option-selection">
-
                         {colorVariants.length > 0 && (
                             <div className="option-container">
                                 <label className='option-name'>Color: <span className="option-span">{selectedColor?.name}</span></label>
@@ -155,7 +177,7 @@ const ProductDetailCard = React.memo(({
                                                 backgroundColor: color.hex || '#ccc',
                                                 borderColor: color.hex ? '#ddd' : '#999'
                                             }}
-                                            onClick={() => onColorChange(color)}
+                                            onClick={() => handleColorChange(color)}
                                             title={color.name}
                                         />
                                     ))}
@@ -171,7 +193,7 @@ const ProductDetailCard = React.memo(({
                                         <span
                                             key={`size-btn-${size.value}`}
                                             className={`size-square ${selectedSize?.value === size.value ? 'active' : ''}`}
-                                            onClick={() => onSizeChange(size)}
+                                            onClick={() => handleSizeChange(size)}
                                         >
                                             {size.value}
                                         </span>
@@ -182,13 +204,13 @@ const ProductDetailCard = React.memo(({
 
                         {capacityVariants.length > 0 && (
                             <div className="option-container">
-                                <label className='option-name'>Capacity: <span className="option-span">{selectedCapacity?.value}</span></label>
+                                <label className='option-name'>Character: <span className="option-span">{selectedCapacity?.value}</span></label>
                                 <div className="option-variants">
                                     {capacityVariants.map((capacity) => (
                                         <span
                                             key={`capacity-btn-${capacity.value}`}
-                                            className={`capacity-circle${selectedCapacity?.value === capacity.value ? 'active' : ''}`}
-                                            onClick={() => onCapacityChange(capacity)}
+                                            className={`capacity-circle ${selectedCapacity?.value === capacity.value ? 'active' : ''}`}
+                                            onClick={() => handleCapacityChange(capacity)}
                                         >
                                             {capacity.value}
                                         </span>
@@ -196,7 +218,6 @@ const ProductDetailCard = React.memo(({
                                 </div>
                             </div>
                         )}
-
                     </div>
                     <button className="enquiry-button" onClick={handleEnquiryClick}>Send Enquiry</button>
 
@@ -212,20 +233,11 @@ const ProductDetailCard = React.memo(({
                     </div>
 
                     {!isRelatedProduct && (
-                        <div className="social-share">
-                            <span>Share:</span>
-                            <div className="social-icons">
-                                <a href={instagramUrl} aria-label="Share on Instagram">
-                                    <FaInstagram className="social-icon" />
-                                </a>
-                                <a href={facebookUrl} aria-label="Share on Facebook">
-                                    <FaFacebookF className="social-icon" />
-                                </a>
-                                <a href={twitterUrl} aria-label="Share on Twitter">
-                                    <FaTwitter className="social-icon" />
-                                </a>
-                            </div>
-                        </div>
+                        <SocialShare
+                            url={shareUrl}
+                            title={shareTitle}
+                            description={productDescription}
+                        />
                     )}
                 </div>
             </div>
