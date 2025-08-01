@@ -40,7 +40,7 @@ function App() {
             <Route path="/catalog" element={<OurCatlog />} />
             <Route path="/catalog/:productId" element={<ProductDetails />} />
             <Route path="/new-arrivals" element={<NewArrival />} />
-            <Route path="/inquiry" element={<Suspense fallback={<Loading />}><ProductDetailForm /></Suspense>} />
+            {/* <Route path="/inquiry" element={<Suspense fallback={<Loading />}><ProductDetailForm /></Suspense>} /> */}
             <Route path="/about" element={<Suspense fallback={<Loading />}><AboutUs /></Suspense>} />
             <Route path="/network" element={<Suspense fallback={<Loading />}><Network /></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<Loading />}><ContactUs /></Suspense>} />

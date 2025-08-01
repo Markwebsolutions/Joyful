@@ -8,7 +8,7 @@
 
 .new-arrival-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 30px;
     flex-wrap: wrap;
@@ -55,7 +55,7 @@
 .new-arrival-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 10px;
 }
 
 .new-arrival-card {
@@ -236,7 +236,7 @@
 @media (max-width: 768px) {
     .new-arrival-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 10px;
     }
 
     .new-arrival-container {

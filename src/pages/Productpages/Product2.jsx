@@ -1,19 +1,24 @@
-import './Product.css';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import {
-    fetchProducts,  // Make sure this matches the export name exactly
+    fetchProducts,
     setSelectedCategory,
     setSelectedSubcategory,
     setIsMobileView
-} from '../../features/productsSlice';  // Verify the correct path
+} from '../../features/productsSlice';
 import ProductShimmer from './ProductShimmer';
 import ProductGridCard from './ProductGrid/ProductGridCard';
 import FilterSidebar from './ProductFilter/FilterSidebar';
 import MobileFilterDropdown from './ProductFilter/MobileFilterDropdown';
+import './Product.css';
 
 const Product2 = () => {
     const dispatch = useDispatch();
+    const [searchParams] = useSearchParams();
+    const location = useLocation();
+
+    // Select only needed data from Redux store
     const {
         data,
         loading,
@@ -21,24 +26,42 @@ const Product2 = () => {
         selectedCategory,
         selectedSubcategory,
         isMobileView
-    } = useSelector((state) => state.products); // Make sure this matches your store configuration
+    } = useSelector((state) => ({
+        data: state.products.data,
+        loading: state.products.loading,
+        error: state.products.error,
+        selectedCategory: state.products.selectedCategory,
+        selectedSubcategory: state.products.selectedSubcategory,
+        isMobileView: state.products.isMobileView
+    }));
 
-    // Memoize all derived data
-    const { allProducts, categories, filteredProducts } = useMemo(() => {
-        // Flatten all products with their category/subcategory info
-        const allProducts = data.flatMap(category =>
-            category.subcategories.flatMap(subcategory =>
-                subcategory.products.map(product => ({
-                    ...product,
-                    category: category.name,
-                    subcategory: subcategory.name
-                }))
-            )
-        );
+    // Handle category selection from location state
+    useEffect(() => {
+        if (location.state?.selectedCategory) {
+            dispatch(setSelectedCategory(location.state.selectedCategory));
+            dispatch(setSelectedSubcategory(null));
+        }
+    }, [location.state, dispatch]);
 
-        // Get unique categories for the filter sidebar
+    // Handle URL parameters on initial load
+    useEffect(() => {
+        const urlCategory = searchParams.get('category');
+        const urlCategoryId = searchParams.get('categoryId');
+
+        if (urlCategory && urlCategoryId) {
+            dispatch(setSelectedCategory(urlCategory));
+            dispatch(setSelectedSubcategory(null));
+        }
+    }, [searchParams, dispatch]);
+
+    // Memoize all derived data with more efficient processing
+    const { categories, filteredProducts } = useMemo(() => {
+        // Early return if no data
+        if (!data.length) return { categories: [], filteredProducts: [] };
+
+        // Process categories for the filter sidebar
         const categories = [
-            { name: 'All Categories', subcategories: [] },
+            { name: 'All Categories', subcategories: [], imagelink: null },
             ...data.map(category => ({
                 name: category.name,
                 imagelink: category.imagelink,
@@ -46,57 +69,75 @@ const Product2 = () => {
             }))
         ];
 
-        // Filter products based on selections
-        const filteredProducts = allProducts.filter(product => {
-            if (!product.ispublished) return false;
-            if (selectedCategory === 'All Categories') return true;
-            if (selectedSubcategory) {
-                return product.category === selectedCategory &&
-                    product.subcategory === selectedSubcategory;
+        // Flatten and filter products in a single pass when possible
+        let filteredProducts = [];
+        for (const category of data) {
+            // Skip processing if we have a category selected and it doesn't match
+            if (selectedCategory && selectedCategory !== 'All Categories' && category.name !== selectedCategory) {
+                continue;
             }
-            return product.category === selectedCategory;
-        });
 
-        return { allProducts, categories, filteredProducts };
+            for (const subcategory of category.subcategories) {
+                // Skip processing if we have a subcategory selected and it doesn't match
+                if (selectedSubcategory && subcategory.name !== selectedSubcategory) {
+                    continue;
+                }
+
+                // Add products that are published and match filters
+                for (const product of subcategory.products) {
+                    if (product.ispublished) {
+                        filteredProducts.push({
+                            ...product,
+                            category: category.name,
+                            subcategory: subcategory.name
+                        });
+                    }
+                }
+            }
+        }
+
+        return { categories, filteredProducts };
     }, [data, selectedCategory, selectedSubcategory]);
 
-    useEffect(() => {
-        dispatch(fetchProducts());
+    // Memoize event handlers
+    const handleCategorySelect = useCallback((category) => {
+        dispatch(setSelectedCategory(category));
+    }, [dispatch]);
 
+    const handleSubcategorySelect = useCallback((subcategory) => {
+        dispatch(setSelectedSubcategory(subcategory));
+    }, [dispatch]);
+
+    // Setup resize listener and fetch products
+    useEffect(() => {
         const handleResize = () => {
             dispatch(setIsMobileView(window.innerWidth < 768));
         };
 
+        dispatch(fetchProducts());
         handleResize(); // Set initial value
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+
+        const resizeListener = () => {
+            window.requestAnimationFrame(handleResize);
+        };
+
+        window.addEventListener('resize', resizeListener);
+        return () => window.removeEventListener('resize', resizeListener);
     }, [dispatch]);
-
-    const handleCategorySelect = (category) => {
-        dispatch(setSelectedCategory(category));
-    };
-
-    const handleSubcategorySelect = (subcategory) => {
-        dispatch(setSelectedSubcategory(subcategory));
-    };
 
     if (error) return <div className="page-width">Error: {error}</div>;
 
     return (
         <div className="page-width">
             <div className="product-container my-20">
-                {/* Mobile Filter Dropdown - only shown on mobile */}
-                {isMobileView && (
+                {isMobileView ? (
                     <MobileFilterDropdown
                         categories={categories}
                         selectedCategory={selectedCategory}
                         setSelectedCategory={handleCategorySelect}
                         setSelectedSubcategory={handleSubcategorySelect}
                     />
-                )}
-
-                {/* Desktop Filter Sidebar - only shown on desktop */}
-                {!isMobileView && (
+                ) : (
                     <FilterSidebar
                         categories={categories}
                         selectedCategory={selectedCategory}
@@ -116,7 +157,10 @@ const Product2 = () => {
                     <div className="product-content">
                         <div className="product-grid">
                             {filteredProducts.map((product) => (
-                                <ProductGridCard key={product.id} product={product} />
+                                <ProductGridCard
+                                    key={`${product.id}-${product.category}-${product.subcategory}`}
+                                    product={product}
+                                />
                             ))}
                         </div>
                     </div>
