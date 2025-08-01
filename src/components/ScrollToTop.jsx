@@ -1,12 +1,24 @@
 // ScrollToTop.js
 import { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const location = useLocation();
+
+    // Scroll to top on route change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+
+    // Scroll to top on initial page load
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const toggleVisibility = () => {
-        if (window.pageYOffset > window.innerHeight) { // Changed to 100vh threshold
+        if (window.pageYOffset > window.innerHeight) {
             setIsVisible(true);
         } else {
             setIsVisible(false);
