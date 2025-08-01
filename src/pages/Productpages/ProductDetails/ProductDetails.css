@@ -298,7 +298,6 @@
 }
 
 /* Product Inquiry Form Styles */
-/* Product Inquiry Form Styles */
 .product-info-form-container {
     max-width: 800px;
     margin: 15vh auto 2rem;
@@ -320,9 +319,29 @@
     flex-direction: column;
 }
 
+.product-info-form .input-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.product-info-form .input-row .input-group {
+    flex: 1;
+    position: relative;
+}
+
+.product-info-form .input-row .input-group.email-input {
+    flex: 2;
+    /* Give email more space */
+}
+
+.product-info-form .input-row .input-group.phone-input {
+    flex: 1;
+    /* Phone takes less space */
+}
+
 .product-info-form .input-group {
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .product-info-form .input-group label {
@@ -365,12 +384,12 @@
 }
 
 .product-info-form .input-group textarea {
-    min-height: 120px;
+    min-height: 5rem;
     resize: vertical;
 }
 
 .product-info-form .product-info-group {
-    padding: 1.5rem;
+    padding: 1.2rem 1.5rem;
     background: #f8f5f2;
     border-radius: 8px;
     border-left: 4px solid #D67A1D;
@@ -450,12 +469,58 @@
 }
 
 @media (max-width: 600px) {
+    .product-info-form .input-row {
+        flex-direction: column;
+        gap: 0px;
+    }
+
     .product-info-form .product-details {
         grid-template-columns: 1fr;
     }
 
     .product-info-form .product-info-group {
         padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-info-form .product-info-group {
+        /* padding: 1.5rem; */
+        background: #f8f5f2;
+        border-radius: 8px;
+        border-left: 4px solid #D67A1D;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .product-info-form .product-details p {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+
+    .product-info-form .product-info-group label {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-info-form .input-group label {
+        position: absolute;
+        top: 0.7rem;
+        left: 1rem;
+        color: #999;
+        transition: all 0.2s ease;
+        pointer-events: none;
+        background: white;
+        padding: 0 0.5rem;
+    }
+
+    .product-info-form .input-group input,
+    .product-info-form .input-group textarea {
+        width: 100%;
+        padding: 0.7rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        transition: border-color 0.3s;
     }
 }
 

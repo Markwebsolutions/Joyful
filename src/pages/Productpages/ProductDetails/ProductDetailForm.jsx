@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
-const ProductDetailForm = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { product } = location.state || {};
-
+const ProductDetailForm = ({ product, onSuccess }) => {
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -47,12 +42,12 @@ const ProductDetailForm = () => {
                 fullName: formData.fullName,
                 email: formData.email,
                 phone: formData.phone,
-                product: product?.name || '', // Using product name as the product field
+                product: product?.name || '',
                 message: formData.message
             };
 
             const response = await fetch(
-                'https://joyful-backend-backend-final-4-production.up.railway.app/enquiry',
+                'https://joyfulbackend-production.up.railway.app/enquiry',
                 {
                     method: 'POST',
                     headers: {
@@ -65,7 +60,8 @@ const ProductDetailForm = () => {
             if (response.ok) {
                 setSubmitSuccess(true);
                 setTimeout(() => {
-                    navigate(-1); // Go back to the product detail page after success
+                    setSubmitSuccess(false);
+                    onSuccess(); // Close the modal
                 }, 2000);
             } else {
                 throw new Error('Failed to submit form');
@@ -79,12 +75,10 @@ const ProductDetailForm = () => {
     };
 
     return (
-        <div className="product-info-form-container">
-            <h2>Product Inquiry</h2>
+        <div className="">
             {submitSuccess ? (
                 <div className="product-info-form success-message">
                     <p>Your inquiry has been submitted successfully!</p>
-                    <p>You'll be redirected back shortly...</p>
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="product-info-form">
@@ -93,6 +87,9 @@ const ProductDetailForm = () => {
                             <label>Product:</label>
                             <div className="product-info-form product-details">
                                 <p>{product.name}</p>
+                                {product.color && <p>Color: {product.color}</p>}
+                                {product.size && <p>Size: {product.size}</p>}
+                                {product.capacity && <p>Capacity: {product.capacity}</p>}
                             </div>
                         </div>
                     )}
@@ -111,31 +108,33 @@ const ProductDetailForm = () => {
                         />
                     </div>
 
-                    <div className="input-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            required
-                        />
-                    </div>
+                    <div className="input-row">
+                        <div className="input-group email-input">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-group">
-                        <label htmlFor="phone">Phone</label>
-                        <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                        />
+                        <div className="input-group phone-input">
+                            <label htmlFor="phone">Phone</label>
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                            />
+                        </div>
                     </div>
 
                     <div className="input-group">

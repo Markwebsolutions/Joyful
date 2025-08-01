@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import "./ProductDetails.css"
+import "./ProductDetails.css";
 import SocialShare from './SocialShare';
+import Modal from './Modal';
+import ProductDetailForm from './ProductDetailForm';
 
 const ProductDetailCard = React.memo(({
     product,
@@ -18,8 +19,8 @@ const ProductDetailCard = React.memo(({
     descriptionLines,
     isRelatedProduct = false
 }) => {
-    const navigate = useNavigate();
     const [mainImage, setMainImage] = useState(currentMainImage);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const sanitizeHTML = useMemo(() => (html) => ({ __html: html }), []);
 
     const cleanDescription = useMemo(() => {
@@ -67,16 +68,16 @@ const ProductDetailCard = React.memo(({
     };
 
     const handleEnquiryClick = () => {
-        navigate('/inquiry', {
-            state: {
-                product: {
-                    ...product,
-                    color: selectedColor?.name,
-                    size: selectedSize?.value,
-                    capacity: selectedCapacity?.value
-                }
-            }
+        setIsModalOpen(true);
+        // Scroll to top of the viewport
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
     };
 
     const sizeVariantsWithImages = useMemo(() =>
@@ -241,8 +242,20 @@ const ProductDetailCard = React.memo(({
                     )}
                 </div>
             </div>
+
+            <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+                <ProductDetailForm
+                    product={{
+                        ...product,
+                        color: selectedColor?.name,
+                        size: selectedSize?.value,
+                        capacity: selectedCapacity?.value
+                    }}
+                    onSuccess={handleModalClose}
+                />
+            </Modal>
         </div>
     );
 });
 
-export default ProductDetailCard;
+export default ProductDetailCard;   
