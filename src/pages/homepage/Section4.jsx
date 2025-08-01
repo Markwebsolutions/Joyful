@@ -40,7 +40,7 @@ const Section4 = () => {
                         <div className="section4-stats-wrapper">
                             <div className="section4-stats-container">
                                 <div className="section4-stat-item">
-                                    <div className="section4-stat-value">
+                                    <div className="section4-stat-value stat-item">
                                         <CountUp
                                             from={0}
                                             to={1200}
@@ -55,7 +55,7 @@ const Section4 = () => {
                                     <div className="section4-stat-label">Happy Clients</div>
                                 </div>
                                 <div className="section4-stat-item">
-                                    <div className="section4-stat-value">
+                                    <div className="section4-stat-value stat-item">
                                         <CountUp
                                             from={0}
                                             to={92}

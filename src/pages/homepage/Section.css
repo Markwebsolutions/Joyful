@@ -740,10 +740,12 @@
 
   .why-joyful-different p {
     line-height: 1.6;
+    font-size: 13px;
   }
 
   .why-joyful-different .grid-row-child-wrapper {
     grid-template-columns: repeat(1, 2fr);
+    gap: 12px;
   }
 
   .why-joyful-different .grid-row {
@@ -756,6 +758,15 @@
 
   .why-joyful-different .grid-column:nth-child(2) {
     grid-row: 1;
+  }
+
+  .why-joyful-different h3 {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .why-joyful-different .grid-column-child-wrapper {
+    height: 107px;
   }
 }
 
@@ -855,9 +866,9 @@
 .stat-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  right: -35px;
+  right: -36px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-70%);
   width: 50px;
   height: 50px;
   background-image: url(../../assets/section3/arrow-right.png);

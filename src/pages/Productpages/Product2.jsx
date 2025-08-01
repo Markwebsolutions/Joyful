@@ -129,7 +129,7 @@ const Product2 = () => {
 
     return (
         <div className="page-width">
-            <div className="product-container my-20">
+            <div className="product-container">
                 {isMobileView ? (
                     <MobileFilterDropdown
                         categories={categories}

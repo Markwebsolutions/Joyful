@@ -30,9 +30,7 @@ function Search({ isHomePage, isMobile = false }) {
     // Debounced search function
     const performSearch = useCallback((query) => {
         if (query === "") {
-            // Show all published products when search is empty
-            const allPublishedProducts = allProducts.filter(product => product.ispublished);
-            setSearchResults(allPublishedProducts.slice(0, 15));
+            setSearchResults([]); // Don't show anything when search is empty
             return;
         }
 
@@ -76,9 +74,7 @@ function Search({ isHomePage, isMobile = false }) {
         setIsSearchOpen(prev => !prev);
         if (!isSearchOpen) {
             setSearchQuery("");
-            // Show all published products when opening search
-            const allPublishedProducts = allProducts.filter(product => product.ispublished);
-            setSearchResults(allPublishedProducts.slice(0, 15));
+            setSearchResults([]); // Clear results when opening search
         } else {
             setSearchResults([]);
         }
@@ -129,7 +125,12 @@ function Search({ isHomePage, isMobile = false }) {
     }, [isSearchOpen, isMobile]);
 
     const renderSearchResults = () => {
-        // Filter to only show published products in all cases
+        // Only show results if there's a search query
+        if (searchQuery.trim() === "") {
+            return null;
+        }
+
+        // Filter to only show published products
         const publishedResults = searchResults.filter(product => product.ispublished);
 
         return (
@@ -151,7 +152,7 @@ function Search({ isHomePage, isMobile = false }) {
                             </div>
                         ))}
                     </div>
-                ) : searchQuery.trim() !== "" && (
+                ) : (
                     <div className="search-no-results">
                         No published products found for "{searchQuery}"
                     </div>
@@ -181,12 +182,6 @@ function Search({ isHomePage, isMobile = false }) {
                                 type="text"
                                 value={searchQuery}
                                 onChange={handleSearchChange}
-                                onFocus={() => {
-                                    if (searchQuery.trim() === "") {
-                                        const allPublishedProducts = allProducts.filter(product => product.ispublished);
-                                        setSearchResults(allPublishedProducts.slice(0, 15));
-                                    }
-                                }}
                                 placeholder="Search for products..."
                                 className="mobile-search-input-expanded"
                                 autoFocus

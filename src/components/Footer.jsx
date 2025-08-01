@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import emailjs from '@emailjs/browser';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +13,9 @@ const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
 const twitterUrl = import.meta.env.VITE_TWITTER_URL;
 const contactNumber = import.meta.env.VITE_CONTACT_NUMBER;
 const contactLink = import.meta.env.VITE_CONTACT_LINK;
+
+// Initialize EmailJS with your Public Key
+emailjs.init('3visauPxUmbnTGLsO');
 
 const footerLinks = {
   b2b: [
@@ -60,29 +64,37 @@ const Footer = () => {
     }
 
     try {
-      const requestBody = {
-        email: email
-      };
+      // Send to both EmailJS and your backend in parallel
+      await Promise.all([
+        // EmailJS request
+        emailjs.send(
+          'service_cb488ng', // Your EmailJS Service ID
+          'template_6dmwc1f', // Your EmailJS Template ID
+          {
+            to_email: email,
+            from_name: 'Joyful Plastics',
+            message: 'Thank you for subscribing to our joyful!',
+            reply_to: 'info@joyful.co.in'
+          }
+        ),
 
-      const response = await fetch('https://joyfulbackend-production.up.railway.app/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
+        // Backend API request
+        fetch('https://joyfulbackend-production.up.railway.app/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email
+          })
+        })
+      ]);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Subscription failed');
-      }
-
-      setSubmissionStatus(data.message || 'Thank you for subscribing!');
+      setSubmissionStatus('Thank you for subscribing! Check your email for confirmation.');
       setEmail('');
     } catch (error) {
-      console.error('Error:', error);
-      setSubmissionStatus(error.message || 'Failed to subscribe. Please try again later.');
+      console.error('Subscription failed:', error);
+      setSubmissionStatus('Failed to subscribe. Please try again later.');
     } finally {
       setIsLoading(false);
     }
