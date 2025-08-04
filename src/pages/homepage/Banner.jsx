@@ -1,4 +1,4 @@
-import './banner.css';
+import './Banner.css';
 import grid1 from "../../assets/grid-1.jpg";
 import grid2 from "../../assets/grid-2.jpg";
 import grid5 from "../../assets/grid-5.jpg";
