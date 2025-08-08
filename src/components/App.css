@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
 
 /* App.css */
 body,
@@ -29,17 +29,19 @@ html {
 
 .footer {
   color: white;
-  font-family: 'Baloo 2', cursive;
+  font-family: "Baloo 2", cursive;
   background-color: #153548;
 }
 
 .footer *:not(input, button) {
-  font-family: 'Baloo 2', cursive;
+  font-family: "Baloo 2", cursive;
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: calc(35% - 20px) calc(20.5% - 20px) calc(20.5% - 20px) calc(21% - 20px);
+  grid-template-columns: calc(35% - 20px) calc(20.5% - 20px) calc(20.5% - 20px) calc(
+      21% - 20px
+    );
   gap: 40px;
   padding: 40px 0;
 }
@@ -166,7 +168,7 @@ html {
 }
 
 address {
-  font-family: 'Baloo 2', cursive;
+  font-family: "Baloo 2", cursive;
   font-style: normal;
   line-height: 1.5;
   font-weight: 500;
@@ -227,7 +229,6 @@ li.contact-li {
 }
 
 @media (max-width: 768px) {
-
   /* Change to single column layout */
   .footer-grid {
     grid-template-columns: 1fr;
@@ -349,6 +350,7 @@ li.contact-li {
 
 .sub-footer__link-item:hover {
   text-decoration: underline;
+  color: #ccc;
 }
 
 /* Social Section */
@@ -475,7 +477,7 @@ li.contact-li {
 }
 
 .floating-scroll-button button {
-  background-color: #D67A1D;
+  background-color: #d67a1d;
   color: white;
   border: none;
   border-radius: 50%;
