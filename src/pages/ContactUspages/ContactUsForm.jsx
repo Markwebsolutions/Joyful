@@ -45,6 +45,30 @@ const ContactForm = ({
     }
     return () => clearTimeout(timer);
   }, [showSuccess, navigate, redirectTo, onClose]);
+  // Abandonment tracking mail process
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (
+        formData.firstname ||
+        formData.lastname ||
+        formData.email ||
+        formData.phone ||
+        formData.querytype ||
+        formData.message
+      ) {
+        navigator.sendBeacon(
+          "https://script.google.com/macros/s/AKfycbxsrav3VTrv3q0CCp1prsLIzYz6mYJq7-kmkKubhJKc9-m6Y3VoG6VF5Y0GRAR3jG4/exec",
+          new URLSearchParams({
+            ...formData,
+            abandoned: "true",
+          })
+        );
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [formData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,14 +86,16 @@ const ContactForm = ({
           body: JSON.stringify(formData),
         }
       );
-      const scriptResponse = await fetch(
-        "https://script.google.com/macros/s/AKfycbygOmac0S0wre-48_pzDJOEsuAnSs1Mmp3fIHdukt2xpxzcIvC7sJlMyrhz80YDiffMiA/exec",
+      // mail process
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbxsrav3VTrv3q0CCp1prsLIzYz6mYJq7-kmkKubhJKc9-m6Y3VoG6VF5Y0GRAR3jG4/exec",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams(formData).toString(),
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            ...formData,
+            abandoned: "false",
+          }).toString(),
         }
       );
       if (!response.ok) {
