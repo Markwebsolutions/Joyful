@@ -18,10 +18,14 @@
 }
 
 .section-image::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(214, 122, 29, 0.2) 0%, rgba(255, 255, 255, 0) 50%);
+  background: linear-gradient(
+    135deg,
+    rgba(214, 122, 29, 0.2) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
   z-index: 1;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -136,7 +140,7 @@
 }
 
 .action-dark-button:hover {
-  background-color: #D67A1D;
+  background-color: #d67a1d;
   color: white;
 }
 
@@ -165,7 +169,7 @@
 }
 
 .dark-button:hover {
-  background-color: #D67A1D;
+  background-color: #d67a1d;
   color: white;
 }
 
@@ -224,7 +228,6 @@
 
 /* Animations */
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(8px);
@@ -236,7 +239,6 @@
 }
 
 @keyframes phoneRing {
-
   0%,
   100% {
     transform: rotate(0);
@@ -267,7 +269,6 @@
 }
 
 @keyframes softPulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -283,7 +284,6 @@
 }
 
 @keyframes gentleBounce {
-
   0%,
   100% {
     transform: translateY(0);
@@ -295,7 +295,6 @@
 }
 
 @keyframes gentlePulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -331,6 +330,8 @@
   .features {
     margin: 0;
     gap: 0.9rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 24px;
   }
 
   .benefits {
@@ -486,7 +487,7 @@
 /* section 2 */
 .grid-section {
   height: auto;
-  background: #F5EDDA;
+  background: #f5edda;
   min-height: 10vh;
 }
 
@@ -563,20 +564,20 @@
 }
 
 .hover-effect::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: #D67A1D;
+  background: #d67a1d;
   transition: all 0.4s ease;
   z-index: -1;
 }
 
 .hover-effect:hover {
   color: white;
-  border-color: #D67A1D;
+  border-color: #d67a1d;
 }
 
 .hover-effect:hover::before {
@@ -655,7 +656,7 @@
 
 .why-joyful-different p {
   margin: 0;
-  color: #000000B2;
+  color: #000000b2;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -707,7 +708,7 @@
   transform: perspective(500px) rotateX(5deg) rotateY(5deg) translateY(-5px);
   box-shadow: 6px 9px 15px rgba(0, 0, 0, 0.2);
   background: #f0f0f0;
-  border-bottom: 3px solid #D67A1D;
+  border-bottom: 3px solid #d67a1d;
 }
 
 .why-joyful-different .grid-content-wrapper {
@@ -770,14 +771,13 @@
   }
 }
 
-
 /* section 4 */
 .section4-wrapper {
   position: relative;
 }
 
 .section4-content {
-  background: #000CB70D;
+  background: #000cb70d;
   padding: 70px 0 10px;
   position: relative;
   z-index: 1;
@@ -854,7 +854,7 @@
   font-size: 48px;
   font-weight: 600;
   line-height: 1.2;
-  color: #D67A1D;
+  color: #d67a1d;
 }
 
 .section4-stat-label {
@@ -1050,14 +1050,14 @@
 }
 
 .follow-on-instagram-wrapper .first-img {
-  background: url('../../assets/section3/instagram-1.jpg');
+  background: url("../../assets/section3/instagram-1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
 }
 
 .follow-on-instagram-wrapper .last-img {
-  background: url('../../assets/section3/instagram-11.jpg');
+  background: url("../../assets/section3/instagram-11.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
@@ -1090,7 +1090,7 @@
 
 /* network */
 .network-content {
-  background: #000CB70D;
+  background: #000cb70d;
   padding: 70px 0 300px;
   position: relative;
   z-index: 1;
