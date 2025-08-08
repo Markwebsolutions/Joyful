@@ -1,168 +1,194 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const ProductDetailForm = ({ product, onSuccess }) => {
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        phone: '',
-        message: ''
-    });
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitError, setSubmitError] = useState(null);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // ✅ Phone number validation while typing
+    if (name === "phone") {
+      // Only allow numbers and limit to 10 digits
+      const cleanedValue = value.replace(/\D/g, "");
+      if (cleanedValue.length <= 10) {
+        setFormData((prev) => ({
+          ...prev,
+          phone: cleanedValue,
         }));
-    };
+      }
+      return;
+    }
 
-    const handleFocus = (e) => {
-        const parent = e.target.parentNode;
-        parent.classList.add('focused');
-    };
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const handleBlur = (e) => {
-        const parent = e.target.parentNode;
-        if (!e.target.value) {
-            parent.classList.remove('focused');
+  const handleFocus = (e) => {
+    const parent = e.target.parentNode;
+    parent.classList.add("focused");
+  };
+
+  const handleBlur = (e) => {
+    const parent = e.target.parentNode;
+    if (!e.target.value) {
+      parent.classList.remove("focused");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    // ✅ Final phone number validation before submit
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setSubmitError("Please enter a valid 10-digit phone number starting with 6-9.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const payload = {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        product: product?.name || "",
+        message: formData.message,
+      };
+
+      const response = await fetch(
+        "https://joyfulbackend-production.up.railway.app/enquiry",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         }
-    };
+      );
+      if (response.ok) {
+        setSubmitSuccess(true);
+        setTimeout(() => {
+          setSubmitSuccess(false);
+          onSuccess(); // Close the modal
+        }, 2000);
+      } else {
+        throw new Error("Failed to submit form");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitError(
+        error.message || "Failed to submit form. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitError(null);
-
-        try {
-            const payload = {
-                fullName: formData.fullName,
-                email: formData.email,
-                phone: formData.phone,
-                product: product?.name || '',
-                message: formData.message
-            };
-
-            const response = await fetch(
-                'https://joyfulbackend-production.up.railway.app/enquiry',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                }
-            );
-
-            if (response.ok) {
-                setSubmitSuccess(true);
-                setTimeout(() => {
-                    setSubmitSuccess(false);
-                    onSuccess(); // Close the modal
-                }, 2000);
-            } else {
-                throw new Error('Failed to submit form');
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setSubmitError(error.message || 'Failed to submit form. Please try again.');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    return (
-        <div className="">
-            {submitSuccess ? (
-                <div className="product-info-form success-message">
-                    <p>Your inquiry has been submitted successfully!</p>
-                </div>
-            ) : (
-                <form onSubmit={handleSubmit} className="product-info-form">
-                    {product && (
-                        <div className="product-info-form product-info-group">
-                            <label>Product:</label>
-                            <div className="product-info-form product-details">
-                                <p>{product.name}</p>
-                                {product.color && <p>Color: {product.color}</p>}
-                                {product.size && <p>Size: {product.size}</p>}
-                                {product.capacity && <p>Capacity: {product.capacity}</p>}
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="product-info-form input-group">
-                        <label htmlFor="fullName">Full Name</label>
-                        <input
-                            type="text"
-                            id="fullName"
-                            name="fullName"
-                            value={formData.fullName}
-                            onChange={handleChange}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            required
-                        />
-                    </div>
-
-                    <div className="input-row">
-                        <div className="input-group email-input">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                required
-                            />
-                        </div>
-
-                        <div className="input-group phone-input">
-                            <label htmlFor="phone">Phone</label>
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="input-group">
-                        <label htmlFor="message">Message</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            rows="4"
-                        />
-                    </div>
-
-                    {submitError && <div className="error-message">{submitError}</div>}
-
-                    <button
-                        type="submit"
-                        className="product-info-form submit-button"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Submitting...' : 'Submit Inquiry'}
-                    </button>
-                </form>
-            )}
+  return (
+    <div className="">
+      {submitSuccess ? (
+        <div className="product-info-form success-message">
+          <p>Your inquiry has been submitted successfully!</p>
         </div>
-    );
+      ) : (
+        <form onSubmit={handleSubmit} className="product-info-form">
+          {product && (
+            <div className="product-info-form product-info-group">
+              <label>Product:</label>
+              <div className="product-info-form product-details">
+                <p>{product.name}</p>
+                {product.color && <p>Color: {product.color}</p>}
+                {product.size && <p>Size: {product.size}</p>}
+                {product.capacity && <p>Capacity: {product.capacity}</p>}
+              </div>
+            </div>
+          )}
+
+          <div className="product-info-form input-group">
+            <label htmlFor="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
+            />
+          </div>
+
+          <div className="input-row">
+            <div className="input-group email-input">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                required
+              />
+            </div>
+
+            <div className="input-group phone-input">
+              <label htmlFor="phone">Phone</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                pattern="[6-9]{1}[0-9]{9}"
+                title="Enter a valid 10-digit phone number starting with 6-9"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              rows="4"
+            />
+          </div>
+
+          {submitError && <div className="error-message">{submitError}</div>}
+
+          <button
+            type="submit"
+            className="product-info-form submit-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+          </button>
+        </form>
+      )}
+    </div>
+  );
 };
 
 export default ProductDetailForm;
