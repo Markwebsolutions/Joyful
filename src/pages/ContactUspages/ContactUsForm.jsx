@@ -45,30 +45,21 @@ const ContactForm = ({
     }
     return () => clearTimeout(timer);
   }, [showSuccess, navigate, redirectTo, onClose]);
-  // Abandonment tracking mail process
-
+// Abandonment tracking on page refresh or close
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (
-        formData.firstname ||
-        formData.lastname ||
-        formData.email ||
-        formData.phone ||
-        formData.querytype ||
-        formData.message
-      ) {
-        navigator.sendBeacon(
-          "https://script.google.com/macros/s/AKfycbxsrav3VTrv3q0CCp1prsLIzYz6mYJq7-kmkKubhJKc9-m6Y3VoG6VF5Y0GRAR3jG4/exec",
-          new URLSearchParams({
-            ...formData,
-            abandoned: "true",
-          })
-        );
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("beforeunload", sendAbandonmentData);
+    return () =>
+      window.removeEventListener("beforeunload", sendAbandonmentData);
   }, [formData]);
+
+  // Abandonment tracking on internal page change (React Router)
+  useEffect(() => {
+    const currentPath = location.pathname;
+    return () => {
+      // This runs when the route changes away from the current page
+      sendAbandonmentData();
+    };
+  }, [location, formData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
