@@ -1,600 +1,599 @@
 .contact-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 40px 0;
-    background-color: #000CB70D;
-    /* Add this to make it the positioning context */
-    position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  background-color: #000cb70d;
+  /* Add this to make it the positioning context */
+  position: relative;
 }
 
 .contact-wrapper {
-    max-width: 1600px;
-    width: 90%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    padding: 0 2rem;
+  max-width: 1600px;
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  padding: 0 2rem;
 }
 
 /* Default order (desktop) */
 .contact2-info {
-    grid-column: 1;
+  grid-column: 1;
 }
 
 .contact-form-container {
-    grid-column: 2;
+  grid-column: 2;
 }
 
 .contact2-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 590px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 590px;
 }
 
 .contact2-info p {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #000;
-    margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 2rem;
 }
 
 .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 2.5rem;
 }
 
 .contact2-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background-color: #D67A1D1F;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background-color: #d67a1d1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .contact2-icon img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .contact-details h4 {
-    font-weight: 700;
-    font-size: 16px;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-    color: #423a3ab5;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  color: #423a3ab5;
 }
 
 .contact-details h1,
 .contact-details h3 {
-    color: #000;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 26px;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 26px;
 }
 
 .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background: #fff;
-    padding: 44px 48px 48px;
-    border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #fff;
+  padding: 44px 48px 48px;
+  border: 1px solid #ddd;
 }
 
 .contact-form h2 {
-    font-weight: 700;
-    font-size: 40px;
-    letter-spacing: 2%;
-    text-transform: capitalize;
-    margin-bottom: 0.5rem;
-    color: #333;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 2%;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+  color: #333;
 }
 
 .form-group {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
-.form-group>* {
-    flex: 1;
+.form-group > * {
+  flex: 1;
 }
 
 .form-control {
-    width: 100%;
-    height: 56px;
-    padding: 18px 16px 18px 20px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  padding: 18px 16px 18px 20px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
 
-    color: #000;
-    /* Text color when typing */
+  color: #000;
+  /* Text color when typing */
 }
 
 .form-control::placeholder {
-    color: #000;
-    opacity: 1;
+  color: #000;
+  opacity: 1;
 }
 
 .form-control:focus {
-    outline: none;
-    border-color: #D67A1D;
-    background-color: #f9f9f9;
-    /* Light background when focused */
+  outline: none;
+  border-color: #d67a1d;
+  background-color: #f9f9f9;
+  /* Light background when focused */
 }
 
 /* Light placeholder when focused */
 .form-control:focus::placeholder {
-    color: #666;
-    /* Lighter color when focused */
-    opacity: 0.8;
+  color: #666;
+  /* Lighter color when focused */
+  opacity: 0.8;
 }
 
 textarea.form-control {
-    height: 120px;
-    resize: vertical;
+  height: 120px;
+  resize: vertical;
 }
 
 select.form-control {
-    appearance: none;
+  appearance: none;
 }
 
 .submit-btn {
-    background-color: #D67A1D;
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    font-weight: 700;
-    font-size: 16px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s;
-    border-radius: 130px;
-    width: 100%;
+  background-color: #d67a1d;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+  border-radius: 130px;
+  width: 100%;
 }
 
 .submit-btn:hover {
-    background-color: #c06e1a;
+  background-color: #c06e1a;
 }
 
 .terms-container {
-    margin: 15px 0;
+  margin: 15px 0;
 }
 
 .terms-label {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    cursor: pointer;
-    font-size: 12px;
-    line-height: 18px;
-    color: #666;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 18px;
+  color: #666;
 }
 
 .terms-checkbox {
-    min-width: 16px;
-    min-height: 16px;
-    margin-top: 2px;
-    accent-color: #D67A1D;
-    cursor: pointer;
+  min-width: 16px;
+  min-height: 16px;
+  margin-top: 2px;
+  accent-color: #d67a1d;
+  cursor: pointer;
 }
 
 .terms-link {
-    color: #D67A1D;
-    text-decoration: underline;
+  color: #d67a1d;
+  text-decoration: underline;
 }
 
 .terms-link:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .submit-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-
 @media (max-width: 768px) {
-    .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 0;
-    }
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0;
+  }
 
-    /* Swapped order for mobile */
-    .contact2-info {
-        order: 2;
-    }
+  /* Swapped order for mobile */
+  .contact2-info {
+    order: 2;
+  }
 
-    .contact-form-container {
-        order: 1;
-    }
+  .contact-form-container {
+    order: 1;
+  }
 
-    .form-group {
-        flex-direction: column;
-        gap: 0;
-    }
+  .form-group {
+    flex-direction: column;
+    gap: 0;
+  }
 
-    .contact-form {
-        padding: 30px;
-    }
+  .contact-form {
+    padding: 30px;
+  }
 
-    .contact-form h2 {
-        font-size: 32px;
-    }
+  .contact-form h2 {
+    font-size: 32px;
+  }
 }
 
 @media (max-width: 480px) {
-    .contact-item {
-        align-items: flex-start;
-        gap: 15px;
-    }
+  .contact-item {
+    align-items: flex-start;
+    gap: 15px;
+  }
 
-    .contact2-icon {
-        width: 60px;
-        height: 60px;
-    }
+  .contact2-icon {
+    width: 60px;
+    height: 60px;
+  }
 
-    .contact-form {
-        padding: 20px;
-    }
+  .contact-form {
+    padding: 20px;
+  }
 }
 
 .normal-content {
-    color: #000;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 26px;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 26px;
 }
 
 .address-content {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0%;
-    color: #000;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  color: #000;
 }
-
 
 /* ContactUs.css */
 .contact3Container {
-    background-color: #fff;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    padding: 40px 0;
+  background-color: #fff;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
 }
 
 .contact3Wrapper {
-    max-width: 1600px;
-    width: 90%;
-    margin: 0 auto;
+  max-width: 1600px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .contact3Grids {
-    display: grid;
-    gap: 100px;
-    /* Changed from 50px to 100px */
-    grid-template-columns: 1fr 1fr;
-    /* Changed from auto-fit to explicit 1fr 1fr */
-    align-items: center;
+  display: grid;
+  gap: 85px;
+  /* Changed from 50px to 100px */
+  grid-template-columns: 1fr 1fr;
+  /* Changed from auto-fit to explicit 1fr 1fr */
+  align-items: center;
 }
 
 .contact3Map {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .contact3Locations {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .contact3Locations h2 {
-    font-weight: 700;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    text-transform: capitalize;
-    color: #333;
-    padding-bottom: 30px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    /* #0000001A equivalent */
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  color: #333;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  /* #0000001A equivalent */
 }
 
 .contact3LocationContent {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .contact3LocationDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .contact3AddressWrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 22px 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 22px 12px;
 }
 
 .contact3LocationIcon {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .contact3LocationIconWrapper {
-    width: 72px;
-    height: 72px;
-    min-width: 24px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
+  width: 65px;
+  height: 65px;
+  min-width: 24px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: #c06e1a29;
 }
 
 .contact3LocationTitle {
-    margin-top: 1.4rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    font-size: 1.25rem;
-    color: #222;
+  margin-top: 1.4rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #222;
 }
 
 .contact3LocationAddress {
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #555;
-    margin: 0;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
 }
 
 .contact3FactoryImage {
-    width: 100%;
-    overflow: hidden;
-    margin-top: 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow: hidden;
+  margin-top: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .contact3FactoryImg {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
 .contact3FactoryImg:hover {
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
 /* Responsive styles */
 @media (max-width: 992px) {
-    .contact3Grids {
-        gap: 40px;
-    }
+  .contact3Grids {
+    gap: 40px;
+  }
 
-    .contact3Map {
-        order: 2;
-    }
-
+  .contact3Map {
+    order: 2;
+  }
 }
 
-
 @media (max-width: 768px) {
-    .contact3Container {
-        padding: 60px 0;
-    }
+  .contact3Container {
+    padding: 60px 0;
+  }
 
-    .contact3Grids {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
+  .contact3Grids {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 
-    .contact3Locations {
-        order: 1;
-    }
+  .contact3Locations {
+    order: 1;
+  }
 
-    .contact3LocationContent {
-        flex-direction: row;
-        align-items: flex-start;
-        text-align: left;
-    }
+  .contact3LocationContent {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
 
-    .contact3AddressWrapper {
-        gap: 12px;
-    }
+  .contact3AddressWrapper {
+    gap: 12px;
+  }
 
-    .contact3LocationIconWrapper {
-        width: 20px;
-        height: 20px;
-        min-width: 20px;
-        padding: 6px;
-    }
+  .contact3LocationIconWrapper {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    padding: 6px;
+  }
 
-    .contact3LocationIcon {
-        width: 16px;
-        height: 16px;
-    }
+  .contact3LocationIcon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @media (max-width: 480px) {
-    .contact3Grids {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
+  .contact3Grids {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 
+  .contact3LocationContent {
+    gap: 15px;
+  }
 
-    .contact3LocationContent {
-        gap: 15px;
-    }
-
-    .contact3LocationIconWrapper {
-        margin-bottom: 0;
-    }
+  .contact3LocationIconWrapper {
+    margin-bottom: 0;
+    width: 50px;
+    height: 50px;
+    background-color: #c06e1a29;
+  }
 }
 
 /* Success Popup Styles */
 .success-overlay {
-    position: absolute;
-    /* Change from fixed to absolute */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 999;
-    animation: fadeIn 0.3s ease-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    /* Change from 140vh to 100% */
-    overflow: hidden;
-    /* Optional: match the container's border radius if it has one */
+  position: absolute;
+  /* Change from fixed to absolute */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* Change from 140vh to 100% */
+  overflow: hidden;
+  /* Optional: match the container's border radius if it has one */
 }
 
 /* Keep all other styles the same */
 .success-popup {
-    z-index: 1000;
-    animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-    width: 90%;
-    max-width: 500px;
-    background: white;
-    border-radius: 12px;
-    padding: 2rem 1.5rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    margin: auto;
-    position: relative;
-    /* Add this to contain the absolute positioned close button */
+  z-index: 1000;
+  animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  margin: auto;
+  position: relative;
+  /* Add this to contain the absolute positioned close button */
 }
 
 /* Rest of your existing styles remain the same */
 .tick-animation {
-    padding-top: 10px;
-    text-align: center;
-    width: 100%;
-    color: #333;
+  padding-top: 10px;
+  text-align: center;
+  width: 100%;
+  color: #333;
 }
 
 .checkmark {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 1.5rem;
-    display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: block;
 }
 
 .checkmark__circle {
-    stroke-dasharray: 166;
-    stroke-dashoffset: 166;
-    stroke-width: 2;
-    stroke: #D67A1D;
-    fill: none;
-    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke: #d67a1d;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 
 .checkmark__check {
-    transform-origin: 50% 50%;
-    stroke-dasharray: 48;
-    stroke-dashoffset: 48;
-    stroke: #D67A1D;
-    stroke-width: 3;
-    stroke-linecap: round;
-    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke: #d67a1d;
+  stroke-width: 3;
+  stroke-linecap: round;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
 
 .tick-animation h3 {
-    color: #D67A1D;
-    margin: 1rem 0 0.5rem;
-    font-size: 1.8rem;
-    font-weight: 700;
+  color: #d67a1d;
+  margin: 1rem 0 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .tick-animation p {
-    color: #555;
-    margin: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
+  color: #555;
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 .success-popup-close {
-    position: absolute;
-    top: 13px;
-    right: 14px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #777;
-    transition: color 0.3s;
-    padding: 0.5rem;
-    line-height: 1;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #777;
+  transition: color 0.3s;
+  padding: 0.5rem;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .success-popup-close:hover {
-    color: #D67A1D;
-    background-color: rgba(214, 122, 29, 0.1);
+  color: #d67a1d;
+  background-color: rgba(214, 122, 29, 0.1);
 }
 
 /* Animations remain unchanged */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes popIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.5);
-    }
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
 
-    70% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
+  70% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 
-    100% {
-        transform: scale(1);
-    }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes stroke {
-    100% {
-        stroke-dashoffset: 0;
-    }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Remove the media query since we're using 100vh now */
 
 @media (max-width: 768px) {
-    .success-overlay {
-        height: 100vh !important;
-    }
+  .success-overlay {
+    height: 100vh !important;
+  }
 }
