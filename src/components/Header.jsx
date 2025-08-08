@@ -1,17 +1,20 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faBars,
   faTimes,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import Logo from "../assets/joyful.png";
 import Search from "./Search";
 import "./Header.css";
-import { setSelectedCategory, setSelectedSubcategory } from '../features/productsSlice';
+import {
+  setSelectedCategory,
+  setSelectedSubcategory,
+} from "../features/productsSlice";
 
 const NAV_LINKS = [
   { path: "/", text: "Home" },
@@ -19,10 +22,11 @@ const NAV_LINKS = [
   { path: "/catalog", text: "Our Catalog", hasDropdown: true },
   { path: "/new-arrivals", text: "New Arrivals" },
   { path: "/network", text: "Network" },
-  { path: "/contact", text: "Contact Us" }
+  { path: "/contact", text: "Contact Us" },
 ];
 
 function Header() {
+  const [isMobileCatalogOpen, setIsMobileCatalogOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -32,11 +36,16 @@ function Header() {
   const catalogDropdownRef = useRef(null);
   const catalogHoverTimerRef = useRef(null);
 
-  const products = useSelector(state => state.products.data);
+  const products = useSelector((state) => state.products.data);
 
-  const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), []);
+  const toggleMenu = useCallback(() => setIsMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
+  const toggleMobileCatalog = useCallback((e) => {
+    e.preventDefault(); // prevent link navigation
+    e.stopPropagation(); // stop propagation to parent
+    setIsMobileCatalogOpen((prev) => !prev);
+  }, []);
   const handleInquiryClick = useCallback(() => {
     navigate("/contact#contact-form");
     closeMenu();
@@ -69,11 +78,16 @@ function Header() {
       clearTimeout(catalogHoverTimerRef.current);
     };
   }, []);
+  useEffect(() => {
+    // Close mobile catalog dropdown on route change
+    setIsMobileCatalogOpen(false);
+  }, [pathname]);
 
   const handleCategorySelect = (categoryName) => {
+    const slug = categoryName.toLowerCase().replace(/\s+/g, "-");
     dispatch(setSelectedCategory(categoryName));
     dispatch(setSelectedSubcategory(null));
-    navigate("/catalog");
+    navigate(`/catalog/${slug}`);
     closeMenu();
     setIsCatalogHovered(false);
   };
@@ -86,8 +100,11 @@ function Header() {
     >
       <div className="subcategories-grid-header">
         {products
-          .filter(category => category.subcategories && category.subcategories.length > 0)
-          .map(category => (
+          .filter(
+            (category) =>
+              category.subcategories && category.subcategories.length > 0
+          )
+          .map((category) => (
             <div
               key={category.id}
               className="subcategory-item-header"
@@ -95,7 +112,7 @@ function Header() {
             >
               <div className="subcategory-image-header">
                 <img
-                  src={category.imagelink || 'https://via.placeholder.com/80'}
+                  src={category.imagelink || "https://via.placeholder.com/80"}
                   alt={category.name}
                   className="subcategory-image"
                 />
@@ -107,38 +124,49 @@ function Header() {
     </div>
   );
 
-  const renderNavLinks = useMemo(() => (
-    NAV_LINKS.map(({ path, text, hasDropdown }) => (
-      <div
-        key={path}
-        className={`nav-link-container ${hasDropdown ? 'has-dropdown' : ''}`}
-        onMouseEnter={hasDropdown ? handleCatalogEnter : undefined}
-        onMouseLeave={hasDropdown ? handleCatalogLeave : undefined}
-        ref={hasDropdown ? catalogDropdownRef : null}
-      >
-        <Link
-          to={path}
-          className={`nav-link ${isHomePage ? 'text-white' : 'text-dark'}`}
-          onClick={closeMenu}
+  const renderNavLinks = useMemo(
+    () =>
+      NAV_LINKS.map(({ path, text, hasDropdown }) => (
+        <div
+          key={path}
+          className={`nav-link-container ${hasDropdown ? "has-dropdown" : ""}`}
+          onMouseEnter={hasDropdown ? handleCatalogEnter : undefined}
+          onMouseLeave={hasDropdown ? handleCatalogLeave : undefined}
+          ref={hasDropdown ? catalogDropdownRef : null}
         >
-          {text}
-        </Link>
+          <Link
+            to={path}
+            className={`nav-link ${isHomePage ? "text-white" : "text-dark"}`}
+            onClick={closeMenu}
+          >
+            {text}
+          </Link>
 
-        {hasDropdown && isCatalogHovered && renderCatalogDropdown()}
-      </div>
-    ))
-  ), [isHomePage, closeMenu, products, isCatalogHovered]);
+          {hasDropdown && isCatalogHovered && renderCatalogDropdown()}
+        </div>
+      )),
+    [isHomePage, closeMenu, products, isCatalogHovered]
+  );
 
-  const headerStyle = !isHomePage ? { backgroundColor: '#f5edda' } : {};
-  const mobileHeaderStyle = { backgroundColor: isHomePage ? 'transparent' : '#f5edda' };
-  const mobileMenuStyle = { backgroundColor: isHomePage ? '#274D63' : '#f5edda' };
+  const headerStyle = !isHomePage ? { backgroundColor: "#f5edda" } : {};
+  const mobileHeaderStyle = {
+    backgroundColor: isHomePage ? "transparent" : "#f5edda",
+  };
+  const mobileMenuStyle = {
+    backgroundColor: isHomePage ? "#274D63" : "#f5edda",
+  };
 
-  const iconButtonClass = isHomePage ? 'light' : 'dark';
-  const linkColor = isHomePage ? 'white' : '#1f2937';
-  const borderColor = isHomePage ? 'rgba(255, 255, 255, 0.3)' : 'rgba(31, 41, 55, 0.3)';
+  const iconButtonClass = isHomePage ? "light" : "dark";
+  const linkColor = isHomePage ? "white" : "#1f2937";
+  const borderColor = isHomePage
+    ? "rgba(255, 255, 255, 0.3)"
+    : "rgba(31, 41, 55, 0.3)";
 
   return (
-    <header className="header" style={headerStyle}>
+    <header
+      className={`header ${isHomePage ? "home-page" : "inner-page"}`}
+      style={headerStyle}
+    >
       {/* Desktop Header */}
       <div className="desktop-header">
         <div className="header-logo">
@@ -147,9 +175,7 @@ function Header() {
           </Link>
         </div>
 
-        <nav className="header-nav">
-          {renderNavLinks}
-        </nav>
+        <nav className="header-nav">{renderNavLinks}</nav>
 
         <div className="header-actions">
           <Search isHomePage={isHomePage} />
@@ -164,8 +190,14 @@ function Header() {
       <div className="mobile-header" style={mobileHeaderStyle}>
         <div className="mobile-header-container">
           <div className="mobile-hamburger">
-            <button className={`icon-button ${iconButtonClass}`} onClick={toggleMenu}>
-              <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="icon" />
+            <button
+              className={`icon-button ${iconButtonClass}`}
+              onClick={toggleMenu}
+            >
+              <FontAwesomeIcon
+                icon={isMenuOpen ? faTimes : faBars}
+                className="icon"
+              />
             </button>
           </div>
 
@@ -187,30 +219,56 @@ function Header() {
           <nav className="mobile-nav">
             {NAV_LINKS.map(({ path, text, hasDropdown }) => (
               <div key={path}>
-                <Link
-                  to={path}
+                <div
                   className="mobile-nav-link"
                   style={{
                     color: linkColor,
-                    borderBottom: `1px solid ${borderColor}`
+                    borderBottom: `1px solid ${borderColor}`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    cursor: "pointer",
                   }}
-                  onClick={closeMenu}
                 >
-                  <span className="mobile-nav-link-text">{text}</span>
-                  {hasDropdown && (
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className="mobile-nav-link-arrow"
+                  {hasDropdown ? (
+                    <>
+                      <span
+                        className="mobile-nav-link-text"
+                        onClick={() => navigate(path) || closeMenu()}
+                      >
+                        {text}
+                      </span>
+                      <FontAwesomeIcon
+                        icon={faChevronRight}
+                        className={`mobile-nav-link-arrow ${
+                          isMobileCatalogOpen ? "rotate" : ""
+                        }`}
+                        style={{ color: linkColor }}
+                        onClick={toggleMobileCatalog}
+                      />
+                    </>
+                  ) : (
+                    <Link
+                      to={path}
+                      className="mobile-nav-link-text"
                       style={{ color: linkColor }}
-                    />
+                      onClick={closeMenu}
+                    >
+                      {text}
+                    </Link>
                   )}
-                </Link>
-                {hasDropdown && (
+                </div>
+
+                {hasDropdown && isMobileCatalogOpen && (
                   <div className="mobile-subcategories">
                     <div className="subcategories-grid-header">
                       {products
-                        .filter(category => category.subcategories && category.subcategories.length > 0)
-                        .map(category => (
+                        .filter(
+                          (category) =>
+                            category.subcategories &&
+                            category.subcategories.length > 0
+                        )
+                        .map((category) => (
                           <div
                             key={category.id}
                             className="subcategory-item-header"
@@ -218,12 +276,17 @@ function Header() {
                           >
                             <div className="subcategory-image-header">
                               <img
-                                src={category.imagelink || 'https://via.placeholder.com/60'}
+                                src={
+                                  category.imagelink ||
+                                  "https://via.placeholder.com/60"
+                                }
                                 alt={category.name}
                                 className="subcategory-image"
                               />
                             </div>
-                            <span className="subcategory-name-header">{category.name}</span>
+                            <span className="subcategory-name-header">
+                              {category.name}
+                            </span>
                           </div>
                         ))}
                     </div>
