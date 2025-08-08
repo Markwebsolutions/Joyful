@@ -45,7 +45,32 @@ const ContactForm = ({
     }
     return () => clearTimeout(timer);
   }, [showSuccess, navigate, redirectTo, onClose]);
-// Abandonment tracking on page refresh or close
+
+  // Abandonment tracking mail process
+
+  // Shared function to send abandonment data
+  const sendAbandonmentData = () => {
+    if (
+      formData.firstname ||
+      formData.lastname ||
+      formData.email ||
+      formData.phone ||
+      formData.querytype ||
+      formData.message
+    ) {
+      const params = new URLSearchParams({
+        ...formData,
+        abandoned: "true",
+      });
+
+      navigator.sendBeacon(
+        "https://script.google.com/macros/s/AKfycbxsrav3VTrv3q0CCp1prsLIzYz6mYJq7-kmkKubhJKc9-m6Y3VoG6VF5Y0GRAR3jG4/exec",
+        params
+      );
+    }
+  };
+
+  // Abandonment tracking on page refresh or close
   useEffect(() => {
     window.addEventListener("beforeunload", sendAbandonmentData);
     return () =>
@@ -77,6 +102,7 @@ const ContactForm = ({
           body: JSON.stringify(formData),
         }
       );
+
       // mail process
       await fetch(
         "https://script.google.com/macros/s/AKfycbxsrav3VTrv3q0CCp1prsLIzYz6mYJq7-kmkKubhJKc9-m6Y3VoG6VF5Y0GRAR3jG4/exec",
@@ -89,10 +115,11 @@ const ContactForm = ({
           }).toString(),
         }
       );
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          errorText || `Server responded with status ${response.status}`
+          errorText || Server responded with status ${response.status}
         );
       }
 
