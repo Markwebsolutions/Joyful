@@ -14,7 +14,7 @@ const AboutUs2 = () => {
       src: AboutUs_1,
       heading: "Company Overview",
       content: [
-        "Joyful Plastics is a 21 year old legacy established in 1995",
+        "Joyful Plastics is a 30+ year old legacy established in 1995",
         "We are assisted by a dedicated management team, most of whom have more than 10 years of experience in their respective fields",
         "We are professional manufacturers and exporters of household plastic ware",
         "We specialize in injection molding and blow molding",
