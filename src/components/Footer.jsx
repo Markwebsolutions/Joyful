@@ -286,7 +286,7 @@ const Footer = () => {
             </div>
             <div>
               <p>
-                Design & Development by 
+                Design & Development by &nbsp;
                 <a href={markweb} target="_blank" rel="noopener noreferrer">
                   Mark Web Solutions
                 </a>
