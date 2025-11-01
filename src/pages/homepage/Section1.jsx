@@ -85,7 +85,7 @@ const Section1 = () => {
         <div className="benefits">
           <p className="benefit-item">
             <img src={giftIcon} alt="Gift icon" className="benefit-icon" />
-            Joyful Plastics is a 21 year old legacy established in 1995
+            Joyful Plastics is a 30+ year old legacy established in 1995
           </p>
           <p className="benefit-item">
             <img src={giftIcon} alt="Gift icon" className="benefit-icon" />
