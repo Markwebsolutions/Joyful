@@ -25,7 +25,7 @@ const productLine = [
   "MultiPurpose Drawers",
   "MultiPurpose Racks",
   "Serving Trays",
-  "Serving Set",
+  "Serving Sets",
   "School products",
   "Kids Products",
   "Others"
