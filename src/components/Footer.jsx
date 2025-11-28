@@ -7,6 +7,7 @@ import insta from "../assets/footer/insta.svg";
 import facebook from "../assets/footer/facebook.svg";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+
 const facebookUrl = import.meta.env.VITE_FACEBOOK_URL;
 const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
 const twitterUrl = import.meta.env.VITE_TWITTER_URL;
@@ -14,34 +15,33 @@ const contactNumber = import.meta.env.VITE_CONTACT_NUMBER;
 const contactLink = import.meta.env.VITE_CONTACT_LINK;
 const markweb = "https://www.markweb.in/";
 const joyfulp = "https://joyful-ui-production.up.railway.app/";
-const footerLinks = {
-  b2b: [
-    "Become a wholesaler",
-    "Find A wholesaler",
-    "Wholesaler benefit",
-    "After-Sales Protections",
-    "Products Monitoring Series",
-  ],
-  productLine: [
-    "Baby Care",
-    "Schoolware",
-    "Home Furniture",
-    "Kitchenware",
-    "Restaurant Trays",
-    "Multipurpose Items",
-  ],
-};
+
+const productLine = [
+  "Baskets & Bins",
+  "Bottles & Jugs",
+  "Containers",
+  "Coffee Mugs & coasters",
+  "Hangers",
+  "MultiPurpose Drawers",
+  "MultiPurpose Racks",
+  "Serving Trays",
+  "Serving Set",
+  "School products",
+  "Kids Products",
+  "Others"
+];
 
 const Footer = () => {
   const [expandedSections, setExpandedSections] = useState({
-    b2b: false,
     productLine: false,
   });
   const [email, setEmail] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  
   const slugify = (text) =>
     text?.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and");
+  
   const toggleSection = useCallback((section) => {
     setExpandedSections((prev) => ({
       ...prev,
@@ -95,19 +95,29 @@ const Footer = () => {
     }
   };
 
-  const renderList = (items, isProductLine = false) => (
-    <ul className="footer-links">
-      {items.map((item, index) => (
-        <li key={index}>
-          {isProductLine ? (
-            <Link to={`/catalog/${slugify(item)}`}>{item}</Link>
-          ) : (
-            item
-          )}
-        </li>
-      ))}
-    </ul>
-  );
+  const renderProductLine = () => {
+    const firstCol = productLine.slice(0, 6);
+    const secondCol = productLine.slice(6);
+    
+    return (
+      <div className="two-column-product-list">
+        <ul className="footer-links">
+          {firstCol.map((item, index) => (
+            <li key={index}>
+              <Link to={`/catalog/${slugify(item)}`}>{item}</Link>
+            </li>
+          ))}
+        </ul>
+        <ul className="footer-links">
+          {secondCol.map((item, index) => (
+            <li key={index + 6}>
+              <Link to={`/catalog/${slugify(item)}`}>{item}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -148,37 +158,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="footer-section">
-              <div
-                className="mobile-toggle"
-                onClick={() => toggleSection("b2b")}
-                role="button"
-                tabIndex="0"
-                aria-expanded={expandedSections.b2b}
-                aria-controls="b2b-mobile-list"
-              >
-                <h3 className="footer-h1">B2B Options</h3>
-                <span className="toggle-icon">
-                  {expandedSections.b2b ? "-" : "+"}
-                </span>
-              </div>
-
-              <div className="desktop-list">
-                <h3>B2B Options</h3>
-                {renderList(footerLinks.b2b)}
-              </div>
-
-              <div
-                id="b2b-mobile-list"
-                className={`footer-links mobile-list ${
-                  expandedSections.b2b ? "expanded" : ""
-                }`}
-              >
-                {renderList(footerLinks.b2b)}
-              </div>
-            </div>
-
-            <div className="footer-section">
+            <div className="footer-section product-line-section">
               <div
                 className="mobile-toggle"
                 onClick={() => toggleSection("productLine")}
@@ -187,15 +167,15 @@ const Footer = () => {
                 aria-expanded={expandedSections.productLine}
                 aria-controls="productLine-mobile-list"
               >
-                <h3 className="footer-h1">Product Line</h3>
+                <h3 className="footer-h1 centered-title">Product Line</h3>
                 <span className="toggle-icon">
                   {expandedSections.productLine ? "-" : "+"}
                 </span>
               </div>
 
               <div className="desktop-list">
-                <h3 className="footer-h1">Product Line</h3>
-                {renderList(footerLinks.productLine , true)}
+                <h3 className="footer-h1 centered-title">Product Line</h3>
+                {renderProductLine()}
               </div>
 
               <div
@@ -204,7 +184,13 @@ const Footer = () => {
                   expandedSections.productLine ? "expanded" : ""
                 }`}
               >
-                {renderList(footerLinks.productLine , true)}
+                <ul className="footer-links">
+                  {productLine.map((item, index) => (
+                    <li key={index}>
+                      <Link to={`/catalog/${slugify(item)}`}>{item}</Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
